@@ -86,7 +86,6 @@
         }
 
         /* Animated background blobs (optional, jika ingin seperti halaman utama) */
-        /* Anda bisa menambahkan atau menghapus bagian ini sesuai kebutuhan */
         .background-blob {
             position: fixed;
             background: var(--accent-glow);
@@ -119,9 +118,9 @@
             margin: 0 auto;
             padding: 0 20px;
             display: flex;
-            justify-content: space-between;
+            justify-content: flex-start; /* Default ke kiri */
             align-items: center;
-            gap: 20px;
+            gap: 20px; /* Jarak antara elemen jika ada lebih dari satu */
         }
 
         .left-header-group {
@@ -154,47 +153,10 @@
             white-space: nowrap;
         }
 
-        .top-right-icons {
-            display: flex;
-            gap: 15px;
-            align-items: center;
-        }
-
-        .top-right-icons .icon-btn {
-            background: none;
-            border: none;
-            color: var(--text-primary); /* Warna teks utama */
-            font-size: 1.5em;
-            cursor: pointer;
-            transition: color 0.2s ease;
-        }
-
-        .top-right-icons .icon-btn:hover {
-            color: var(--accent-glow); /* Warna aksen */
-        }
-        .top-right-icons .icon-btn.has-badge {
-            position: relative;
-        }
-        .top-right-icons .icon-btn.has-badge .badge {
-            position: absolute;
-            top: -5px;
-            right: -5px;
-            background-color: var(--red-alert-color); /* Merah untuk badge */
-            color: white;
-            font-size: 0.6em;
-            font-weight: 600;
-            border-radius: 50%;
-            padding: 2px 5px;
-            min-width: 15px;
-            text-align: center;
-            line-height: 1;
-        }
-
         /* Main Content Area */
         .content-area {
             flex-grow: 1;
             padding: 30px;
-            /* background-color: var(--bg-dark); Hapus atau ubah jika ingin transparan ke background blur */
             max-width: 1200px; /* Constrain content width */
             margin: 0 auto;
             position: relative; /* Untuk z-index blobs */
@@ -533,25 +495,23 @@
 
         @media (max-width: 768px) {
             .header-content {
-                flex-wrap: wrap;
-                justify-content: center;
+                justify-content: center; /* Pusat elemen di header setelah ikon dihapus */
+                padding: 0 15px; /* Sedikit lebih kecil untuk mobile */
             }
 
             .left-header-group {
-                flex-basis: 100%;
-                justify-content: center;
-                margin-bottom: 15px;
+                flex-basis: auto; /* Biarkan konten menentukan lebar */
+                justify-content: center; /* Pastikan item di dalamnya tetap di tengah jika grupnya lebar */
+                margin-bottom: 0; /* Tidak perlu margin-bottom jika hanya ada satu baris */
+                width: 100%; /* Pastikan mengambil lebar penuh jika dibutuhkan */
             }
 
             .logo-text {
-                text-align: center;
-                margin-bottom: 0;
+                font-size: 1.4em; /* Sedikit lebih kecil di mobile */
             }
-
-            .top-right-icons {
-                width: 100%;
-                justify-content: flex-end;
-                margin-bottom: 10px;
+            .back-button {
+                font-size: 1.6em; /* Sedikit lebih kecil di mobile */
+                padding: 8px; /* Padding lebih kecil */
             }
             
             .content-area {
@@ -631,10 +591,12 @@
                 <button class="back-button" onclick="history.back()"><i class="fas fa-arrow-left"></i></button>
                 <div class="logo-text">XiamoStore</div>
             </div>
+            <!-- Bagian ini dihilangkan:
             <div class="top-right-icons">
                 <button class="icon-btn"><i class="fas fa-moon"></i></button>
                 <button class="icon-btn"><i class="fas fa-user-circle"></i></button>
             </div>
+            -->
         </div>
     </header>
 
