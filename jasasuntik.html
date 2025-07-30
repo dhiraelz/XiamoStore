@@ -550,9 +550,9 @@
 
                 const orderData = [{ name: `${service.name} (${target})`, price: service.price, quantity: quantity }];
                 localStorage.setItem('xiamoStoreCart', JSON.stringify(orderData));
-                // Ganti 'pembayaran.html' dengan halaman tujuan Anda
-                // window.location.href = 'pembayaran.html'; 
-                alert(`Pesanan dibuat!\nLayanan: ${service.name}\nTarget: ${target}\nJumlah: ${quantity}\n\nMengarahkan ke halaman pembayaran... (Simulasi)`);
+                
+                // Mengarahkan ke halaman pembayaran.html
+                window.location.href = 'pembayaran.html'; 
             });
 
             // Initial Load
