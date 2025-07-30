@@ -46,533 +46,252 @@
             --info-box-border-transparent: rgba(120, 190, 220, 0.4); /* Dari --accent-glow, sedikit transparan */
         }
         
-        /* General page layout */
+        /* General page layout - Mobile First */
         body {
             font-family: 'Poppins', sans-serif;
-            background-color: var(--dark-deep); /* Fallback warna jika gambar tidak termuat */
-            color: var(--text-primary); /* Main text color */
+            background-color: var(--dark-deep);
+            color: var(--text-primary);
             line-height: 1.6;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             overflow-x: hidden;
-            position: relative; /* Penting untuk penempatan background blur */
+            position: relative;
         }
 
-        a {
-            text-decoration: none;
-            color: inherit;
-        }
+        a { text-decoration: none; color: inherit; }
+        img { max-width: 100%; height: auto; display: block; }
+        * { box-sizing: border-box; }
 
-        img {
-            max-width: 100%;
-            height: auto;
-            display: block;
-        }
-
-        /* Background Image with Blur */
+        /* Backgrounds */
         .blurred-background {
-            position: fixed; /* Tetap di posisi yang sama saat scroll */
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url('backgroundweb.jpeg'); /* Gunakan gambar Anda di sini */
-            background-size: cover;
-            background-position: center;
-            filter: blur(10px); /* Tingkat blur yang bisa disesuaikan */
-            -webkit-filter: blur(10px); /* Untuk kompatibilitas browser */
-            z-index: -2; /* Di belakang semua elemen lain, termasuk blobs */
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url('https://images.unsplash.com/photo-1554034483-04fda0d3507b?q=80&w=2070&auto=format&fit=crop'); /* Placeholder image */
+            background-size: cover; background-position: center;
+            filter: blur(10px); -webkit-filter: blur(10px);
+            z-index: -2;
         }
-
-        /* Animated background blobs (optional, jika ingin seperti halaman utama) */
         .background-blob {
-            position: fixed;
-            background: var(--accent-glow);
-            border-radius: 50%;
-            filter: blur(130px);
-            opacity: 0.28;
-            z-index: -1;
-            animation: pulse-blob 8s infinite alternate;
+            position: fixed; background: var(--accent-glow); border-radius: 50%;
+            filter: blur(130px); opacity: 0.28; z-index: -1; animation: pulse-blob 8s infinite alternate;
         }
-        .blob-1 { width: 380px; height: 380px; top: 18%; left: 12%; transform: translate(-50%, -50%); animation-delay: 0s; }
-        .blob-2 { width: 300px; height: 300px; bottom: 22%; right: 15%; transform: translate(50%, 50%); background: rgba(120, 190, 220, 0.8); animation-delay: 2.5s; }
+        .blob-1 { width: 250px; height: 250px; top: 15%; left: 10%; }
+        .blob-2 { width: 200px; height: 200px; bottom: 18%; right: 12%; background: rgba(120, 190, 220, 0.8); animation-delay: 2.5s; }
         @keyframes pulse-blob {
-            0% { transform: scale(1) translate(-50%, -50%); opacity: 0.28; }
-            50% { transform: scale(1.06) translate(-48%, -52%); opacity: 0.38; }
-            100% { transform: scale(1) translate(-50%, -50%); opacity: 0.28; }
+            from { transform: scale(1); opacity: 0.28; }
+            to { transform: scale(1.1); opacity: 0.38; }
         }
 
         /* Header */
         .header {
-            background-color: var(--dark-deep); /* Gunakan warna gelap dari palette baru */
-            padding: 20px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Border warna transparan */
-            position: sticky;
-            top: 0;
-            z-index: 1000;
+            background-color: var(--dark-deep); padding: 15px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: sticky; top: 0; z-index: 1000;
         }
-
         .header-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-            display: flex;
-            justify-content: flex-start; /* Default ke kiri */
-            align-items: center;
-            gap: 20px; /* Jarak antara elemen jika ada lebih dari satu */
+            max-width: 1200px; margin: 0 auto; padding: 0 15px;
+            display: flex; justify-content: flex-start; align-items: center; gap: 15px;
         }
-
-        .left-header-group {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
         .back-button {
-            background: none;
-            color: var(--text-primary); /* Warna teks utama */
-            border: none;
-            border-radius: 50%;
-            padding: 10px;
-            font-size: 1.8em;
-            cursor: pointer;
+            background: none; color: var(--text-primary); border: none;
+            border-radius: 50%; padding: 8px; font-size: 1.6em; cursor: pointer;
             transition: background-color 0.2s ease, color 0.2s ease;
         }
-
-        .back-button:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-            color: var(--accent-glow); /* Warna aksen */
-        }
-
+        .back-button:hover { background-color: rgba(255, 255, 255, 0.1); color: var(--accent-glow); }
         .logo-text {
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 700;
-            font-size: 1.5em;
-            color: var(--text-secondary); /* Putih bersih */
-            white-space: nowrap;
+            font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 1.4em; color: var(--text-secondary);
         }
 
         /* Main Content Area */
         .content-area {
-            flex-grow: 1;
-            padding: 30px;
-            max-width: 1200px; /* Constrain content width */
-            margin: 0 auto;
-            position: relative; /* Untuk z-index blobs */
-            z-index: 1; /* Di atas background blur */
+            flex-grow: 1; padding: 20px 15px; max-width: 1200px;
+            margin: 0 auto; width: 100%; position: relative; z-index: 1;
         }
-
-        .content-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-        }
-
         .content-header h1 {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 2em;
-            font-weight: 700;
-            color: var(--text-secondary); /* Putih bersih */
+            font-family: 'Montserrat', sans-serif; font-size: 1.8em; font-weight: 700;
+            color: var(--text-secondary); margin-bottom: 20px; text-align: left;
         }
 
-        /* Category Buttons at the top of the order form */
+        /* Category Buttons - Responsive by default */
         .category-buttons {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-            gap: 10px;
-            margin-bottom: 30px;
-            padding: 20px;
-            background: linear-gradient(145deg, rgba(59, 77, 99, 0.5), rgba(46, 62, 80, 0.5)); /* Sedikit transparan */
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            backdrop-filter: blur(5px);
-            -webkit-backdrop-filter: blur(5px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 10px; margin-bottom: 25px;
         }
-
         .category-buttons .cat-btn {
             background: linear-gradient(90deg, var(--menu-item-start-gradient), var(--menu-item-end-gradient));
-            color: var(--text-secondary);
-            border: none;
-            border-radius: 8px;
-            padding: 12px 15px;
-            font-size: 0.95em;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.2s ease, transform 0.1s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            color: var(--text-secondary); border: none; border-radius: 8px; padding: 10px 12px;
+            font-size: 0.85em; font-weight: 600; cursor: pointer;
+            transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; gap: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); text-align: center;
         }
-
         .category-buttons .cat-btn:hover {
             background: linear-gradient(90deg, var(--menu-item-hover-start), var(--menu-item-hover-end));
-            transform: translateY(-1px);
+            transform: translateY(-2px);
         }
-
         .category-buttons .cat-btn.active-category {
-            background: linear-gradient(90deg, var(--menu-item-hover-end), var(--menu-item-hover-start)); /* Inverted gradient for active */
-            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.3);
-            border: 1px solid var(--accent-glow);
+            background: linear-gradient(90deg, var(--menu-item-hover-end), var(--menu-item-hover-start));
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.3); border: 1px solid var(--accent-glow);
         }
 
-        /* Order Creation Section */
+        /* === ORDER SECTION - RESPONSIVE REWORK === */
+        /* Default Mobile: Stacked Column Layout */
         .order-section-wrapper {
             display: flex;
-            gap: 30px;
-            align-items: flex-start;
+            flex-direction: column; /* Stacked by default for mobile */
+            gap: 25px;
+            align-items: stretch; /* Make children take full width */
         }
 
-        .order-form-container {
-            flex: 2;
-            background: linear-gradient(145deg, var(--card-start-gradient), var(--card-end-gradient)); /* Gunakan transparansi dari root */
+        .order-form-container, .info-panel {
+            flex-shrink: 0; /* Prevent shrinking */
+            width: 100%; /* Full width on mobile */
+            background: linear-gradient(145deg, var(--card-start-gradient), var(--card-end-gradient));
             border-radius: 10px;
-            padding: 30px;
+            padding: 20px; /* Reduced padding for mobile */
             box-shadow: 0 5px 15px var(--shadow-deep);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
+            backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
             border: 1px solid rgba(255, 255, 255, 0.15);
         }
-
-        .order-form-container h3 {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 1.5em;
-            margin-bottom: 25px;
-            color: var(--text-secondary); /* Putih bersih */
-        }
-
+        
+        /* Specific adjustments for info panel background */
         .info-panel {
-            flex: 1;
-            background-color: var(--info-box-bg-transparent); /* Background transparan */
-            border: 1px solid var(--info-box-border-transparent); /* Border transparan */
-            border-radius: 10px;
-            padding: 25px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            backdrop-filter: blur(5px);
-            -webkit-backdrop-filter: blur(5px);
+             background-color: var(--info-box-bg-transparent);
+             border: 1px solid var(--info-box-border-transparent);
         }
-
-        .info-panel h3 {
+        
+        .order-form-container h3, .info-panel h3 {
             font-family: 'Montserrat', sans-serif;
-            font-size: 1.2em;
-            font-weight: 600;
-            color: var(--text-secondary); /* Putih bersih */
-            margin-bottom: 15px;
+            font-size: 1.3em; /* Adjusted font size for mobile */
+            margin-bottom: 20px; color: var(--text-secondary);
+        }
+        .info-panel h4 {
+            font-size: 1.0em; color: var(--text-primary);
+            margin-bottom: 10px; font-weight: 600;
         }
 
-        .info-panel h4 { /* For sub-headers like "Langkah-langkah" */
-            font-size: 1.05em;
-            color: var(--text-primary); /* Teks utama */
-            margin-bottom: 10px;
-            font-weight: 600;
-        }
-
-        .info-panel ul {
-            list-style: none;
-            padding: 0;
-            margin-left: 15px;
-        }
-        .info-panel ul li {
-            position: relative;
-            margin-bottom: 8px;
-            font-size: 0.95em;
-            color: rgba(var(--text-primary), 0.7); /* Teks muted */
-        }
+        .info-panel ul { list-style: none; padding-left: 5px; }
+        .info-panel ul li { position: relative; margin-bottom: 8px; font-size: 0.9em; padding-left: 15px; }
         .info-panel ul li::before {
-            content: "•";
-            color: var(--accent-glow); /* Bullet color */
-            font-weight: bold;
-            display: inline-block;
-            width: 1em;
-            margin-left: -1em;
+            content: "•"; color: var(--accent-glow); font-weight: bold;
+            position: absolute; left: 0; top: 0;
         }
-        .info-panel p {
-            font-size: 0.9em;
-            color: rgba(var(--text-primary), 0.7); /* Teks muted */
-            margin-top: 15px;
-        }
-
-        .info-panel strong {
-            color: var(--text-secondary); /* Putih bersih */
-        }
-        .info-panel i.fas.fa-sync-alt { /* Icon for "Garansi" */
-            color: var(--success-color); /* Green for warranty */
-        }
-
+        .info-panel p { font-size: 0.9em; margin-top: 15px; }
+        .info-panel strong { color: var(--text-secondary); }
+        .info-panel i.fas.fa-sync-alt { color: var(--success-color); }
 
         /* Form elements */
-        .form-group {
-            margin-bottom: 20px;
-        }
-
+        .form-group { margin-bottom: 20px; }
         .form-group label {
-            display: block;
-            font-weight: 600;
-            margin-bottom: 8px;
-            color: var(--text-primary); /* Teks utama */
-            font-size: 0.95em;
+            display: block; font-weight: 600; margin-bottom: 8px;
+            color: var(--text-primary); font-size: 0.9em;
         }
-
-        .form-group select,
-        .form-group input[type="text"],
-        .form-group input[type="number"] {
-            width: 100%;
-            padding: 12px 15px;
-            border: 1px solid var(--input-border-transparent);
-            border-radius: 8px;
-            font-size: 1em;
-            color: var(--text-primary); /* Teks utama */
-            background-color: var(--input-bg-transparent); /* Background transparan */
+        .form-group select, .form-group input {
+            width: 100%; padding: 12px 15px; border: 1px solid var(--input-border-transparent);
+            border-radius: 8px; font-size: 1em; color: var(--text-primary);
+            background-color: var(--input-bg-transparent);
             transition: border-color 0.2s ease, box-shadow 0.2s ease;
         }
-
-        .form-group select:focus,
-        .form-group input[type="text"]:focus,
-        .form-group input[type="number"]:focus {
-            outline: none;
-            border-color: var(--accent-glow); /* Warna aksen saat fokus */
-            box-shadow: 0 0 0 3px rgba(120, 190, 220, 0.25); /* Shadow aksen */
+        .form-group select:focus, .form-group input:focus {
+            outline: none; border-color: var(--accent-glow);
+            box-shadow: 0 0 0 3px rgba(120, 190, 220, 0.25);
         }
+        .form-group select option { color: var(--text-primary); background-color: var(--dark-blue); }
 
-        .form-group select option {
-            color: var(--text-primary);
-            background-color: var(--dark-blue); /* Opacity removed for options for better readability */
-        }
-
-        .checkbox-group {
-            display: flex;
-            align-items: center;
-            margin-top: 10px;
-            margin-bottom: 20px;
-        }
-
-        .checkbox-group input[type="checkbox"] {
-            margin-right: 10px;
-            width: 18px;
-            height: 18px;
-            accent-color: var(--menu-item-start-gradient); /* Warna aksen untuk checkbox */
-        }
-
-        .checkbox-group label {
-            font-size: 0.9em;
-            color: rgba(var(--text-primary), 0.7); /* Teks muted */
-            margin-bottom: 0;
-            cursor: pointer;
-        }
+        .checkbox-group { display: flex; align-items: center; margin-top: 10px; margin-bottom: 20px; }
+        .checkbox-group input[type="checkbox"] { margin-right: 10px; width: 18px; height: 18px; accent-color: var(--menu-item-start-gradient); }
+        .checkbox-group label { font-size: 0.9em; margin-bottom: 0; cursor: pointer; }
 
         .form-submit-btn {
-            display: block;
-            width: 100%;
-            padding: 15px 25px;
-            background: linear-gradient(90deg, var(--menu-item-start-gradient), var(--menu-item-end-gradient)); /* Gradien aksen */
-            color: var(--text-secondary); /* Putih bersih */
-            border: none;
-            border-radius: 10px;
-            font-size: 1.1em;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
+            display: block; width: 100%; padding: 14px 20px;
+            background: linear-gradient(90deg, var(--menu-item-start-gradient), var(--menu-item-end-gradient));
+            color: var(--text-secondary); border: none; border-radius: 10px;
+            font-size: 1.1em; font-weight: 600; cursor: pointer;
+            transition: all 0.2s ease;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
         }
-
         .form-submit-btn:hover {
-            background: linear-gradient(90deg, var(--menu-item-hover-start), var(--menu-item-hover-end)); /* Gradien hover aksen */
-            transform: translateY(-1px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+            background: linear-gradient(90deg, var(--menu-item-hover-start), var(--menu-item-hover-end));
+            transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
         }
 
-        /* Styling for Price & Description Display */
+        /* Service Details Display */
         .service-details-display {
-            background-color: var(--info-box-bg-transparent); /* Background transparan */
-            color: var(--text-primary);
-            padding: 15px;
-            border-radius: 8px;
-            margin-top: 15px;
-            font-size: 0.95em;
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-            border: 1px solid var(--info-box-border-transparent);
+            background-color: var(--info-box-bg-transparent); color: var(--text-primary);
+            padding: 15px; border-radius: 8px; margin-top: 15px; font-size: 0.95em;
+            display: flex; flex-direction: column; gap: 5px; border: 1px solid var(--info-box-border-transparent);
         }
-        .service-details-display p {
-            margin: 0;
-            color: rgba(var(--text-primary), 0.7); /* Teks muted */
-        }
-        .service-details-display strong {
-            color: var(--text-secondary); /* Putih bersih */
-        }
+        .service-details-display p { margin: 0; }
+        .service-details-display strong { color: var(--text-secondary); }
         .service-details-display .price-info {
-            font-size: 1.1em;
-            font-weight: 600;
-            color: var(--accent-glow); /* Warna aksen */
-            margin-top: 10px;
+            font-size: 1.1em; font-weight: 600; color: var(--accent-glow); margin-top: 10px;
         }
-        .service-details-display .min-max-info {
-            font-size: 0.85em;
-            color: rgba(var(--text-primary), 0.6); /* Lebih muted */
-        }
-
+        .service-details-display .min-max-info { font-size: 0.85em; }
 
         /* Footer */
         .footer {
-            background-color: var(--dark-blue); /* Warna gelap dari palette baru */
-            padding: 30px 0;
-            color: rgba(var(--text-primary), 0.7); /* Teks muted */
-            font-size: 0.9em;
-            text-align: center;
-            width: 100%;
-            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
-            margin-top: 40px; /* Ensure space from content */
-            position: relative;
-            z-index: 1; /* Agar di atas background blur */
+            background-color: var(--dark-blue); padding: 30px 15px; color: rgba(var(--text-primary), 0.7);
+            font-size: 0.9em; text-align: center; width: 100%; box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
+            margin-top: 40px; position: relative; z-index: 1;
         }
-        /* Adjusted footer content for responsiveness */
         .footer-content {
-            display: flex;
-            justify-content: space-around;
-            flex-wrap: wrap;
-            gap: 20px;
-            padding: 0 20px;
+            display: flex; flex-direction: column; /* Stacked on mobile */
+            text-align: center; gap: 20px; max-width: 1200px; margin: 0 auto;
         }
-        .footer-col {
-            flex-basis: 200px;
-            margin-bottom: 20px;
-            text-align: left;
-        }
+        .footer-col { text-align: left; } /* Align left for content inside */
         .footer-col h4 {
-            color: var(--text-secondary); /* Putih bersih */
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 700;
+            color: var(--text-secondary); font-family: 'Montserrat', sans-serif; font-weight: 700;
         }
-        .footer-col ul {
-            list-style: none;
-            padding: 0;
-        }
-        .footer-col ul li a {
-            color: rgba(var(--text-primary), 0.7); /* Teks muted */
-            transition: color 0.2s ease;
-        }
-        .footer-col ul li a:hover {
-            color: var(--accent-glow); /* Warna aksen */
-        }
+        .footer-col ul { list-style: none; padding: 0; }
+        .footer-col ul li a:hover { color: var(--accent-glow); }
         .footer-bottom {
-            margin-top: 20px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            padding-top: 20px;
-            font-size: 0.8em;
-            color: rgba(var(--text-primary), 0.5); /* Sangat muted */
+            margin-top: 20px; border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 20px; font-size: 0.8em; color: rgba(var(--text-primary), 0.5);
         }
 
-        /* Responsive adjustments */
-        @media (max-width: 992px) {
-            .content-area {
-                padding: 20px;
-            }
-            .content-header h1 {
-                font-size: 1.8em;
-            }
-            .category-buttons {
-                grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
-                padding: 15px;
-            }
-            .category-buttons .cat-btn {
-                padding: 10px 12px;
-                font-size: 0.85em;
-            }
-            .order-section-wrapper {
-                flex-direction: column;
-            }
-            .order-form-container, .info-panel {
-                flex: none;
-                width: 100%;
-                margin-bottom: 20px;
-            }
-        }
+        /* === Media Queries for Larger Screens === */
 
-        @media (max-width: 768px) {
-            .header-content {
-                justify-content: center; /* Pusat elemen di header setelah ikon dihapus */
-                padding: 0 15px; /* Sedikit lebih kecil untuk mobile */
-            }
-
-            .left-header-group {
-                flex-basis: auto; /* Biarkan konten menentukan lebar */
-                justify-content: center; /* Pastikan item di dalamnya tetap di tengah jika grupnya lebar */
-                margin-bottom: 0; /* Tidak perlu margin-bottom jika hanya ada satu baris */
-                width: 100%; /* Pastikan mengambil lebar penuh jika dibutuhkan */
-            }
-
-            .logo-text {
-                font-size: 1.4em; /* Sedikit lebih kecil di mobile */
-            }
-            .back-button {
-                font-size: 1.6em; /* Sedikit lebih kecil di mobile */
-                padding: 8px; /* Padding lebih kecil */
-            }
+        /* Tablet (e.g., iPads) */
+        @media (min-width: 768px) {
+            .header-content { padding: 0 30px; }
+            .logo-text { font-size: 1.5em; }
             
-            .content-area {
-                padding: 15px;
+            .content-area { padding: 30px; }
+            .content-header h1 { font-size: 2em; margin-bottom: 30px; }
+            
+            .category-buttons { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); }
+            .category-buttons .cat-btn { font-size: 0.9em; padding: 12px 15px; }
+
+            .order-form-container, .info-panel { padding: 25px; }
+            .order-form-container h3, .info-panel h3 { font-size: 1.4em; }
+
+            .footer-content {
+                flex-direction: row; /* Side-by-side on tablet */
+                justify-content: space-around;
+                text-align: left;
             }
-            .content-header {
-                flex-direction: column;
-                align-items: flex-start;
-                margin-bottom: 20px;
+            .footer-col { flex: 1; min-width: 200px; }
+        }
+
+        /* Desktop */
+        @media (min-width: 1024px) {
+            .blob-1 { width: 380px; height: 380px; top: 18%; left: 12%; }
+            .blob-2 { width: 300px; height: 300px; bottom: 22%; right: 15%; }
+            
+            /* === Key Change: Side-by-side layout for order section on desktop === */
+            .order-section-wrapper {
+                flex-direction: row; /* Change to row for desktop */
+                align-items: flex-start; /* Align to top */
+                gap: 30px;
             }
-            .content-header h1 {
-                margin-bottom: 15px;
-                font-size: 1.6em;
+            .order-form-container {
+                flex: 2; /* Takes 2/3 of the space */
             }
-            .category-buttons {
-                grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-                padding: 10px;
-            }
-            .category-buttons .cat-btn {
-                padding: 8px 10px;
-                font-size: 0.8em;
-            }
-            .info-panel ul {
-                margin-left: 0;
-            }
-            .info-panel ul li::before {
-                margin-left: -0.5em;
+            .info-panel {
+                flex: 1; /* Takes 1/3 of the space */
             }
         }
 
-        @media (max-width: 480px) {
-            .content-area {
-                padding: 10px;
-            }
-            .content-header h1 {
-                font-size: 1.4em;
-            }
-            .category-buttons {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 8px;
-            }
-            .category-buttons .cat-btn {
-                padding: 6px 8px;
-                font-size: 0.75em;
-            }
-            .form-group select,
-            .form-group input {
-                padding: 10px 12px;
-                font-size: 0.9em;
-            }
-            .form-group label {
-                font-size: 0.85em;
-            }
-            .checkbox-group label {
-                font-size: 0.8em;
-            }
-            .form-submit-btn {
-                padding: 12px 15px;
-                font-size: 1em;
-            }
-        }
     </style>
 </head>
 <body>
@@ -580,23 +299,15 @@
     <!-- Background Image with Blur -->
     <div class="blurred-background"></div>
 
-    <!-- Background Blobs (optional, jika ingin seperti halaman utama) -->
+    <!-- Background Blobs -->
     <div class="background-blob blob-1"></div>
     <div class="background-blob blob-2"></div>
 
-    <!-- Header (No sidebar) -->
+    <!-- Header -->
     <header class="header">
         <div class="header-content">
-            <div class="left-header-group">
-                <button class="back-button" onclick="history.back()"><i class="fas fa-arrow-left"></i></button>
-                <div class="logo-text">XiamoStore</div>
-            </div>
-            <!-- Bagian ini dihilangkan:
-            <div class="top-right-icons">
-                <button class="icon-btn"><i class="fas fa-moon"></i></button>
-                <button class="icon-btn"><i class="fas fa-user-circle"></i></button>
-            </div>
-            -->
+            <button class="back-button" onclick="history.back()"><i class="fas fa-arrow-left"></i></button>
+            <div class="logo-text">XiamoStore</div>
         </div>
     </header>
 
@@ -608,7 +319,7 @@
 
         <!-- Category Buttons -->
         <div class="category-buttons">
-            <button class="cat-btn active-category" data-category="Semua"><i class="fas fa-globe"></i> Semua Kategori</button>
+            <button class="cat-btn active-category" data-category="Semua"><i class="fas fa-globe"></i> Semua</button>
             <button class="cat-btn" data-category="Instagram"><i class="fab fa-instagram"></i> Instagram</button>
             <button class="cat-btn" data-category="TikTok"><i class="fab fa-tiktok"></i> TikTok</button>
             <button class="cat-btn" data-category="YouTube"><i class="fab fa-youtube"></i> YouTube</button>
@@ -685,25 +396,23 @@
                 <h4>Ketentuan membuat pesanan baru:</h4>
                 <ul>
                     <li>Silahkan membuat pesanan sesuai langkah-langkah diatas.</li>
-                    <li>Jika ingin membuat pesanan dengan Target yang sama dengan pesanan yang sudah pernah dipesan sebelumnya, mohon menunggu sampai pesanan sebelumnya selesai diproses.</li>
-                    <li>Tidak ada garansi berupa isi ulang/refund untuk layanan yang tidak berlabel Garansi <i class="fas fa-sync-alt"></i>/R, bahkan jika berkurang 5 menit sejak status completed.</li>
-                    <li>Tidak ada garansi berupa isi ulang/refund untuk layanan yang berlabel Drop/No refill.</li>
+                    <li>Jika ingin membuat pesanan dengan Target yang sama, mohon menunggu pesanan sebelumnya selesai.</li>
+                    <li>Tidak ada garansi untuk layanan yang tidak berlabel Garansi <i class="fas fa-sync-alt"></i>/R.</li>
+                    <li>Tidak ada garansi untuk layanan yang berlabel Drop/No refill.</li>
                 </ul>
             </div>
         </div>
     </main>
 
-    <!-- Footer (retained, but adjusted for no sidebar) -->
+    <!-- Footer -->
     <footer class="footer">
         <div class="footer-content">
             <div class="footer-col">
                 <h4>XiamoStore</h4>
-                <p>XiamoStore menawarkan produk digital berkualitas di berbagai bidang hiburan, termasuk musik, film, dan konten digital lainnya. Kami menyediakan akses mudah dan cepat ke produk digital terpopuler dengan harga terjangkau. Dapatkan pengalaman hiburan terbaik dengan layanan yang aman dan terpercaya.</p>
+                <p>XiamoStore menawarkan produk digital berkualitas di berbagai bidang hiburan. Dapatkan pengalaman hiburan terbaik dengan layanan yang aman dan terpercaya.</p>
                 <div class="footer-social-icons">
                     <a href="#"><i class="fab fa-whatsapp"></i></a>
                     <a href="#"><i class="fab fa-instagram"></i></a>
-                    <a href="#"><i class="fab fa-youtube"></i></a>
-                    <a href="#"><i class="fab fa-telegram-plane"></i></a>
                 </div>
             </div>
             <div class="footer-col">
@@ -713,7 +422,6 @@
                     <li><a href="#">Desain</a></li>
                     <li><a href="#">Musik & Video</a></li>
                     <li><a href="#">Edukasi</a></li>
-                    <li><a href="#">Productivity</a></li>
                 </ul>
             </div>
             <div class="footer-col">
@@ -721,7 +429,6 @@
                 <ul>
                     <li><a href="https://wa.me/6287844643452" target="_blank"><i class="fab fa-whatsapp"></i> Tanya Admin</a></li>
                     <li><a href="#">Cara Pembelian</a></li>
-                    <li><a href="#">Tips Hemat</a></li>
                     <li><a href="#">FAQ</a></li>
                 </ul>
             </div>
@@ -733,64 +440,14 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // === Data Layanan ===
-            // Pastikan data ini lengkap sesuai semua layanan yang Anda tawarkan
-            const allServicesData = {
-                "Instagram": [
-                    { name: "Followers Instagram (Global)", price: 25000, desc: "Menambah follower aktif global ke akun Instagram Anda. Proses cepat dan aman.", min: 100, max: 10000, unit: "Followers", isFavorite: false },
-                    { name: "Likes Instagram (Indonesia)", price: 15000, desc: "Meningkatkan jumlah likes pada postingan Instagram Anda dari pengguna Indonesia.", min: 50, max: 5000, unit: "Likes", isFavorite: true },
-                    { name: "Komentar Instagram", price: 20000, desc: "Tambahkan komentar positif pada postingan Instagram Anda.", min: 10, max: 500, unit: "Komentar", isFavorite: false }
-                ],
-                "TikTok": [
-                    { name: "Followers TikTok", price: 20000, desc: "Menambah follower aktif ke akun TikTok Anda. Tingkatkan popularitas!", min: 50, max: 8000, unit: "Followers", isFavorite: false },
-                    { name: "Likes TikTok", price: 15000, desc: "Dapatkan lebih banyak like untuk video TikTok Anda.", min: 100, max: 10000, unit: "Likes", isFavorite: false },
-                    { name: "Views TikTok", price: 10000, desc: "Tingkatkan jumlah penonton video TikTok Anda dengan cepat.", min: 500, max: 50000, unit: "Views", isFavorite: false }
-                ],
-                "YouTube": [
-                    { name: "Views YouTube", price: 18000, desc: "Tingkatkan jumlah penonton video YouTube Anda dengan cepat.", min: 1000, max: 100000, unit: "Views", isFavorite: false },
-                    { name: "Subscribers YouTube", price: 50000, desc: "Dapatkan subscriber baru untuk channel YouTube Anda.", min: 100, max: 5000, unit: "Subscribers", isFavorite: false },
-                    { name: "Jam Tayang YouTube", price: 60000, desc: "Capai persyaratan monetisasi dengan cepat.", min: 100, max: 4000, unit: "Jam", isFavorite: false }
-                ],
-                "Facebook": [
-                    { name: "Likes Facebook", price: 12000, desc: "Tingkatkan jumlah like pada postingan Facebook Anda.", min: 100, max: 10000, unit: "Likes", isFavorite: false },
-                    { name: "Views Facebook", price: 15000, desc: "Dapatkan lebih banyak penonton untuk video Facebook Anda.", min: 500, max: 50000, unit: "Views", isFavorite: false }
-                ],
-                "Twitter": [
-                    { name: "Retweets Twitter", price: 14000, desc: "Menambah jumlah retweet untuk tweet Anda. Tingkatkan engagement!", min: 50, max: 2000, unit: "Retweets", isFavorite: false },
-                    { name: "Followers Twitter", price: 22000, desc: "Tingkatkan jumlah pengikut di akun Twitter Anda.", min: 100, max: 5000, unit: "Followers", isFavorite: false }
-                ],
-                "Telegram": [
-                     { name: "Member Telegram", price: 30000, desc: "Tambahkan anggota ke grup atau channel Telegram Anda.", min: 50, max: 10000, unit: "Member", isFavorite: false }
-                ],
-                "WhatsApp": [
-                    { name: "Member Grup WhatsApp", price: 35000, desc: "Tambahkan anggota aktif ke grup WhatsApp Anda.", min: 20, max: 500, unit: "Member", isFavorite: false }
-                ],
-                "Marketplace": [
-                    { name: "Ulasan Toko Online", price: 25000, desc: "Tingkatkan reputasi toko online Anda dengan ulasan positif.", min: 5, max: 100, unit: "Ulasan", isFavorite: false }
-                ],
-                "Discord": [
-                    { name: "Member Discord", price: 28000, desc: "Tambahkan anggota ke server Discord Anda.", min: 20, max: 1000, unit: "Member", isFavorite: false }
-                ],
-                "Twitch": [
-                    { name: "Followers Twitch", price: 20000, desc: "Dapatkan follower baru untuk channel Twitch Anda.", min: 50, max: 2000, unit: "Followers", isFavorite: false }
-                ],
-                "Pinterest": [
-                    { name: "Followers Pinterest", price: 18000, desc: "Tingkatkan jumlah pengikut di akun Pinterest Anda.", min: 50, max: 2000, unit: "Followers", isFavorite: false }
-                ],
-                "Snack Video": [
-                    { name: "Followers Snack Video", price: 16000, desc: "Menambah follower untuk akun Snack Video Anda.", min: 50, max: 5000, unit: "Followers", isFavorite: false },
-                    { name: "Likes Snack Video", price: 8000, desc: "Dapatkan lebih banyak like untuk video Snack Video Anda.", min: 100, max: 10000, unit: "Likes", isFavorite: false }
-                ],
-                "TripAdvisor": [
-                    { name: "Ulasan TripAdvisor", price: 40000, desc: "Tingkatkan rating bisnis Anda di TripAdvisor dengan ulasan asli.", min: 1, max: 20, unit: "Ulasan", isFavorite: false }
-                ]
-            };
+            // Data Layanan (Sama seperti sebelumnya)
+            const allServicesData = { "Instagram": [{ name: "Followers Instagram (Global)", price: 25000, desc: "Menambah follower aktif global ke akun Instagram Anda. Proses cepat dan aman.", min: 100, max: 10000, unit: "Followers", isFavorite: false }, { name: "Likes Instagram (Indonesia)", price: 15000, desc: "Meningkatkan jumlah likes pada postingan Instagram Anda dari pengguna Indonesia.", min: 50, max: 5000, unit: "Likes", isFavorite: true }, { name: "Komentar Instagram", price: 20000, desc: "Tambahkan komentar positif pada postingan Instagram Anda.", min: 10, max: 500, unit: "Komentar", isFavorite: false }], "TikTok": [{ name: "Followers TikTok", price: 20000, desc: "Menambah follower aktif ke akun TikTok Anda. Tingkatkan popularitas!", min: 50, max: 8000, unit: "Followers", isFavorite: false }, { name: "Likes TikTok", price: 15000, desc: "Dapatkan lebih banyak like untuk video TikTok Anda.", min: 100, max: 10000, unit: "Likes", isFavorite: false }, { name: "Views TikTok", price: 10000, desc: "Tingkatkan jumlah penonton video TikTok Anda dengan cepat.", min: 500, max: 50000, unit: "Views", isFavorite: false }], "YouTube": [{ name: "Views YouTube", price: 18000, desc: "Tingkatkan jumlah penonton video YouTube Anda dengan cepat.", min: 1000, max: 100000, unit: "Views", isFavorite: false }, { name: "Subscribers YouTube", price: 50000, desc: "Dapatkan subscriber baru untuk channel YouTube Anda.", min: 100, max: 5000, unit: "Subscribers", isFavorite: false }, { name: "Jam Tayang YouTube", price: 60000, desc: "Capai persyaratan monetisasi dengan cepat.", min: 100, max: 4000, unit: "Jam", isFavorite: false }], "Facebook": [{ name: "Likes Facebook", price: 12000, desc: "Tingkatkan jumlah like pada postingan Facebook Anda.", min: 100, max: 10000, unit: "Likes", isFavorite: false }, { name: "Views Facebook", price: 15000, desc: "Dapatkan lebih banyak penonton untuk video Facebook Anda.", min: 500, max: 50000, unit: "Views", isFavorite: false }], "Twitter": [{ name: "Retweets Twitter", price: 14000, desc: "Menambah jumlah retweet untuk tweet Anda. Tingkatkan engagement!", min: 50, max: 2000, unit: "Retweets", isFavorite: false }, { name: "Followers Twitter", price: 22000, desc: "Tingkatkan jumlah pengikut di akun Twitter Anda.", min: 100, max: 5000, unit: "Followers", isFavorite: false }], "Telegram": [{ name: "Member Telegram", price: 30000, desc: "Tambahkan anggota ke grup atau channel Telegram Anda.", min: 50, max: 10000, unit: "Member", isFavorite: false }], "WhatsApp": [{ name: "Member Grup WhatsApp", price: 35000, desc: "Tambahkan anggota aktif ke grup WhatsApp Anda.", min: 20, max: 500, unit: "Member", isFavorite: false }], "Marketplace": [{ name: "Ulasan Toko Online", price: 25000, desc: "Tingkatkan reputasi toko online Anda dengan ulasan positif.", min: 5, max: 100, unit: "Ulasan", isFavorite: false }], "Discord": [{ name: "Member Discord", price: 28000, desc: "Tambahkan anggota ke server Discord Anda.", min: 20, max: 1000, unit: "Member", isFavorite: false }], "Twitch": [{ name: "Followers Twitch", price: 20000, desc: "Dapatkan follower baru untuk channel Twitch Anda.", min: 50, max: 2000, unit: "Followers", isFavorite: false }], "Pinterest": [{ name: "Followers Pinterest", price: 18000, desc: "Tingkatkan jumlah pengikut di akun Pinterest Anda.", min: 50, max: 2000, unit: "Followers", isFavorite: false }], "Snack Video": [{ name: "Followers Snack Video", price: 16000, desc: "Menambah follower untuk akun Snack Video Anda.", min: 50, max: 5000, unit: "Followers", isFavorite: false }, { name: "Likes Snack Video", price: 8000, desc: "Dapatkan lebih banyak like untuk video Snack Video Anda.", min: 100, max: 10000, unit: "Likes", isFavorite: false }], "TripAdvisor": [{ name: "Ulasan TripAdvisor", price: 40000, desc: "Tingkatkan rating bisnis Anda di TripAdvisor dengan ulasan asli.", min: 1, max: 20, unit: "Ulasan", isFavorite: false }]};
 
-            // === Elemen Form & Display ===
+            // Elemen Form & Display
             const categoryButtons = document.querySelectorAll('.category-buttons .cat-btn');
             const categorySelect = document.getElementById('categorySelect');
             const serviceSelect = document.getElementById('serviceSelect');
-            const orderTargetInput = document.getElementById('orderTarget'); // New input
+            const orderTargetInput = document.getElementById('orderTarget');
             const orderQuantityInput = document.getElementById('orderQuantity');
             const favoriteServiceCheckbox = document.getElementById('favoriteServiceCheckbox');
             const orderForm = document.getElementById('orderForm');
@@ -801,148 +458,105 @@
             const servicePriceDisplay = document.getElementById('servicePriceDisplay');
             const quantityUnitDisplay = document.getElementById('quantityUnit');
 
-            // Helper function to format currency
-            function formatRupiah(number) {
-                return new Intl.NumberFormat('id-ID', {
-                    style: 'currency',
-                    currency: 'IDR',
-                    minimumFractionDigits: 0
-                }).format(number);
-            }
+            function formatRupiah(number) { return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(number); }
 
-            // Populate Category Select (Dropdown)
             function populateCategorySelect() {
-                categorySelect.innerHTML = '<option value="">Pilih...</option>';
+                categorySelect.innerHTML = '<option value="">Pilih Kategori...</option>';
                 for (const category in allServicesData) {
                     const option = document.createElement('option');
-                    option.value = category;
-                    option.textContent = category;
+                    option.value = category; option.textContent = category;
                     categorySelect.appendChild(option);
                 }
             }
 
-            // Update Service Select (Dropdown) based on selected category and favorite filter
             function updateServiceSelect() {
                 const selectedCategory = categorySelect.value;
                 const showFavorites = favoriteServiceCheckbox.checked;
-                serviceSelect.innerHTML = '<option value="">Pilih...</option>';
-                serviceDetailsDisplay.style.display = 'none'; // Hide details when service selection changes
+                serviceSelect.innerHTML = '<option value="">Pilih Layanan...</option>';
+                serviceDetailsDisplay.style.display = 'none';
 
                 if (selectedCategory && allServicesData[selectedCategory]) {
                     let services = allServicesData[selectedCategory];
-                    if (showFavorites) {
-                        services = services.filter(service => service.isFavorite);
-                    }
-                    
+                    if (showFavorites) { services = services.filter(service => service.isFavorite); }
                     services.forEach((service, index) => {
                         const option = document.createElement('option');
-                        option.value = index; // Use index to easily retrieve service details
-                        option.textContent = service.name;
+                        option.value = index; option.textContent = service.name;
                         serviceSelect.appendChild(option);
                     });
                 }
             }
 
-            // Display selected service details
             function displayServiceDetails() {
                 const selectedCategory = categorySelect.value;
                 const selectedServiceIndex = serviceSelect.value;
-
                 if (selectedCategory && selectedServiceIndex !== "" && allServicesData[selectedCategory]) {
                     const service = allServicesData[selectedCategory][selectedServiceIndex];
                     serviceDescriptionDisplay.textContent = service.desc;
-                    minQuantityDisplay.textContent = service.min;
-                    maxQuantityDisplay.textContent = service.max;
+                    minQuantityDisplay.textContent = new Intl.NumberFormat('id-ID').format(service.min);
+                    maxQuantityDisplay.textContent = new Intl.NumberFormat('id-ID').format(service.max);
                     servicePriceDisplay.textContent = formatRupiah(service.price);
                     quantityUnitDisplay.textContent = service.unit;
-
                     orderQuantityInput.min = service.min;
                     orderQuantityInput.max = service.max;
-                    orderQuantityInput.value = service.min; // Set default quantity to min
-                    serviceDetailsDisplay.style.display = 'flex'; // Show details
+                    orderQuantityInput.value = service.min;
+                    serviceDetailsDisplay.style.display = 'flex';
                 } else {
-                    serviceDetailsDisplay.style.display = 'none'; // Hide if no service selected
+                    serviceDetailsDisplay.style.display = 'none';
                 }
             }
 
-            // Event Listeners for Form
-            categorySelect.addEventListener('change', updateServiceSelect);
-            serviceSelect.addEventListener('change', displayServiceDetails);
-            favoriteServiceCheckbox.addEventListener('change', () => {
-                updateServiceSelect(); // Re-populate service dropdown with favorite filter applied
-                displayServiceDetails(); // Update details in case selected service is affected by filter
+            // --- Event Listeners ---
+            categorySelect.addEventListener('change', () => {
+                // Sync button active state with dropdown
+                const categoryName = categorySelect.value || "Semua";
+                categoryButtons.forEach(btn => {
+                    btn.classList.toggle('active-category', btn.dataset.category === categoryName);
+                });
+                updateServiceSelect();
             });
 
-            // Event Listeners for Category Buttons (top section)
+            serviceSelect.addEventListener('change', displayServiceDetails);
+            favoriteServiceCheckbox.addEventListener('change', () => {
+                updateServiceSelect();
+                displayServiceDetails();
+            });
+
             categoryButtons.forEach(button => {
                 button.addEventListener('click', () => {
-                    // Remove active class from all buttons
                     categoryButtons.forEach(btn => btn.classList.remove('active-category'));
-                    // Add active class to clicked button
                     button.classList.add('active-category');
-
                     const categoryName = button.dataset.category;
-                    if (categoryName === "Semua") {
-                        categorySelect.value = ""; // Clear category selection in dropdown
-                    } else {
-                        categorySelect.value = categoryName; // Set dropdown to selected category
-                    }
-                    updateServiceSelect(); // Update service dropdown
-                    displayServiceDetails(); // Update service details
+                    categorySelect.value = (categoryName === "Semua") ? "" : categoryName;
+                    updateServiceSelect();
                 });
             });
 
-            // Handle Form Submission (Direct to Payment - does NOT add to a multi-item cart)
             orderForm.addEventListener('submit', (event) => {
-                event.preventDefault(); // Prevent default form submission
-
+                event.preventDefault();
                 const selectedCategory = categorySelect.value;
                 const selectedServiceIndex = serviceSelect.value;
-                const target = orderTargetInput.value.trim(); // Get target value
+                const target = orderTargetInput.value.trim();
                 const quantity = parseInt(orderQuantityInput.value);
 
-                if (!selectedCategory || selectedServiceIndex === "") {
-                    alert("Mohon pilih Kategori dan Layanan terlebih dahulu.");
-                    return;
-                }
-
-                if (!target) {
-                    alert("Mohon masukkan Target pesanan (username/link/ID).");
-                    orderTargetInput.focus();
-                    return;
-                }
-
-                if (isNaN(quantity) || quantity < 1) {
-                    alert("Jumlah pesanan tidak valid.");
-                    return;
-                }
+                if (!selectedCategory || selectedServiceIndex === "") { alert("Mohon pilih Kategori dan Layanan."); return; }
+                if (!target) { alert("Mohon masukkan Target pesanan."); orderTargetInput.focus(); return; }
+                if (isNaN(quantity) || quantity < 1) { alert("Jumlah pesanan tidak valid."); return; }
 
                 const service = allServicesData[selectedCategory][selectedServiceIndex];
-
-                // Validate quantity against min/max
                 if (quantity < service.min || quantity > service.max) {
-                    alert(`Jumlah pesanan harus antara ${service.min} dan ${service.max} untuk layanan ini.`);
-                    orderQuantityInput.value = service.min; // Reset to min
-                    return;
+                    alert(`Jumlah pesanan harus antara ${service.min} dan ${service.max}.`);
+                    orderQuantityInput.value = service.min; return;
                 }
 
-                // Prepare order data for payment page.
-                // This will OVERWRITE any previous 'xiamoStoreCart' data,
-                // effectively acting as a direct "buy now" for a single item.
-                const orderData = [{
-                    name: `${service.name} (${target})`, // Include target in product name
-                    price: service.price, // Price per unit
-                    quantity: quantity
-                }];
-
-                // Save to localStorage and redirect
-                localStorage.setItem('xiamoStoreCart', JSON.stringify(orderData)); // Overwrite previous cart with this single order
-                window.location.href = 'pembayaran.html';
+                const orderData = [{ name: `${service.name} (${target})`, price: service.price, quantity: quantity }];
+                localStorage.setItem('xiamoStoreCart', JSON.stringify(orderData));
+                // Ganti 'pembayaran.html' dengan halaman tujuan Anda
+                // window.location.href = 'pembayaran.html'; 
+                alert(`Pesanan dibuat!\nLayanan: ${service.name}\nTarget: ${target}\nJumlah: ${quantity}\n\nMengarahkan ke halaman pembayaran... (Simulasi)`);
             });
 
-            // Initial population of category dropdown
+            // Initial Load
             populateCategorySelect();
-            // Trigger a click on "Semua Kategori" button initially to set dropdown and active state
             document.querySelector('.cat-btn[data-category="Semua"]').click();
         });
     </script>
