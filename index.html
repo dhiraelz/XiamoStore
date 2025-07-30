@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XiamoStore - Solusi Produk Digital Terbaik</title>
+    <!-- Google Fonts - Poppins untuk teks, Montserrat untuk judul (opsional, jika ingin variasi) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Remixicon for icons -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet" />
+
+    <style>
+        :root {
+            /* Warna latar belakang dan kartu (Biru Keabu-abuan Gelap) */
+            --dark-deep: #1A2534; /* Sangat gelap, hampir hitam kebiruan */
+            --dark-blue: #233041; /* Biru keabu-abuan gelap yang kaya */
+            /* Menggunakan nilai RGBA untuk transparansi pada kartu (OPACITY DIUBAH!) */
+            --card-start-gradient: rgba(59, 77, 99, 0.65); /* #3B4D63 dengan opacity 65% */
+            --card-end-gradient: rgba(46, 62, 80, 0.65); /* #2E3E50 dengan opacity 65% */
+
+            /* Warna item menu yang lebih cerah dan menarik (Biru Keabu-abuan Terang) */
+            --menu-item-start-gradient: #6080A5; /* Biru keabu-abuan cerah yang hidup */
+            --menu-item-end-gradient: #8DAACB; /* Biru keabu-abuan yang lebih terang */
+            --menu-item-hover-start: #7FAACB; /* Hover start slightly lighter */
+            --menu-item-hover-end: #A0C2E2; /* Hover end slightly lighter */
+
+            /* Warna teks dan aksen */
+            --text-primary: #EBF2F7; /* Abu-abu kebiruan terang */
+            --text-secondary: #FFFFFF; /* Putih bersih */
+            --accent-glow: #78B2D4; /* Biru keabu-abuan cerah untuk efek glow (dari gambar) */
+
+            /* Bayangan yang lebih dramatis */
+            --shadow-light: rgba(0, 0, 0, 0.45);
+            --shadow-deep: rgba(0, 0, 0, 0.7);
+        }
+
+        /* html and body for full page scrolling */
+        html {
+            height: 100%; /* Ensure html takes full height */
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--dark-deep); /* Fallback warna jika gambar tidak termuat */
+            color: var(--text-primary);
+            display: flex; /* Keep flex for initial centering */
+            justify-content: center;
+            align-items: center; /* Vertically center content if it's shorter than viewport */
+            min-height: 100vh; /* Ensure background always fills viewport */
+            margin: 0;
+            overflow-x: hidden; /* Prevent horizontal scroll */
+            overflow-y: auto; /* Allow vertical scroll */
+            position: relative;
+            line-height: 1.6;
+            padding: 20px 0; /* Add vertical padding for overall page content */
+            box-sizing: border-box; /* Include padding in height calculation */
+        }
+
+        /* Background Image with Blur */
+        .blurred-background {
+            position: fixed; /* Tetap di posisi yang sama saat scroll */
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('backgroundweb.jpeg'); /* Gunakan gambar Anda di sini */
+            background-size: cover;
+            background-position: center;
+            filter: blur(10px); /* Tingkat blur yang bisa disesuaikan */
+            -webkit-filter: blur(10px); /* Untuk kompatibilitas browser */
+            z-index: -2; /* Di belakang semua elemen lain, termasuk blobs */
+        }
+
+        /* Animated background blobs */
+        .background-blob {
+            position: fixed; /* Fixed position so they don't scroll with content */
+            background: var(--accent-glow); /* Menggunakan warna aksen baru */
+            border-radius: 50%;
+            filter: blur(130px); /* Sedikit lebih blur */
+            opacity: 0.28; /* Sedikit lebih terlihat */
+            z-index: -1; /* Di atas background blur, di bawah konten utama */
+            animation: pulse-blob 8s infinite alternate;
+        }
+
+        .blob-1 {
+            width: 380px;
+            height: 380px;
+            top: 18%;
+            left: 12%;
+            transform: translate(-50%, -50%);
+            animation-delay: 0s;
+        }
+
+        .blob-2 {
+            width: 300px;
+            height: 300px;
+            bottom: 22%;
+            right: 15%;
+            transform: translate(50%, 50%);
+            background: rgba(120, 190, 220, 0.8); /* Variasi dari accent-glow */
+            animation-delay: 2.5s;
+        }
+
+        /* NEW BLOBS FOR BUBBLE EFFECT */
+        .blob-3 {
+            width: 220px;
+            height: 220px;
+            top: 65%;
+            left: 7%;
+            transform: translate(-50%, -50%);
+            background: rgba(140, 200, 230, 0.7); /* Variasi dari accent-glow */
+            filter: blur(110px);
+            opacity: 0.25;
+            animation: pulse-blob-subtle 9s infinite alternate;
+            animation-delay: 4.5s;
+        }
+
+        .blob-4 {
+            width: 250px;
+            height: 250px;
+            top: 35%;
+            right: 10%;
+            transform: translate(50%, -50%);
+            background: rgba(100, 160, 200, 0.75); /* Variasi dari accent-glow */
+            filter: blur(120px);
+            opacity: 0.3;
+            animation: pulse-blob-subtle-right 7s infinite alternate;
+            animation-delay: 1.5s;
+        }
+
+        /* KEYFRAMES UNTUK ANIMASI HALAMAN */
+        @keyframes pulse-blob {
+            0% { transform: scale(1) translate(-50%, -50%); opacity: 0.28; }
+            50% { transform: scale(1.06) translate(-48%, -52%); opacity: 0.38; }
+            100% { transform: scale(1) translate(-50%, -50%); opacity: 0.28; }
+        }
+
+        @keyframes pulse-blob-subtle {
+            0% { transform: scale(1) translate(-50%, -50%); opacity: 0.25; }
+            50% { transform: scale(1.04) translate(-49%, -51%); opacity: 0.3; }
+            100% { transform: scale(1) translate(-50%, -50%); opacity: 0.25; }
+        }
+
+        @keyframes pulse-blob-subtle-right {
+            0% { transform: scale(1) translate(50%, -50%); opacity: 0.3; }
+            50% { transform: scale(1.04) translate(51%, -52%); opacity: 0.35; }
+            100% { transform: scale(1) translate(50%, -50%); opacity: 0.3; }
+        }
+
+        /* ANIMASI BARU UNTUK LOADING HALAMAN */
+        @keyframes slide-in-up-pop {
+            0% {
+                opacity: 0;
+                transform: translateY(100px); /* Muncul dari bawah lebih jauh */
+            }
+            80% {
+                opacity: 1;
+                transform: translateY(-10px); /* Sedikit overshoot ke atas */
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fade-in-scale {
+            0% {
+                opacity: 0;
+                transform: scale(0.9); /* Sedikit zoom saat muncul */
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes slide-in-left-stagger {
+            0% {
+                opacity: 0;
+                transform: translateX(-50px); /* Geser dari kiri lebih jauh */
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* APLIKASIKAN ANIMASI */
+        .card {
+            opacity: 0; /* Mulai tidak terlihat */
+            animation: slide-in-up-pop 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; /* Efek springy */
+        }
+
+        .logo {
+            opacity: 0;
+            animation: fade-in-scale 0.6s ease-out 0.5s forwards; /* Setelah kartu, sedikit delay */
+        }
+
+        h1 {
+            opacity: 0;
+            animation: fade-in-scale 0.6s ease-out 0.7s forwards;
+        }
+
+        .tagline {
+            opacity: 0;
+            animation: fade-in-scale 0.6s ease-out 0.9s forwards;
+        }
+
+        .menu-item {
+            opacity: 0;
+            animation: slide-in-left-stagger 0.5s ease-out forwards;
+            /* Staggered delay for each menu item */
+        }
+
+        .menu-item:nth-child(1) { animation-delay: 1.2s; }
+        .menu-item:nth-child(2) { animation-delay: 1.4s; }
+        .menu-item:nth-child(3) { animation-delay: 1.6s; }
+        .menu-item:nth-child(4) { animation-delay: 1.8s; }
+        .menu-item:nth-child(5) { animation-delay: 2.0s; }
+
+        .footer-text {
+            opacity: 0;
+            animation: fade-in-scale 0.6s ease-out 2.2s forwards;
+        }
+
+        /* MASCOT STYLING - Mempertahankan float dan memastikan flip */
+        .mascot-robot {
+            position: fixed;
+            width: 450px;
+            height: auto;
+            bottom: 3%;
+            right: 13.5%;
+            z-index: 5;
+            filter: drop-shadow(0 12px 25px rgba(0, 0, 0, 0.5));
+            /* Kombinasikan initial fade-in dengan float */
+            animation: float-mascot 4s ease-in-out infinite alternate, fade-in-scale 0.8s ease-out 1s forwards;
+            transform: scaleX(-1); /* Memastikan maskot menghadap ke kiri */
+        }
+
+        /* Keyframes untuk float mascot */
+        @keyframes float-mascot {
+            0% {
+                transform: translateY(0) scaleX(-1); /* Pastikan flip tetap saat float */
+            }
+            50% {
+                transform: translateY(-15px) scaleX(-1); /* Bergerak naik 15px */
+            }
+            100% {
+                transform: translateY(0) scaleX(-1); /* Pastikan flip tetap saat float */
+            }
+        }
+
+        .main-container {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            box-sizing: border-box;
+            padding: 0 20px;
+        }
+
+        .card {
+            background: linear-gradient(145deg, var(--card-start-gradient), var(--card-end-gradient));
+            border-radius: 30px;
+            padding: 45px 35px;
+            box-shadow: 0 25px 60px var(--shadow-deep), 0 0 35px rgba(120, 190, 220, 0.5);
+            text-align: center;
+            max-width: 420px;
+            width: 100%;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            position: relative;
+            z-index: 1;
+            box-sizing: border-box;
+        }
+
+        /* LOGO STYLING */
+        .logo {
+            display: block;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 30px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            flex-shrink: 0;
+        }
+
+        h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.3em;
+            margin-bottom: 12px;
+            color: var(--text-secondary);
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-shadow: 0 3px 6px rgba(0, 0, 0, 0.4);
+        }
+
+        .tagline {
+            font-size: 1.1em;
+            color: var(--text-primary);
+            margin-bottom: 45px;
+            font-weight: 400;
+            opacity: 0.98;
+            line-height: 1.5;
+        }
+
+        .menu {
+            margin-top: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .menu-item {
+            background: linear-gradient(90deg, var(--menu-item-start-gradient), var(--menu-item-end-gradient));
+            color: var(--text-secondary);
+            padding: 22px 30px;
+            border-radius: 18px;
+            text-decoration: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+            font-weight: 500;
+            font-size: 1.15em;
+            box-shadow: 0 10px 30px var(--shadow-light);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+        }
+
+        .menu-item:hover {
+            transform: translateY(-7px) scale(1.02);
+            box-shadow: 0 15px 45px var(--shadow-deep), 0 0 25px rgba(120, 190, 220, 0.8);
+            background: linear-gradient(90deg, #7FAACB, #A0C2E2);
+        }
+
+        .menu-item:active {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .menu-item .icon {
+            margin-right: 18px;
+            font-size: 1.6em;
+            opacity: 0.98;
+            flex-shrink: 0;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+        }
+
+        .menu-item .arrow-icon {
+            font-size: 1.4em;
+            margin-left: 18px;
+            transition: transform 0.3s ease;
+            flex-shrink: 0;
+            color: var(--text-secondary);
+        }
+
+        .menu-item:hover .arrow-icon {
+            transform: translateX(10px);
+        }
+
+        .footer-text {
+            margin-top: 60px;
+            font-size: 0.95em;
+            color: rgba(255, 255, 255, 0.75);
+            font-weight: 300;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        /* --- RESPONSIVE DESIGN --- */
+
+        /* Mobile (Max-width 576px) */
+        @media (max-width: 576px) {
+            body {
+                padding: 15px 0;
+            }
+            .main-container {
+                padding: 0 15px;
+            }
+            .card {
+                padding: 30px 25px;
+                border-radius: 25px;
+            }
+
+            .logo {
+                width: 75px;
+                height: 75px;
+                margin-bottom: 25px;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .tagline {
+                font-size: 0.95em;
+                margin-bottom: 30px;
+            }
+
+            .menu {
+                gap: 15px;
+            }
+
+            .menu-item {
+                padding: 18px 25px;
+                font-size: 1em;
+                border-radius: 12px;
+            }
+
+            .menu-item .icon {
+                font-size: 1.3em;
+                margin-right: 12px;
+            }
+
+            .menu-item .arrow-icon {
+                font-size: 1.1em;
+            }
+
+            .footer-text {
+                margin-top: 35px;
+                font-size: 0.8em;
+            }
+
+            /* Adjust blobs for mobile */
+            .blob-1 { width: 280px; height: 280px; top: 12%; left: 8%; filter: blur(100px); }
+            .blob-2 { width: 220px; height: 220px; bottom: 12%; right: 8%; filter: blur(100px); }
+            .blob-3 { width: 170px; height: 170px; top: 72%; left: 3%; filter: blur(90px); opacity: 0.2; }
+            .blob-4 { width: 190px; height: 190px; top: 25%; right: 3%; filter: blur(95px); opacity: 0.25; }
+
+            /* Adjust mascot for mobile - NEW SIZE and POSITION */
+            .mascot-robot {
+                width: 280px;
+                bottom: 1%;
+                right: 7.5%;
+            }
+            /* float-mascot keyframes already apply scaleX(-1) consistently */
+        }
+
+        /* Tablet (Min-width 577px to 991px) */
+        @media (min-width: 577px) and (max-width: 991px) {
+            .card {
+                max-width: 550px;
+                padding: 50px 45px;
+            }
+
+            .logo {
+                width: 100px;
+                height: 100px;
+            }
+
+            h1 {
+                font-size: 2.3em;
+            }
+
+            .tagline {
+                font-size: 1.05em;
+            }
+
+            .menu {
+                gap: 20px;
+            }
+
+            .menu-item {
+                padding: 22px 30px;
+                font-size: 1.1em;
+            }
+
+            .menu-item .icon {
+                font-size: 1.4em;
+            }
+
+            .menu-item .arrow-icon {
+                font-size: 1.2em;
+            }
+
+            .footer-text {
+                font-size: 0.88em;
+            }
+
+            /* Adjust blobs for tablet */
+            .blob-1 { width: 320px; height: 320px; }
+            .blob-2 { width: 270px; height: 270px; }
+            .blob-3 { width: 190px; height: 190px; top: 68%; left: 5%; }
+            .blob-4 { width: 210px; height: 210px; top: 28%; right: 7%; }
+
+            /* Adjust mascot for tablet - NEW SIZE and POSITION */
+            .mascot-robot {
+                width: 400px;
+                bottom: 2%;
+                right: 11.5%;
+            }
+            /* float-mascot keyframes already apply scaleX(-1) consistently */
+        }
+
+        /* Desktop (Min-width 992px and up) */
+        @media (min-width: 992px) {
+            .card {
+                max-width: 600px;
+                padding: 60px 50px;
+            }
+
+            .logo {
+                width: 120px;
+                height: 120px;
+            }
+
+            h1 {
+                font-size: 2.6em;
+            }
+
+            .tagline {
+                font-size: 1.2em;
+            }
+
+            .menu {
+                gap: 22px;
+            }
+
+            .menu-item {
+                padding: 25px 35px;
+                font-size: 1.15em;
+            }
+
+            .menu-item .icon {
+                font-size: 1.5em;
+            }
+
+            .menu-item .arrow-icon {
+                font-size: 1.3em;
+            }
+
+            .footer-text {
+                font-size: 0.95em;
+            }
+            /* float-mascot keyframes already apply scaleX(-1) consistently */
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Image with Blur -->
+    <div class="blurred-background"></div>
+
+    <!-- Background Blobs (for visual interest) -->
+    <div class="background-blob blob-1"></div>
+    <div class="background-blob blob-2"></div>
+    <div class="background-blob blob-3"></div>
+    <div class="background-blob blob-4"></div>
+
+    <!-- Mascot Robot -->
+    <img src="maskotXS.png" alt="XiamoStore Mascot" class="mascot-robot">
+
+    <div class="main-container">
+        <div class="card">
+            <!-- Logo XiamoStore -->
+            <img src="logoXiamo.jpeg" alt="XiamoStore Logo" class="logo"> 
+
+            <h1>Xiamostore</h1>
+            <p class="tagline">✨ Solusi Produk Digital Terbaik ✨</p>
+
+            <nav class="menu">
+                <!-- CS WhatsApp -->
+                <a href="https://wa.me/6287844643452" target="_blank" class="menu-item">
+                <i class="fab fa-whatsapp"></i>
+                    <span>CS WhatsApp</span>
+                    <span class="arrow-icon ri-arrow-right-line"></span>
+                </a>
+                <!-- Gabung Reseller -->
+                <a href="grupreseller.html" class="menu-item">
+                <i class="fas fa-users"></i>
+                    <span>Gabung Reseller</span>
+                    <span class="arrow-icon ri-arrow-right-line"></span>
+                </a>
+                <!-- Jasa Suntik Sosial Media -->
+                <a href="jasasuntik.html" class="menu-item">
+                    <i class="ri-global-line icon"></i>
+                    <span>Jasa Suntik Sosial Media</span>
+                    <span class="arrow-icon ri-arrow-right-line"></span>
+                </a>
+                <!-- Aplikasi Premium - IKON BARU -->
+                <a href="aplikasipremium.html" class="menu-item">
+                    <i class="fas fa-crown icon"></i> <!-- IKON DIGANTI DI SINI -->
+                    <span>Aplikasi Premium</span>
+                    <span class="arrow-icon ri-arrow-right-line"></span>
+                </a>
+                <!-- Ketentuan Garansi -->
+                <a href="garansi.html" class="menu-item">
+                    <i class="fas fa-list-check"></i>
+                    <span>Ketentuan Garansi</span>
+                    <span class="arrow-icon ri-arrow-right-line"></span>
+                </a>
+            </nav>
+
+            <p class="footer-text">Made With XiamoStore.</p>
+        </div>
+    </div>
+</body>
+</html>

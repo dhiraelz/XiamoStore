@@ -1,0 +1,1696 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XiamoStore - Solusi Produk Digital Terbaik</title>
+    <!-- Google Fonts - Poppins untuk teks, Montserrat untuk judul -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Remixicon for icons (for arrow icons if needed, though FA is mostly used here) -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet" />
+
+    <style>
+        :root {
+            /* Warna latar belakang dan kartu (Biru Keabu-abuan Gelap) */
+            --dark-deep: #1A2534; /* Sangat gelap, hampir hitam kebiruan */
+            --dark-blue: #233041; /* Biru keabu-abuan gelap yang kaya */
+            /* Menggunakan nilai RGBA untuk transparansi pada kartu utama dan elemen serupa */
+            --card-start-gradient: rgba(59, 77, 99, 0.65); /* #3B4D63 dengan opacity 65% */
+            --card-end-gradient: rgba(46, 62, 80, 0.65); /* #2E3E50 dengan opacity 65% */
+
+            /* Warna item menu dan elemen interaktif lainnya (Biru Keabu-abuan Terang) */
+            --menu-item-start-gradient: #6080A5; /* Biru keabu-abuan cerah yang hidup */
+            --menu-item-end-gradient: #8DAACB; /* Biru keabu-abuan yang lebih terang */
+            --menu-item-hover-start: #7FAACB; /* Hover start slightly lighter */
+            --menu-item-hover-end: #A0C2E2; /* Hover end slightly lighter */
+
+            /* Warna teks dan aksen */
+            --text-primary: #EBF2F7; /* Abu-abu kebiruan terang */
+            --text-secondary: #FFFFFF; /* Putih bersih */
+            --accent-glow: #78B2D4; /* Biru keabu-abuan cerah untuk efek glow */
+            --success-color: #4CAF50; /* Hijau untuk checkmark */
+            --red-alert-color: #FF5C5C; /* Merah untuk badge/alert */
+
+            /* Bayangan */
+            --shadow-light: rgba(0, 0, 0, 0.45);
+            --shadow-deep: rgba(0, 0, 0, 0.7);
+        }
+
+        /* Base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--dark-deep); /* Fallback warna jika gambar tidak termuat */
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            position: relative; /* Penting untuk penempatan background blur */
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Background Image with Blur */
+        .blurred-background {
+            position: fixed; /* Tetap di posisi yang sama saat scroll */
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('backgroundweb.jpeg'); /* Gunakan gambar Anda di sini */
+            background-size: cover;
+            background-position: center;
+            filter: blur(10px); /* Tingkat blur yang bisa disesuaikan */
+            -webkit-filter: blur(10px); /* Untuk kompatibilitas browser */
+            z-index: -2; /* Di belakang semua elemen lain, termasuk blobs */
+        }
+
+        /* Background Blobs (Optional - uncomment if you want them on this page too) */
+        /* .background-blob {
+            position: fixed;
+            background: var(--accent-glow);
+            border-radius: 50%;
+            filter: blur(130px);
+            opacity: 0.28;
+            z-index: -1;
+            animation: pulse-blob 8s infinite alternate;
+        }
+        .blob-1 { width: 380px; height: 380px; top: 18%; left: 12%; transform: translate(-50%, -50%); animation-delay: 0s; }
+        .blob-2 { width: 300px; height: 300px; bottom: 22%; right: 15%; transform: translate(50%, 50%); background: rgba(120, 190, 220, 0.8); animation-delay: 2.5s; }
+        @keyframes pulse-blob {
+            0% { transform: scale(1) translate(-50%, -50%); opacity: 0.28; }
+            50% { transform: scale(1.06) translate(-48%, -52%); opacity: 0.38; }
+            100% { transform: scale(1) translate(-50%, -50%); opacity: 0.28; }
+        } */
+
+        /* Container for content */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative; /* Untuk z-index blobs */
+            z-index: 1; /* Di atas background blur */
+        }
+
+        /* Header */
+        .header {
+            background-color: var(--dark-deep); /* Warna gelap dari palette baru */
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Border warna transparan */
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .left-header-group {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .back-button {
+            background: none;
+            color: var(--text-primary);
+            border: none;
+            border-radius: 50%;
+            padding: 10px;
+            font-size: 1.8em;
+            cursor: pointer;
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
+
+        .back-button:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--accent-glow);
+        }
+
+        .logo-text {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 1.5em;
+            color: var(--text-secondary);
+            white-space: nowrap;
+        }
+
+        .search-bar {
+            flex-grow: 1;
+            max-width: 600px;
+            position: relative;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 12px 20px 12px 45px;
+            border: none;
+            border-radius: 10px;
+            background-color: rgba(35, 48, 65, 0.5); /* Menggunakan dark-blue dengan transparansi */
+            color: var(--text-primary);
+            font-size: 1em;
+            outline: none;
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .search-bar input::placeholder {
+            color: rgba(var(--text-primary), 0.6);
+        }
+
+        .search-bar .search-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(var(--text-primary), 0.6);
+        }
+
+        .header-icons {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .header-icons .icon-btn {
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1.4em;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 5px;
+            transition: color 0.3s ease, background-color 0.3s ease;
+            position: relative;
+        }
+
+        .header-icons .icon-btn:hover {
+            color: var(--accent-glow);
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .cart-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: var(--red-alert-color);
+            color: white;
+            font-size: 0.7em;
+            font-weight: 600;
+            border-radius: 50%;
+            padding: 3px 6px;
+            min-width: 18px;
+            text-align: center;
+            line-height: 1;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Main content area */
+        .main-content {
+            flex-grow: 1;
+            padding: 30px 0;
+        }
+
+        /* Hero Section (Carousel) */
+        .hero-section {
+            background: linear-gradient(145deg, var(--card-start-gradient), var(--card-end-gradient));
+            border-radius: 20px;
+            margin-bottom: 40px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px var(--shadow-deep);
+            min-height: 350px;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .hero-slides-wrapper {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.8s ease-in-out;
+        }
+
+        .hero-slide {
+            flex: 0 0 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 40px;
+            position: relative;
+            height: 100%;
+        }
+
+        .hero-content {
+            text-align: left;
+            max-width: 50%;
+            z-index: 1;
+            position: relative;
+        }
+
+        .hero-content h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.8em;
+            font-weight: 800;
+            margin-bottom: 10px;
+            color: var(--text-secondary);
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .hero-content p {
+            font-size: 1.1em;
+            color: rgba(var(--text-primary), 0.9);
+            margin-bottom: 20px;
+        }
+
+        .admin-info {
+            display: flex;
+            align-items: center;
+            font-size: 0.9em;
+            color: rgba(var(--text-primary), 0.7);
+            margin-top: 20px;
+        }
+
+        .admin-info i {
+            margin-right: 8px;
+            color: var(--accent-glow);
+        }
+
+        .hero-images {
+            position: absolute;
+            right: 40px;
+            bottom: 0;
+            display: flex;
+            gap: 20px;
+            align-items: flex-end;
+            z-index: 0;
+        }
+
+        .hero-images img {
+            height: 300px;
+            object-fit: contain;
+            filter: drop-shadow(0 15px 30px rgba(0, 0, 0, 0.4));
+        }
+
+        .hero-images img:nth-child(1) {
+            transform: rotate(-5deg);
+            height: 280px;
+            margin-bottom: 20px;
+        }
+
+        .hero-dots {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 2;
+        }
+
+        .hero-dot {
+            width: 8px;
+            height: 8px;
+            background-color: rgba(var(--text-secondary), 0.5);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .hero-dot.active {
+            background-color: var(--accent-glow);
+            width: 25px;
+            border-radius: 5px;
+        }
+
+        /* Product Grid */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .product-card {
+            background: linear-gradient(145deg, rgba(59, 77, 99, 0.6), rgba(46, 62, 80, 0.6)); /* Sedikit lebih transparan dari card utama */
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px var(--shadow-light);
+            text-align: center;
+            padding: 20px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px); /* Blur pada card produk */
+            -webkit-backdrop-filter: blur(5px);
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px var(--shadow-deep);
+        }
+        .product-card.hidden {
+            display: none;
+        }
+
+        .product-image {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin: 0 auto 15px;
+        }
+
+        .product-icon-fa {
+            font-size: 3.5em;
+            width: 80px;
+            height: 80px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 15px;
+            color: var(--accent-glow); /* Menggunakan accent-glow */
+            background-color: transparent;
+            border-radius: 10px;
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: linear-gradient(90deg, var(--menu-item-start-gradient), var(--menu-item-end-gradient)); /* Gunakan gradien aksen */
+            color: var(--text-secondary);
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.75em;
+            font-weight: 600;
+            text-transform: uppercase;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+
+        .product-name {
+            font-weight: 600;
+            font-size: 1.1em;
+            margin-bottom: 8px;
+            color: var(--text-secondary);
+            flex-grow: 1;
+        }
+
+        .product-price {
+            font-size: 1em;
+            font-weight: 500;
+            color: var(--accent-glow); /* Menggunakan accent-glow */
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .add-to-cart-btn {
+            background: linear-gradient(90deg, var(--menu-item-start-gradient), var(--menu-item-end-gradient)); /* Gradien aksen */
+            color: var(--text-secondary);
+            border: none;
+            border-radius: 8px;
+            padding: 10px 15px;
+            font-size: 0.9em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
+            width: 100%;
+            margin-top: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .add-to-cart-btn:hover {
+            background: linear-gradient(90deg, var(--menu-item-hover-start), var(--menu-item-hover-end));
+            transform: translateY(-1px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Load More Button */
+        .load-more-btn {
+            display: block;
+            margin: 0 auto 50px;
+            padding: 15px 30px;
+            background: linear-gradient(90deg, var(--menu-item-start-gradient), var(--menu-item-end-gradient));
+            color: var(--text-secondary);
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+            box-shadow: 0 5px 15px var(--shadow-light);
+        }
+
+        .load-more-btn:hover {
+            background: linear-gradient(90deg, var(--menu-item-hover-start), var(--menu-item-hover-end));
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px var(--shadow-deep);
+        }
+
+        /* Register Banner */
+        .register-banner {
+            background: linear-gradient(145deg, var(--card-start-gradient), var(--card-end-gradient));
+            border-radius: 20px;
+            padding: 50px;
+            margin-bottom: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 30px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px var(--shadow-deep);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .register-text-content {
+            max-width: 60%;
+            text-align: left;
+            z-index: 1;
+        }
+
+        .register-banner h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.5em;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--text-secondary);
+        }
+
+        .register-banner p {
+            font-size: 1.05em;
+            color: rgba(var(--text-primary), 0.9);
+            margin-bottom: 25px;
+        }
+
+        .register-btn {
+            background: linear-gradient(90deg, var(--menu-item-start-gradient), var(--menu-item-end-gradient));
+            color: var(--text-secondary);
+            padding: 15px 35px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+            box-shadow: 0 5px 15px var(--shadow-light);
+        }
+
+        .register-btn:hover {
+            background: linear-gradient(90deg, var(--menu-item-hover-start), var(--menu-item-hover-end));
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px var(--shadow-deep);
+        }
+
+        .register-illustration {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            height: 250px;
+            object-fit: contain;
+            filter: drop-shadow(0 15px 30px rgba(0, 0, 0, 0.4));
+        }
+
+        /* Footer */
+        .footer {
+            background-color: var(--dark-blue); /* Warna gelap dari palette baru */
+            padding: 50px 0 30px;
+            color: rgba(var(--text-primary), 0.7);
+            font-size: 0.9em;
+            position: relative;
+            z-index: 1; /* Pastikan di atas background blur */
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .footer-col h4 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.1em;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--text-secondary);
+        }
+
+        .footer-col ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 10px;
+            padding-left: 0;
+            text-align: left;
+        }
+
+        .footer-col ul li a {
+            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-left: -5px;
+        }
+
+        .footer-col ul li a:hover {
+            color: var(--accent-glow);
+        }
+
+        .footer-col ul li a .fab.fa-whatsapp {
+            font-size: 1.2em;
+            color: #25D366; /* Warna ikon WhatsApp standar */
+        }
+
+        .footer-social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .footer-social-icons a {
+            color: rgba(var(--text-primary), 0.7);
+            font-size: 1.5em;
+            transition: color 0.3s ease;
+        }
+
+        .footer-social-icons a:hover {
+            color: var(--accent-glow);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.8em;
+            color: rgba(var(--text-primary), 0.5);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 992px) {
+            .hero-section {
+                padding: 0;
+                text-align: center;
+                align-items: initial;
+            }
+            .hero-slide {
+                flex-direction: column;
+                padding: 30px;
+                text-align: center;
+                justify-content: center;
+            }
+
+            .hero-content {
+                max-width: 100%;
+                margin-bottom: 30px;
+            }
+
+            .hero-images {
+                position: static;
+                transform: none;
+                justify-content: center;
+                flex-wrap: wrap;
+                width: 100%;
+                right: initial;
+                bottom: initial;
+                margin-top: 20px;
+            }
+            .hero-images img {
+                height: 250px;
+            }
+            .hero-images img:nth-child(1) {
+                height: 230px;
+                margin-bottom: 0;
+            }
+
+            .hero-dots {
+                bottom: 15px;
+            }
+
+            .register-banner {
+                flex-direction: column;
+                text-align: center;
+                padding: 40px;
+            }
+
+            .register-text-content {
+                max-width: 100%;
+            }
+
+            .register-illustration {
+                position: static;
+                margin-top: 20px;
+                height: 200px;
+            }
+
+            .product-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .left-header-group {
+                flex-basis: 100%;
+                justify-content: center;
+                margin-bottom: 15px;
+            }
+
+            .logo-text {
+                text-align: center;
+                margin-bottom: 0;
+            }
+
+            .search-bar {
+                order: 3;
+                flex-basis: 100%;
+            }
+            .header-icons {
+                order: 2;
+            }
+
+            .hero-content h2 {
+                font-size: 2.2em;
+            }
+
+            .hero-content p {
+                font-size: 1em;
+            }
+
+            .product-grid {
+                grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+                gap: 15px;
+            }
+            .product-card {
+                padding: 15px;
+            }
+            .product-image {
+                width: 70px;
+                height: 70px;
+            }
+            .product-name {
+                font-size: 1em;
+            }
+            .product-badge {
+                font-size: 0.7em;
+                padding: 4px 8px;
+            }
+
+            .register-banner h3 {
+                font-size: 2em;
+            }
+            .register-banner p {
+                font-size: 0.95em;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            .footer-col ul {
+                padding-left: 0;
+                text-align: center;
+            }
+            .footer-col ul li a {
+                justify-content: center;
+                margin-left: 0;
+            }
+            .footer-social-icons {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-images img {
+                height: 200px;
+            }
+            .hero-images img:nth-child(1) {
+                height: 180px;
+            }
+            .product-grid {
+                grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            }
+            .search-bar input {
+                font-size: 0.9em;
+                padding: 10px 15px 10px 40px;
+            }
+            .search-bar .search-icon {
+                left: 10px;
+            }
+        }
+
+        /* Styles for the Shopping Cart Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1100;
+            visibility: hidden;
+            opacity: 0;
+            transition: visibility 0.3s, opacity 0.3s;
+        }
+
+        .modal-overlay.active {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .modal-content {
+            background: linear-gradient(145deg, var(--card-start-gradient), var(--card-end-gradient));
+            border-radius: 15px;
+            padding: 30px;
+            max-width: 450px;
+            width: 90%;
+            box-shadow: 0 10px 30px var(--shadow-deep);
+            position: relative;
+            transform: translateY(-20px);
+            transition: transform 0.3s ease-out;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: translateY(0);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .modal-header h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.6em;
+            font-weight: 700;
+            color: var(--text-secondary);
+        }
+
+        .modal-close-btn {
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1.8em;
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
+
+        .modal-close-btn:hover {
+            color: var(--red-alert-color);
+        }
+
+        .cart-items {
+            margin-bottom: 20px;
+        }
+
+        .cart-item {
+            display: flex;
+            flex-wrap: wrap; /* Izinkan wrap untuk responsivitas di mobile */
+            justify-content: space-between;
+            align-items: center; /* Vertikal center jika satu baris */
+            background-color: rgba(35, 48, 65, 0.5);
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            gap: 10px; /* Jarak antar elemen dalam item keranjang */
+        }
+
+        .cart-item-details {
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+            flex-basis: 100%; /* Ambil lebar penuh di baris pertama untuk nama/harga */
+            margin-bottom: 10px; /* Jarak ke kontrol kuantitas */
+        }
+        .cart-item-details strong {
+            font-size: 1.05em;
+            margin-bottom: 5px;
+            color: var(--text-secondary);
+        }
+        .cart-item-details span {
+            font-size: 0.9em;
+            color: rgba(var(--text-primary), 0.7);
+        }
+
+        /* NEW: Container untuk kontrol kuantitas dan harga total item + tombol hapus */
+        .cart-item-action-group {
+            display: flex;
+            align-items: center;
+            flex-grow: 1; /* Biarkan grup ini mengambil sisa ruang */
+            justify-content: space-between; /* Spasi antara kontrol kuantitas, harga, dan tombol hapus */
+            min-width: 250px; /* Berikan lebar minimum agar tidak terlalu menyusut */
+        }
+
+        /* Styles for quantity controls */
+        .quantity-editor {
+            display: flex;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.2); /* Latar belakang untuk kontrol kuantitas */
+            border-radius: 5px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            flex-shrink: 0; /* Jangan biarkan menyusut */
+        }
+
+        .quantity-editor .quantity-btn {
+            background-color: transparent;
+            color: var(--text-secondary);
+            border: none;
+            padding: 8px 12px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            flex-shrink: 0;
+        }
+
+        .quantity-editor .quantity-btn:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        .quantity-editor .quantity-btn:active {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .quantity-editor .item-quantity-input { /* INPUT field for quantity */
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            font-weight: 500;
+            padding: 0 5px; /* Sesuaikan padding */
+            width: 40px; /* Lebar input */
+            text-align: center;
+            font-size: 1em;
+            outline: none;
+        }
+        /* Sembunyikan panah default di Chrome/Safari */
+        .quantity-editor .item-quantity-input::-webkit-outer-spin-button,
+        .quantity-editor .item-quantity-input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        .item-line-total {
+            font-size: 1em;
+            font-weight: 600;
+            color: var(--accent-glow);
+            text-align: right;
+            flex-shrink: 0; /* Jangan biarkan menyusut */
+            margin-left: 10px; /* Jarak dari kontrol kuantitas */
+            min-width: 80px; /* Berikan min-width agar harga tidak pecah */
+        }
+
+        .cart-item .hapus-btn {
+            background-color: var(--red-alert-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 8px 12px; /* Sesuaikan padding */
+            font-size: 0.9em;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            flex-shrink: 0; /* Jangan biarkan menyusut */
+            margin-left: 10px; /* Jarak dari harga total */
+        }
+
+        .cart-item .hapus-btn:hover {
+            background-color: #e64a4a;
+        }
+
+        .cart-total {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 20px;
+        }
+
+        .cart-total strong {
+            font-size: 1.2em;
+            color: var(--text-secondary);
+        }
+
+        .cart-total span {
+            font-size: 1.2em;
+            font-weight: 600;
+            color: var(--accent-glow);
+        }
+
+        .btn-lanjut-pembayaran {
+            display: block;
+            width: 100%;
+            padding: 15px 20px;
+            background: linear-gradient(90deg, var(--menu-item-start-gradient), var(--menu-item-end-gradient));
+            color: var(--text-secondary);
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
+            margin-top: 25px;
+            box-shadow: 0 5px 15px var(--shadow-light);
+        }
+
+        .btn-lanjut-pembayaran:hover {
+            background: linear-gradient(90deg, var(--menu-item-hover-start), var(--menu-item-hover-end));
+            transform: translateY(-1px);
+            box-shadow: 0 8px 20px var(--shadow-deep);
+        }
+
+        /* Responsive adjustments for modal specifically */
+        @media (max-width: 480px) {
+            .modal-content {
+                padding: 20px;
+            }
+            .modal-header h3 {
+                font-size: 1.4em;
+            }
+            .modal-close-btn {
+                font-size: 1.5em;
+            }
+            .cart-item {
+                flex-direction: column; /* Tumpuk item secara vertikal */
+                align-items: flex-start; /* Sejajarkan ke kiri */
+                padding: 12px 15px;
+            }
+            .cart-item-details {
+                flex-basis: auto; /* Reset flex-basis */
+                margin-bottom: 8px;
+            }
+            .cart-item-action-group {
+                flex-direction: row; /* Tetap horizontal untuk aksi */
+                justify-content: space-between;
+                width: 100%; /* Ambil lebar penuh */
+                min-width: unset; /* Hapus min-width */
+            }
+            .quantity-editor {
+                padding: 0; /* Hapus padding */
+            }
+            .item-line-total {
+                font-size: 0.9em;
+                margin-left: 0; /* Reset margin */
+                min-width: unset;
+                text-align: left; /* Teks harga rata kiri */
+            }
+            .hapus-btn {
+                padding: 6px 10px;
+                font-size: 0.8em;
+                margin-left: 0; /* Reset margin */
+            }
+            .cart-total {
+                font-size: 1em;
+            }
+            .btn-lanjut-pembayaran {
+                font-size: 1em;
+                padding: 12px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Image with Blur -->
+    <div class="blurred-background"></div>
+
+    <!-- Background Blobs (Optional, uncomment in CSS if desired) -->
+    <!-- <div class="background-blob blob-1"></div>
+    <div class="background-blob blob-2"></div> -->
+
+    <header class="header">
+        <div class="container header-content">
+            <div class="left-header-group">
+                <button class="back-button" onclick="history.back()"><i class="fas fa-arrow-left"></i></button>
+                <div class="logo-text">XiamoStore</div>
+            </div>
+            <div class="search-bar">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" placeholder="Cari produk & transaksi" value="canva">
+            </div>
+            <div class="header-icons">
+                <button class="icon-btn" id="cartIcon">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-badge" id="cartBadge">0</span>
+                </button>
+                <button class="icon-btn"><i class="fas fa-user-circle"></i></button>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            <!-- Hero Section / Carousel -->
+            <section class="hero-section">
+                <div class="hero-slides-wrapper">
+                    <!-- Slide 1: ChatGPT+ -->
+                    <div class="hero-slide">
+                        <div class="hero-content">
+                            <h2>XiamoStore<br>ChatGPT+</h2>
+                            <p>Nikmati: ChatGPT+ dan akses semua AI dan fitur ekslusif lainnya</p>
+                            <div class="admin-info">
+                                <a href="https://wa.me/6287844643452" target="_blank" style="color: inherit; text-decoration: none; display: flex; align-items: center;">
+                                    <i class="fab fa-whatsapp"></i> Admin XiamoStore <br>+62 8xx xxxx xxxx
+                                </a>
+                            </div>
+                        </div>
+                        <div class="hero-images">
+                            <img src="https://via.placeholder.com/200x400/3B4D63/FFFFFF?text=Mobile+app+screenshot+1" alt="Mobile app screenshot 1">
+                            <img src="https://via.placeholder.com/200x400/3B4D63/FFFFFF?text=Mobile+app+screenshot+2" alt="Mobile app screenshot 2">
+                        </div>
+                    </div>
+
+                    <!-- Slide 2: Desain Premium -->
+                    <div class="hero-slide">
+                        <div class="hero-content">
+                            <h2>XiamoStore<br>Desain Premium</h2>
+                            <p>Kreativitas tanpa batas dengan akses ke tool desain profesional.</p>
+                            <div class="admin-info">
+                                <a href="https://wa.me/6287844643452" target="_blank" style="color: inherit; text-decoration: none; display: flex; align-items: center;">
+                                    <i class="fab fa-whatsapp"></i> Admin XiamoStore <br>+62 8xx xxxx xxxx
+                                </a>
+                            </div>
+                        </div>
+                        <div class="hero-images">
+                            <img src="https://via.placeholder.com/200x400/6080A5/FFFFFF?text=Banner+2+App+1" alt="Design app screenshot 1">
+                            <img src="https://via.placeholder.com/200x400/6080A5/FFFFFF?text=Banner+2+App+2" alt="Design app screenshot 2">
+                        </div>
+                    </div>
+
+                    <!-- Slide 3: Hiburan Tanpa Batas -->
+                    <div class="hero-slide">
+                        <div class="hero-content">
+                            <h2>XiamoStore<br>Hiburan Tanpa Batas</h2>
+                            <p>Streaming film, musik, dan konten favorit tanpa iklan.</p>
+                            <div class="admin-info">
+                                <a href="https://wa.me/6287844643452" target="_blank" style="color: inherit; text-decoration: none; display: flex; align-items: center;">
+                                    <i class="fab fa-whatsapp"></i> Admin XiamoStore <br>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="hero-images">
+                            <img src="https://via.placeholder.com/200x400/78B2D4/FFFFFF?text=Banner+3+App+1" alt="Entertainment app screenshot 1">
+                            <img src="https://via.placeholder.com/200x400/78B2D4/FFFFFF?text=Banner+3+App+2" alt="Entertainment app screenshot 2">
+                        </div>
+                    </div>
+
+                    <!-- Tambahkan lebih banyak slide di sini sesuai kebutuhan Anda -->
+
+                </div>
+                <div class="hero-dots">
+                    <span class="hero-dot active"></span>
+                    <span class="hero-dot"></span>
+                    <span class="hero-dot"></span>
+                    <!-- Pastikan jumlah dot sesuai dengan jumlah hero-slide -->
+                </div>
+            </section>
+
+            <!-- Product Grid -->
+            <section class="product-grid" id="productGrid">
+                <!-- Products initially visible -->
+                <!-- Product Card 1: CapCut -->
+                <div class="product-card">
+                    <span class="product-badge">DESAIN</span>
+                    <img src="capcutlogo.png" alt="CapCut Icon" class="product-image"> <!-- Diubah dari ikon ke gambar -->
+                    <h5 class="product-name">CapCut</h5>
+                    <span class="product-price">Rp 50.000</span>
+                    <button class="add-to-cart-btn" data-product-name="CapCut" data-price="50000">Tambah ke Keranjang</button>
+                </div>
+                <!-- Product Card 2: ChatGPT -->
+                <div class="product-card">
+                    <span class="product-badge">AI</span>
+                    <i class="fas fa-robot product-icon-fa"></i> <!-- Icon untuk ChatGPT -->
+                    <h5 class="product-name">ChatGPT</h5>
+                    <span class="product-price">Rp 75.000</span>
+                    <button class="add-to-cart-btn" data-product-name="ChatGPT" data-price="75000">Tambah ke Keranjang</button>
+                </div>
+                <!-- Product Card 3: Claude -->
+                <div class="product-card">
+                    <span class="product-badge">AI</span>
+                    <img src="https://via.placeholder.com/80x80/2E3E50/FFFFFF?text=Claude" alt="Claude Icon" class="product-image">
+                    <h5 class="product-name">Claude</h5>
+                    <span class="product-price">Rp 60.000</span>
+                    <button class="add-to-cart-btn" data-product-name="Claude" data-price="60000">Tambah ke Keranjang</button>
+                </div>
+                <!-- Product Card 4: Crunchyroll -->
+                <div class="product-card">
+                    <span class="product-badge">MUSIK & VIDEO</span>
+                    <img src="https://via.placeholder.com/80x80/2E3E50/FFFFFF?text=Crunchyroll" alt="Crunchyroll Icon" class="product-image">
+                    <h5 class="product-name">Crunchyroll</h5>
+                    <span class="product-price">Rp 45.000</span>
+                    <button class="add-to-cart-btn" data-product-name="Crunchyroll" data-price="45000">Tambah ke Keranjang</button>
+                </div>
+                <!-- Product Card 5: DeepL -->
+                <div class="product-card">
+                    <span class="product-badge">EDUKASI</span>
+                    <img src="https://via.placeholder.com/80x80/2E3E50/FFFFFF?text=DeepL" alt="DeepL Icon" class="product-image">
+                    <h5 class="product-name">DeepL</h5>
+                    <span class="product-price">Rp 35.000</span>
+                    <button class="add-to-cart-btn" data-product-name="DeepL" data-price="35000">Tambah ke Keranjang</button>
+                </div>
+                <!-- Product Card 6: Duolingo -->
+                <div class="product-card">
+                    <span class="product-badge">EDUKASI</span>
+                    <img src="https://via.placeholder.com/80x80/2E3E50/FFFFFF?text=Duolingo" alt="Duolingo Icon" class="product-image">
+                    <h5 class="product-name">Duolingo</h5>
+                    <span class="product-price">Rp 30.000</span>
+                    <button class="add-to-cart-btn" data-product-name="Duolingo" data-price="30000">Tambah ke Keranjang</button>
+                </div>
+                <!-- Product Card 7: Gemini AI -->
+                <div class="product-card">
+                    <span class="product-badge">AI</span>
+                    <img src="https://via.placeholder.com/80x80/2E3E50/FFFFFF?text=Gemini" alt="Gemini AI Icon" class="product-image">
+                    <h5 class="product-name">Gemini AI</h5>
+                    <span class="product-price">Rp 80.000</span>
+                    <button class="add-to-cart-btn" data-product-name="Gemini AI" data-price="80000">Tambah ke Keranjang</button>
+                </div>
+                <!-- Product Card 8: Google Drive -->
+                <div class="product-card">
+                    <span class="product-badge">PRODUCTIVITY</span>
+                    <img src="https://via.placeholder.com/80x80/2E3E50/FFFFFF?text=Drive" alt="Google Drive Icon" class="product-image">
+                    <h5 class="product-name">Google Drive</h5>
+                    <span class="product-price">Rp 20.000</span>
+                    <button class="add-to-cart-btn" data-product-name="Google Drive" data-price="20000">Tambah ke Keranjang</button>
+                </div>
+
+                <!-- NEW PRODUCTS (Initially Hidden via JS) -->
+                <!-- Product Card 9: Canva Pro -->
+                <div class="product-card">
+                    <span class="product-badge">DESAIN</span>
+                    <img src="https://via.placeholder.com/80x80/2E3E50/FFFFFF?text=Canva" alt="Canva Pro Icon" class="product-image">
+                    <h5 class="product-name">Canva Pro</h5>
+                    <span class="product-price">Rp 65.000</span>
+                    <button class="add-to-cart-btn" data-product-name="Canva Pro" data-price="65000">Tambah ke Keranjang</button>
+                </div>
+                <!-- Product Card 10: Picsart -->
+                <div class="product-card">
+                    <span class="product-badge">DESAIN</span>
+                    <img src="https://via.placeholder.com/80x80/2E3E50/FFFFFF?text=Picsart" alt="Picsart Icon" class="product-image">
+                    <h5 class="product-name">Picsart</h5>
+                    <span class="product-price">Rp 40.000</span>
+                    <button class="add-to-cart-btn" data-product-name="Picsart" data-price="40000">Tambah ke Keranjang</button>
+                </div>
+                <!-- Product Card 11: Scribd -->
+                <div class="product-card">
+                    <span class="product-badge">EDUKASI</span>
+                    <img src="https://via.placeholder.com/80x80/2E3E50/FFFFFF?text=Scribd" alt="Scribd Icon" class="product-image">
+                    <h5 class="product-name">Scribd</h5>
+                    <span class="product-price">Rp 35.000</span>
+                    <button class="add-to-cart-btn" data-product-name="Scribd" data-price="35000">Tambah ke Keranjang</button>
+                </div>
+                <!-- Product Card 12: WeTV -->
+                <div class="product-card">
+                    <span class="product-badge">MUSIK & VIDEO</span>
+                    <img src="https://via.placeholder.com/80x80/2E3E50/FFFFFF?text=WeTV" alt="WeTV Icon" class="product-image">
+                    <h5 class="product-name">WeTV</h5>
+                    <span class="product-price">Rp 40.000</span>
+                    <button class="add-to-cart-btn" data-product-name="WeTV" data-price="40000">Tambah ke Keranjang</button>
+                </div>
+                <!-- Product Card 13: VPN Express -->
+                <div class="product-card">
+                    <span class="product-badge">VPN</span>
+                    <img src="https://via.placeholder.com/80x80/2E3E50/FFFFFF?text=Express" alt="VPN Express Icon" class="product-image">
+                    <h5 class="product-name">VPN Express</h5>
+                    <span class="product-price">Rp 80.000</span>
+                    <button class="add-to-cart-btn" data-product-name="VPN Express" data-price="80000">Tambah ke Keranjang</button>
+                </div>
+                <!-- Product Card 14: VPN HMA -->
+                <div class="product-card">
+                    <span class="product-badge">VPN</span>
+                    <img src="https://via.placeholder.com/80x80/2E3E50/FFFFFF?text=HMA" alt="VPN HMA Icon" class="product-image">
+                    <h5 class="product-name">VPN HMA</h5>
+                    <span class="product-price">Rp 70.000</span>
+                    <button class="add-to-cart-btn" data-product-name="VPN HMA" data-price="70000">Tambah ke Keranjang</button>
+                </div>
+                <!-- Product Card 15: VPN Surfshark -->
+                <div class="product-card">
+                    <span class="product-badge">VPN</span>
+                    <img src="https://via.placeholder.com/80x80/2E3E50/FFFFFF?text=Surfshark" alt="VPN Surfshark Icon" class="product-image">
+                    <h5 class="product-name">VPN Surfshark</h5>
+                    <span class="product-price">Rp 75.000</span>
+                    <button class="add-to-cart-btn" data-product-name="VPN Surfshark" data-price="75000">Tambah ke Keranjang</button>
+                </div>
+                <!-- Product Card 16: Prime Video -->
+                <div class="product-card">
+                    <span class="product-badge">MUSIK & VIDEO</span>
+                    <img src="https://via.placeholder.com/80x80/2E3E50/FFFFFF?text=Prime" alt="Prime Video Icon" class="product-image">
+                    <h5 class="product-name">Prime Video</h5>
+                    <span class="product-price">Rp 50.000</span>
+                    <button class="add-to-cart-btn" data-product-name="Prime Video" data-price="50000">Tambah ke Keranjang</button>
+                </div>
+                <!-- Product Card 17: Apple Music -->
+                <div class="product-card">
+                    <span class="product-badge">MUSIK & VIDEO</span>
+                    <img src="https://via.placeholder.com/80x80/2E3E50/FFFFFF?text=Apple Music" alt="Apple Music Icon" class="product-image">
+                    <h5 class="product-name">Apple Music</h5>
+                    <span class="product-price">Rp 45.000</span>
+                    <button class="add-to-cart-btn" data-product-name="Apple Music" data-price="45000">Tambah ke Keranjang</button>
+                </div>
+                <!-- Product Card 18: Alight Motion -->
+                <div class="product-card">
+                    <span class="product-badge">DESAIN</span>
+                    <img src="https://via.placeholder.com/80x80/2E3E50/FFFFFF?text=Alight" alt="Alight Motion Icon" class="product-image">
+                    <h5 class="product-name">Alight Motion</h5>
+                    <span class="product-price">Rp 50.000</span>
+                    <button class="add-to-cart-btn" data-product-name="Alight Motion" data-price="50000">Tambah ke Keranjang</button>
+                </div>
+                <!-- Product Card 19: GDrive Lifetime -->
+                <div class="product-card">
+                    <span class="product-badge">PRODUCTIVITY</span>
+                    <img src="https://via.placeholder.com/80x80/2E3E50/FFFFFF?text=GDrive" alt="Google Drive Lifetime Icon" class="product-image">
+                    <h5 class="product-name">GDrive Lifetime</h5>
+                    <span class="product-price">Rp 150.000</span>
+                    <button class="add-to-cart-btn" data-product-name="GDrive Lifetime" data-price="150000">Tambah ke Keranjang</button>
+                </div>
+            </section>
+
+            <button class="load-more-btn" id="loadMoreBtn">Tampilkan Lebih Banyak</button>
+
+            <!-- Register Banner -->
+            <section class="register-banner">
+                <div class="register-text-content">
+                    <h3>Dapatkan Berbagai Keuntungan Dengan Mendaftar</h3>
+                    <p>Kamu akan bebas biaya admin, lebih mudah mengelola transaksi dan pesanan, serta bebas mengatur jumlah dan menyimpannya ke dalam keranjang. Tunggu apa lagi?</p>
+                    <button class="register-btn">Daftar Sekarang</button>
+                </div>
+                <img src="https://via.placeholder.com/250x250/3B4D63/FFFFFF?text=Robot+Mascot" alt="Robot Mascot" class="register-illustration">
+            </section>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-col">
+                    <h4>XiamoStore</h4>
+                    <p>XiamoStore menawarkan produk digital berkualitas di berbagai bidang hiburan, termasuk musik, film, dan konten digital lainnya. Kami menyediakan akses mudah dan cepat ke produk digital terpopuler dengan harga terjangkau. Dapatkan pengalaman hiburan terbaik dengan layanan yang aman dan terpercaya.</p>
+                    <div class="footer-social-icons">
+                        <a href="#"><i class="fab fa-whatsapp"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-telegram-plane"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Kategori Produk</h4>
+                    <ul>
+                        <li><a href="#">AI</a></li>
+                        <li><a href="#">Desain</a></li>
+                        <li><a href="#">Musik & Video</a></li>
+                        <li><a href="#">Edukasi</a></li>
+                        <li><a href="#">Productivity</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Lainnya</h4>
+                    <ul>
+                        <li><a href="https://wa.me/6287844643452" target="_blank"><i class="fab fa-whatsapp"></i> Tanya Admin</a></li>
+                        <li><a href="#">Cara Pembelian</a></li>
+                        <li><a href="#">Tips Hemat</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                © 2025 XiamoStore. Sudah terdaftar sebagai penyedia media elektronik di Komdigi.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Shopping Cart Modal -->
+    <div class="modal-overlay" id="cartModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Keranjang Belanja</h3>
+                <button class="modal-close-btn" id="closeModalBtn">×</button>
+            </div>
+            <div class="cart-items" id="modalCartItems">
+                <!-- Items will be dynamically added here -->
+            </div>
+            <div class="cart-total">
+                <strong>Total:</strong>
+                <span id="cartTotal">Rp 0</span>
+            </div>
+            <button class="btn-lanjut-pembayaran">Lanjutkan ke Pembayaran</button>
+        </div>
+    </div>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const slidesWrapper = document.querySelector('.hero-slides-wrapper');
+            const slides = document.querySelectorAll('.hero-slide');
+            const dots = document.querySelectorAll('.hero-dot');
+            let currentSlideIndex = 0;
+            let slideInterval;
+
+            // Set the first dot as active initially if no slide has the 'active' class
+            if (slides.length > 0 && !document.querySelector('.hero-slide.active')) {
+                slides[0].classList.add('active');
+            }
+            if (dots.length > 0 && !document.querySelector('.hero-dot.active')) {
+                dots[0].classList.add('active');
+            }
+
+            function showSlide(index) {
+                // Pastikan index berada dalam batas yang valid
+                if (index >= slides.length) {
+                    index = 0;
+                } else if (index < 0) {
+                    index = slides.length - 1;
+                }
+
+                // Hapus kelas 'active' dari semua slide dan dot
+                slides.forEach(slide => slide.classList.remove('active'));
+                dots.forEach(dot => dot.classList.remove('active'));
+
+                // Tambahkan kelas 'active' ke slide dan dot saat ini
+                //slides[index].classList.add('active'); // No need to add 'active' class to slide for transform
+                dots[index].classList.add('active');
+
+                // Geser wrapper slide untuk menampilkan slide yang benar
+                slidesWrapper.style.transform = `translateX(-${index * 100}%)`;
+
+                currentSlideIndex = index;
+            }
+
+            function nextSlide() {
+                showSlide(currentSlideIndex + 1);
+            }
+
+            function startAutoSlide() {
+                // Bersihkan interval sebelumnya untuk menghindari duplikasi
+                clearInterval(slideInterval);
+                slideInterval = setInterval(nextSlide, 3000); // Ganti slide setiap 5 detik
+            }
+
+            function stopAutoSlide() {
+                clearInterval(slideInterval);
+            }
+
+            // Tambahkan event listener untuk navigasi dot manual
+            dots.forEach((dot, index) => {
+                dot.addEventListener('click', () => {
+                    stopAutoSlide(); // Hentikan auto-slide saat interaksi manual
+                    showSlide(index);
+                    startAutoSlide(); // Mulai kembali auto-slide setelah interaksi
+                });
+            });
+
+            // Tampilkan slide pertama saat halaman dimuat dan mulai auto-slide
+            showSlide(currentSlideIndex);
+            startAutoSlide();
+
+            // Opsional: Jeda auto-slide saat hover di area banner
+            slidesWrapper.addEventListener('mouseenter', stopAutoSlide);
+            slidesWrapper.addEventListener('mouseleave', startAutoSlide);
+
+            // === Fungsionalitas Modal Keranjang Belanja ===
+            const cartIcon = document.getElementById('cartIcon');
+            const cartModal = document.getElementById('cartModal');
+            const closeModalBtn = document.getElementById('closeModalBtn');
+            const cartBadge = document.getElementById('cartBadge');
+            const modalCartItems = document.getElementById('modalCartItems');
+            const cartTotalSpan = document.getElementById('cartTotal');
+            const addToCartButtons = document.querySelectorAll('.add-to-cart-btn');
+            const btnLanjutPembayaran = document.querySelector('.btn-lanjut-pembayaran');
+
+            let cartItems = []; // Array untuk menyimpan item di keranjang
+
+            // Load cart from localStorage saat halaman dimuat
+            function loadCartFromLocalStorage() {
+                const storedCart = localStorage.getItem('xiamoStoreCart');
+                if (storedCart) {
+                    try {
+                        // Pastikan ini parsing data yang benar
+                        const parsedCart = JSON.parse(storedCart);
+                        // Filter out single-item orders from "Jasa Suntik" page, if any.
+                        // We only want multi-item cart behavior for "Aplikasi Premium"
+                        // Or, assume cart is always replaced by Jasa Suntik, and needs to be cleared if coming from there
+                        // For this implementation, we simply load whatever is there.
+                        // A more robust solution might clear cart if navigated from 'jasasuntik.html'
+                        if (parsedCart.length === 1 && !parsedCart[0].isFromPremiumPage) { // Simplified check
+                             // If it's a single item potentially from Jasa Suntik, clear it if we want multi-item cart
+                             // For now, let's just use it as is, but be aware of potential mix.
+                             cartItems = parsedCart;
+                        } else {
+                            cartItems = parsedCart;
+                        }
+                    } catch (e) {
+                        console.error("Error parsing cart data from localStorage:", e);
+                        cartItems = []; // Reset if parsing fails
+                    }
+                }
+            }
+
+            // Helper function to format currency
+            function formatRupiah(number) {
+                return new Intl.NumberFormat('id-ID', {
+                    style: 'currency',
+                    currency: 'IDR',
+                    minimumFractionDigits: 0
+                }).format(number);
+            }
+
+            // Fungsi untuk memperbarui tampilan keranjang belanja (badge dan modal)
+            function updateCartDisplay() {
+                modalCartItems.innerHTML = ''; // Kosongkan daftar item di modal
+                let total = 0;
+                let itemCount = 0;
+
+                if (cartItems.length === 0) {
+                    modalCartItems.innerHTML = '<p style="text-align: center; color: rgba(255,255,255,0.7);">Keranjang Anda kosong.</p>';
+                    btnLanjutPembayaran.disabled = true; // Nonaktifkan tombol jika keranjang kosong
+                    btnLanjutPembayaran.style.opacity = '0.5'; // Memberi efek visual nonaktif
+                    btnLanjutPembayaran.style.cursor = 'not-allowed';
+                } else {
+                    btnLanjutPembayaran.disabled = false; // Aktifkan tombol jika ada item
+                    btnLanjutPembayaran.style.opacity = '1'; // Mengembalikan efek visual aktif
+                    btnLanjutPembayaran.style.cursor = 'pointer';
+
+                    cartItems.forEach((item) => {
+                        const cartItemDiv = document.createElement('div');
+                        cartItemDiv.classList.add('cart-item');
+                        // Gunakan nama produk sebagai ID unik atau data-attribute jika diperlukan untuk penghapusan/kuantitas
+                        cartItemDiv.dataset.productName = item.name;
+
+                        cartItemDiv.innerHTML = `
+                            <div class="cart-item-details">
+                                <strong>${item.name}</strong>
+                                <span>Harga per item: ${formatRupiah(item.price)}</span>
+                            </div>
+                            <div class="cart-item-action-group">
+                                <div class="quantity-editor">
+                                    <button class="quantity-btn decrease-quantity" data-product-name="${item.name}">-</button>
+                                    <input type="number" class="item-quantity-input" value="${item.quantity}" min="1" data-product-name="${item.name}">
+                                    <button class="quantity-btn increase-quantity" data-product-name="${item.name}">+</button>
+                                </div>
+                                <span class="item-line-total">${formatRupiah(item.price * item.quantity)}</span>
+                                <button class="hapus-btn" data-product-name="${item.name}"><i class="fas fa-trash-alt"></i></button>
+                            </div>
+                        `;
+                        modalCartItems.appendChild(cartItemDiv);
+                        total += item.price * item.quantity;
+                        itemCount += item.quantity;
+                    });
+                }
+
+                cartBadge.textContent = itemCount; // Perbarui badge di header
+                cartTotalSpan.textContent = formatRupiah(total); // Perbarui total di modal
+
+                // Simpan cart ke localStorage setelah update display
+                localStorage.setItem('xiamoStoreCart', JSON.stringify(cartItems));
+            }
+
+            // Fungsi untuk membuka modal
+            function openCartModal() {
+                updateCartDisplay(); // Pastikan tampilan keranjang terbaru saat dibuka
+                cartModal.classList.add('active');
+            }
+
+            // Fungsi untuk menutup modal
+            function closeCartModal() {
+                cartModal.classList.remove('active');
+            }
+
+            // Event listener untuk membuka modal saat ikon keranjang diklik
+            if (cartIcon) {
+                cartIcon.addEventListener('click', openCartModal);
+            }
+
+            // Event listener untuk menutup modal saat tombol 'X' diklik
+            if (closeModalBtn) {
+                closeModalBtn.addEventListener('click', closeCartModal);
+            }
+
+            // Event listener untuk menutup modal saat mengklik di luar konten modal
+            if (cartModal) {
+                cartModal.addEventListener('click', (event) => {
+                    if (event.target === cartModal) { // Hanya tutup jika klik langsung pada overlay
+                        closeCartModal();
+                    }
+                });
+            }
+
+            // === Fungsionalitas Tombol 'Tambah ke Keranjang' di kartu produk ===
+            addToCartButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const productName = button.dataset.productName;
+                    const productPrice = parseInt(button.dataset.price);
+
+                    // Cek apakah produk sudah ada di keranjang
+                    const existingItem = cartItems.find(item => item.name === productName);
+
+                    if (existingItem) {
+                        // Jika sudah ada, tambahkan kuantitasnya
+                        existingItem.quantity++;
+                    } else {
+                        // Jika belum ada, tambahkan item baru
+                        cartItems.push({
+                            name: productName,
+                            price: productPrice,
+                            quantity: 1
+                        });
+                    }
+
+                    updateCartDisplay(); // Perbarui tampilan keranjang
+                    alert(`'${productName}' telah ditambahkan ke keranjang!`); // Pesan konfirmasi
+                });
+            });
+
+            // === Fungsionalitas Tombol 'Hapus', '+', '-' di dalam Modal & Input Kuantitas (menggunakan event delegation) ===
+            modalCartItems.addEventListener('click', (event) => {
+                const targetBtn = event.target;
+                const productName = targetBtn.dataset.productName;
+                let item = cartItems.find(i => i.name === productName);
+
+                if (!item) return; // Item tidak ditemukan
+
+                if (targetBtn.classList.contains('hapus-btn')) {
+                    // Tombol Hapus
+                    cartItems = cartItems.filter(i => i.name !== productName); // Hapus item sepenuhnya
+                } else if (targetBtn.classList.contains('increase-quantity')) {
+                    // Tombol +
+                    item.quantity++;
+                } else if (targetBtn.classList.contains('decrease-quantity')) {
+                    // Tombol -
+                    if (item.quantity > 1) {
+                        item.quantity--;
+                    } else {
+                        // Jika kuantitas menjadi 0, hapus item
+                        cartItems = cartItems.filter(i => i.name !== productName);
+                    }
+                }
+                updateCartDisplay(); // Perbarui tampilan keranjang setelah perubahan
+            });
+
+            // Event listener untuk perubahan pada input kuantitas
+            modalCartItems.addEventListener('change', (event) => {
+                if (event.target.classList.contains('item-quantity-input')) {
+                    const inputElement = event.target;
+                    const productName = inputElement.dataset.productName;
+                    let item = cartItems.find(i => i.name === productName);
+
+                    if (!item) return;
+
+                    let newQuantity = parseInt(inputElement.value);
+
+                    if (isNaN(newQuantity) || newQuantity < 1) {
+                        newQuantity = 1; // Pastikan kuantitas minimal 1
+                    }
+
+                    item.quantity = newQuantity;
+                    updateCartDisplay(); // Perbarui tampilan keranjang
+                }
+            });
+
+
+            // === Fungsionalitas Tombol 'Lanjutkan ke Pembayaran' ===
+            if (btnLanjutPembayaran) {
+                btnLanjutPembayaran.addEventListener('click', () => {
+                    if (cartItems.length > 0) {
+                        // Data keranjang sudah disimpan otomatis ke localStorage oleh updateCartDisplay()
+                        window.location.href = 'pembayaran.html'; // Redirect ke halaman pembayaran
+                    } else {
+                        alert("Keranjang Anda kosong. Tambahkan produk terlebih dahulu.");
+                    }
+                });
+            }
+
+            // Panggil loadCartFromLocalStorage dan updateCartDisplay saat halaman dimuat
+            loadCartFromLocalStorage();
+            updateCartDisplay();
+
+            // === Fungsionalitas "Tampilkan Lebih Banyak" ===
+            const productCards = document.querySelectorAll('.product-grid .product-card');
+            const loadMoreButton = document.getElementById('loadMoreBtn');
+            const initialVisibleCount = 8; // Jumlah produk yang akan ditampilkan di awal
+
+            function initializeProductDisplay() {
+                if (productCards.length > initialVisibleCount) {
+                    for (let i = initialVisibleCount; i < productCards.length; i++) {
+                        productCards[i].classList.add('hidden');
+                    }
+                    loadMoreButton.style.display = 'block'; // Tampilkan tombol jika ada produk tersembunyi
+                } else {
+                    loadMoreButton.style.display = 'none'; // Sembunyikan tombol jika semua produk sudah terlihat
+                }
+            }
+
+            loadMoreButton.addEventListener('click', () => {
+                productCards.forEach(card => {
+                    card.classList.remove('hidden');
+                });
+                loadMoreButton.style.display = 'none'; // Sembunyikan tombol setelah semua ditampilkan
+            });
+
+            // Panggil ini saat DOM selesai dimuat untuk mengatur tampilan awal produk
+            initializeProductDisplay();
+        });
+    </script>
+</body>
+</html>

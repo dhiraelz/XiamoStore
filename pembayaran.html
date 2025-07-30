@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XiamoStore - Halaman Pembayaran</title>
+    <!-- Google Fonts - Poppins untuk teks, Montserrat untuk judul -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Remixicon for icons (ditambahkan untuk konsistensi, meskipun mungkin tidak langsung digunakan di sini) -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet" />
+
+
+    <style>
+        :root {
+            /* Warna latar belakang dan kartu (Biru Keabu-abuan Gelap) */
+            --dark-deep: #1A2534; /* Sangat gelap, hampir hitam kebiruan */
+            --dark-blue: #233041; /* Biru keabu-abuan gelap yang kaya */
+            /* Menggunakan nilai RGBA untuk transparansi pada kartu utama dan elemen serupa */
+            --card-start-gradient: rgba(59, 77, 99, 0.65); /* #3B4D63 dengan opacity 65% */
+            --card-end-gradient: rgba(46, 62, 80, 0.65); /* #2E3E50 dengan opacity 65% */
+
+            /* Warna item menu dan elemen interaktif lainnya (Biru Keabu-abuan Terang) */
+            --menu-item-start-gradient: #6080A5; /* Biru keabu-abuan cerah yang hidup */
+            --menu-item-end-gradient: #8DAACB; /* Biru keabu-abuan yang lebih terang */
+            --menu-item-hover-start: #7FAACB; /* Hover start slightly lighter */
+            --menu-item-hover-end: #A0C2E2; /* Hover end slightly lighter */
+
+            /* Warna teks dan aksen */
+            --text-primary: #EBF2F7; /* Abu-abu kebiruan terang */
+            --text-secondary: #FFFFFF; /* Putih bersih */
+            --accent-glow: #78B2D4; /* Biru keabu-abuan cerah untuk efek glow */
+            --success-color: #4CAF50; /* Hijau untuk checkmark/sukses */
+            --red-alert-color: #FF5C5C; /* Merah untuk alert */
+
+            /* Bayangan */
+            --shadow-light: rgba(0, 0, 0, 0.45);
+            --shadow-deep: rgba(0, 0, 0, 0.7);
+
+            /* Warna spesifik elemen form dan info (transparan) */
+            --input-bg-transparent: rgba(35, 48, 65, 0.7); /* Dari --dark-blue, sedikit transparan */
+            --input-border-transparent: rgba(255, 255, 255, 0.2);
+            --info-box-bg-transparent: rgba(35, 48, 65, 0.6); /* Dari --dark-blue, lebih transparan */
+            --info-box-border-transparent: rgba(120, 190, 220, 0.4); /* Dari --accent-glow, sedikit transparan */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--dark-deep); /* Fallback warna jika gambar tidak termuat */
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            position: relative; /* Penting untuk penempatan background blur */
+        }
+
+        .container {
+            max-width: 900px; /* Lebar container untuk halaman pembayaran */
+            margin: 0 auto;
+            padding: 20px;
+            flex-grow: 1;
+            position: relative; /* Untuk z-index blobs */
+            z-index: 1; /* Di atas background blur */
+        }
+
+        /* Background Image with Blur */
+        .blurred-background {
+            position: fixed; /* Tetap di posisi yang sama saat scroll */
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('backgroundweb.jpeg'); /* Gunakan gambar Anda di sini */
+            background-size: cover;
+            background-position: center;
+            filter: blur(10px); /* Tingkat blur yang bisa disesuaikan */
+            -webkit-filter: blur(10px); /* Untuk kompatibilitas browser */
+            z-index: -2; /* Di belakang semua elemen lain, termasuk blobs */
+        }
+
+        /* Header */
+        .header {
+            background-color: var(--dark-deep); /* Warna gelap dari palette baru */
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between; /* Menjaga spasi antara elemen */
+            padding: 0 20px;
+        }
+
+        /* Gaya untuk logo-text agar berada di tengah */
+        .logo-text {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 1.5em;
+            color: var(--text-secondary); /* Putih bersih */
+            flex-grow: 1; /* Membuatnya mengisi ruang yang tersedia */
+            text-align: center; /* Memusatkan teks di dalamnya */
+            /* Margin untuk mengimbangi tombol kembali agar lebih di tengah secara visual (opsional, sesuaikan) */
+            margin-left: -50px; /* Contoh: Offset sekitar lebar tombol kembali */
+        }
+
+        /* Gaya untuk tombol kembali agar berada di kiri atas header */
+        .back-button {
+            background: linear-gradient(90deg, var(--menu-item-start-gradient), var(--menu-item-end-gradient));
+            color: var(--text-secondary);
+            border: none;
+            border-radius: 8px;
+            padding: 10px 15px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background-color 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
+            box-shadow: 0 2px 5px var(--shadow-light);
+            flex-shrink: 0; /* Jangan biarkan menyusut */
+        }
+
+        .back-button:hover {
+            background: linear-gradient(90deg, var(--menu-item-hover-start), var(--menu-item-hover-end));
+            transform: translateY(-1px);
+            box-shadow: 0 4px 10px var(--shadow-deep);
+        }
+
+
+        .checkout-section {
+            background: linear-gradient(145deg, var(--card-start-gradient), var(--card-end-gradient)); /* Gunakan gradien transparan */
+            border-radius: 20px;
+            padding: 30px;
+            margin-top: 30px;
+            box-shadow: 0 10px 30px var(--shadow-deep);
+            backdrop-filter: blur(8px); /* Efek blur pada kartu */
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.15); /* Border transparan */
+            position: relative; /* Penting untuk penempatan tombol silang */
+        }
+
+        /* Gaya untuk tombol silang (close button) di kanan atas card */
+        .card-close-button {
+            position: absolute;
+            top: 15px; /* Jarak dari atas card */
+            right: 15px; /* Jarak dari kanan card */
+            background: none;
+            border: none;
+            color: var(--text-primary); /* Warna teks utama */
+            font-size: 1.8em;
+            cursor: pointer;
+            padding: 5px;
+            line-height: 1; /* Untuk memastikan ikon terpusat vertikal */
+            transition: color 0.2s ease, background-color 0.2s ease;
+        }
+
+        .card-close-button:hover {
+            color: var(--red-alert-color); /* Warna merah alert saat hover */
+            background-color: rgba(255, 255, 255, 0.1); /* Efek latar belakang transparan saat hover */
+            border-radius: 50%; /* Membuat efek lingkaran saat hover */
+        }
+
+
+        .checkout-section h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2em;
+            font-weight: 700;
+            color: var(--text-secondary); /* Putih bersih */
+            margin-bottom: 25px;
+            margin-top: 0; /* Pastikan tidak ada margin-top berlebihan karena tombol silang */
+            text-align: center;
+        }
+
+        .order-summary, .payment-details {
+            margin-bottom: 30px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15); /* Border transparan */
+            padding-bottom: 20px;
+        }
+
+        .order-summary h3, .payment-details h3 {
+            font-size: 1.3em;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--accent-glow); /* Warna aksen */
+        }
+
+        .summary-items {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px dashed rgba(255, 255, 255, 0.1); /* Border dashed transparan */
+        }
+
+        .summary-item:last-child {
+            border-bottom: none;
+        }
+
+        .summary-item-name {
+            font-weight: 400;
+            color: rgba(var(--text-primary), 0.8); /* Teks utama sedikit transparan */
+        }
+
+        .summary-item-price {
+            font-weight: 500;
+            color: var(--text-primary); /* Teks utama */
+        }
+
+        .order-total {
+            display: flex;
+            justify-content: space-between;
+            font-size: 1.3em;
+            font-weight: 700;
+            padding-top: 20px;
+            color: var(--text-secondary); /* Putih bersih */
+        }
+
+        .order-total .total-amount {
+            color: var(--accent-glow); /* Warna aksen untuk total */
+        }
+
+        .payment-methods {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .payment-methods label {
+            background-color: rgba(35, 48, 65, 0.5); /* Menggunakan dark-blue dengan transparansi */
+            padding: 15px 20px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            cursor: pointer;
+            border: 1px solid rgba(255, 255, 255, 0.1); /* Border transparan */
+            transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+        }
+
+        .payment-methods input[type="radio"] {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 2px solid var(--accent-glow); /* Border radio button dengan warna aksen */
+            outline: none;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .payment-methods input[type="radio"]:checked {
+            background-color: var(--accent-glow); /* Background radio button saat checked */
+            border-color: var(--accent-glow);
+        }
+
+        .payment-methods input[type="radio"]:checked::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: var(--dark-deep); /* Warna titik tengah radio button */
+        }
+
+        .payment-methods label:hover {
+            border-color: var(--accent-glow);
+            background-color: rgba(35, 48, 65, 0.7); /* Lebih solid saat hover */
+            box-shadow: 0 0 10px rgba(120, 190, 220, 0.3); /* Shadow glow */
+        }
+
+        .payment-methods .method-info {
+            flex-grow: 1;
+        }
+
+        .payment-methods .method-info strong {
+            display: block;
+            font-size: 1.1em;
+            margin-bottom: 3px;
+            color: var(--text-secondary); /* Putih bersih */
+        }
+
+        .payment-methods .method-info span {
+            font-size: 0.9em;
+            color: rgba(var(--text-primary), 0.7); /* Teks muted */
+        }
+
+        .payment-button {
+            display: block;
+            width: 100%;
+            padding: 15px 25px;
+            background: linear-gradient(90deg, var(--menu-item-start-gradient), var(--menu-item-end-gradient));
+            color: var(--text-secondary); /* Putih bersih */
+            border: none;
+            border-radius: 10px;
+            font-size: 1.2em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
+            margin-top: 30px;
+            box-shadow: 0 5px 15px var(--shadow-light);
+        }
+
+        .payment-button:hover {
+            background: linear-gradient(90deg, var(--menu-item-hover-start), var(--menu-item-hover-end));
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px var(--shadow-deep);
+        }
+
+        .footer {
+            background-color: var(--dark-blue); /* Warna gelap dari palette baru */
+            padding: 30px 0;
+            color: rgba(var(--text-primary), 0.7); /* Teks muted */
+            font-size: 0.9em;
+            text-align: center;
+            margin-top: 40px;
+            position: relative;
+            z-index: 1; /* Pastikan di atas background blur */
+        }
+
+        /* --- Styles for Payment Instruction Modal --- */
+        .instruction-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85); /* Lebih gelap sedikit dari modal keranjang */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1200; /* Lebih tinggi dari z-index lainnya */
+            visibility: hidden;
+            opacity: 0;
+            transition: visibility 0.3s, opacity 0.3s;
+        }
+
+        .instruction-modal-overlay.active {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .instruction-modal-content {
+            background: linear-gradient(145deg, var(--card-start-gradient), var(--card-end-gradient)); /* Gradien transparan */
+            border-radius: 15px;
+            padding: 30px;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 10px 30px var(--shadow-deep);
+            position: relative;
+            transform: translateY(-20px);
+            transition: transform 0.3s ease-out;
+            text-align: center;
+            max-height: 90vh;
+            overflow-y: auto;
+            backdrop-filter: blur(10px); /* Blur pada modal */
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2); /* Border transparan */
+        }
+
+        .instruction-modal-overlay.active .instruction-modal-content {
+            transform: translateY(0);
+        }
+
+        .instruction-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .instruction-modal-header h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.6em;
+            font-weight: 700;
+            color: var(--text-secondary); /* Putih bersih */
+            flex-grow: 1;
+            text-align: center;
+        }
+        
+        .instruction-modal-header .close-btn {
+            background: none;
+            border: none;
+            color: var(--text-primary); /* Teks utama */
+            font-size: 1.8em;
+            cursor: pointer;
+            transition: color 0.2s ease;
+            position: absolute;
+            right: 20px;
+            top: 20px;
+        }
+
+        .instruction-modal-header .close-btn:hover {
+            color: var(--red-alert-color); /* Warna merah alert */
+        }
+
+        .instruction-modal-body {
+            margin-bottom: 25px;
+            text-align: left;
+        }
+
+        .instruction-modal-body p {
+            margin-bottom: 10px;
+            font-size: 1em;
+            color: rgba(var(--text-primary), 0.9); /* Teks utama sedikit transparan */
+        }
+
+        .instruction-modal-body .payment-info {
+            background-color: rgba(35, 48, 65, 0.7); /* Menggunakan dark-blue dengan transparansi */
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+            font-size: 1.1em;
+            font-weight: 500;
+            color: var(--accent-glow); /* Warna aksen */
+            overflow-wrap: break-word;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1); /* Border transparan */
+        }
+
+        .instruction-modal-body .payment-info strong {
+            display: block;
+            font-size: 1em;
+            color: var(--text-secondary); /* Putih bersih */
+            margin-bottom: 5px;
+        }
+
+        .instruction-modal-body .payment-info .qris-label-text {
+            display: block;
+            font-size: 0.9em;
+            font-weight: 400;
+            color: rgba(var(--text-primary), 0.7);
+            margin-top: 5px;
+        }
+
+
+        .instruction-modal-body .payment-info img {
+            max-width: 250px;
+            height: auto;
+            margin: 15px auto 0;
+            display: block;
+            border-radius: 8px;
+        }
+
+        .whatsapp-btn {
+            display: block;
+            width: 100%;
+            padding: 15px 25px;
+            background-color: var(--success-color); /* Warna hijau sukses */
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
+            margin-top: 20px;
+            text-align: center;
+            text-decoration: none;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .whatsapp-btn i {
+            margin-right: 10px;
+        }
+
+        .whatsapp-btn:hover {
+            background-color: #3e8e41; /* Sedikit lebih gelap */
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Responsive adjustments for Instruction Modal */
+        @media (max-width: 480px) {
+            .instruction-modal-content {
+                padding: 20px;
+            }
+            .instruction-modal-header h3 {
+                font-size: 1.4em;
+            }
+            .instruction-modal-header .close-btn {
+                font-size: 1.5em;
+                right: 15px;
+                top: 15px;
+            }
+            .instruction-modal-body p {
+                font-size: 0.9em;
+            }
+            .instruction-modal-body .payment-info {
+                font-size: 1em;
+                padding: 10px;
+            }
+            .instruction-modal-body .payment-info strong {
+                font-size: 1.1em;
+            }
+            .instruction-modal-body .payment-info img {
+                max-width: 180px;
+            }
+            .whatsapp-btn {
+                font-size: 1em;
+                padding: 12px 20px;
+            }
+        }
+
+        /* Responsive adjustments for main page */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: row; /* Kembali ke baris untuk mobile */
+                justify-content: space-between; /* Untuk tombol di kiri, logo di tengah (dengan flex-grow) */
+                align-items: center;
+                padding: 0 15px;
+            }
+            .logo-text {
+                margin-bottom: 0; /* Hapus margin bawah */
+                margin-left: 0; /* Reset margin-left dari desktop */
+            }
+            .back-button {
+                align-self: center; /* Sejajarkan ke tengah secara vertikal */
+                margin-top: 0; /* Hapus margin negatif */
+            }
+
+            .checkout-section h2 {
+                font-size: 1.8em;
+                margin-top: 40px; /* Tambahkan margin agar tidak tumpang tindih dengan tombol silang */
+                margin-bottom: 20px;
+            }
+
+            .card-close-button { /* Adjust for mobile positioning */
+                top: 10px;
+                right: 10px;
+                font-size: 1.5em;
+            }
+
+            .container {
+                padding: 15px;
+            }
+            .checkout-section {
+                padding: 20px;
+            }
+            .order-summary h3, .payment-details h3 {
+                font-size: 1.1em;
+                margin-bottom: 10px;
+            }
+            .summary-item-name, .summary-item-price {
+                font-size: 0.9em;
+            }
+            .order-total {
+                font-size: 1.1em;
+            }
+            .payment-methods label {
+                padding: 12px 15px;
+            }
+            .payment-methods .method-info strong {
+                font-size: 1em;
+            }
+            .payment-methods .method-info span {
+                font-size: 0.85em;
+            }
+            .payment-button {
+                font-size: 1.1em;
+                padding: 12px 20px;
+            }
+            .footer {
+                padding: 20px 15px;
+                font-size: 0.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Image with Blur -->
+    <div class="blurred-background"></div>
+
+    <header class="header">
+        <div class="header-content">
+            <!-- Pindahkan tombol kembali ke awal untuk berada di kiri -->
+            <button class="back-button" onclick="history.back()"><i class="fas fa-arrow-left"></i> Kembali</button>
+            <!-- Pindahkan logo-text di antara tombol dan (jika ada) elemen kanan -->
+            <div class="logo-text">XiamoStore</div>
+            <!-- Elemen kosong untuk mendorong logo-text ke tengah (opsional, tergantung layout) -->
+            <!-- Jika tidak ada ikon atau elemen lain di kanan, logo-text akan mengisi sisa ruang dan tengah. -->
+            <div></div> <!-- Spacer kosong untuk menyeimbangkan tombol kembali jika ingin logo lebih ke tengah -->
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="checkout-section">
+            <!-- Tombol silang di kanan atas card -->
+            <button class="card-close-button" onclick="history.back()">
+                <i class="fas fa-times"></i>
+            </button>
+
+            <h2>Detail Pembayaran</h2>
+
+            <div class="order-summary">
+                <h3>Ringkasan Pesanan</h3>
+                <div class="summary-items" id="orderSummaryItems">
+                    <!-- Cart items will be loaded here by JavaScript -->
+                    <p style="text-align: center; color: rgba(255,255,255,0.7);">Memuat item keranjang...</p>
+                </div>
+                <div class="order-total">
+                    <strong>Total Pembayaran:</strong>
+                    <span class="total-amount" id="checkoutTotal">Rp 0</span>
+                </div>
+            </div>
+
+            <div class="payment-details">
+                <h3>Pilih Metode Pembayaran</h3>
+                <div class="payment-methods">
+                    <!-- QRIS moved to the top and set as default checked -->
+                    <label>
+                        <input type="radio" name="payment-method" value="qris" checked>
+                        <div class="method-info">
+                            <strong>QRIS</strong>
+                            <span>Scan untuk bayar dari semua aplikasi pembayaran.</span>
+                        </div>
+                    </label>
+                    <label>
+                        <input type="radio" name="payment-method" value="dana">
+                        <div class="method-info">
+                            <strong>DANA</strong>
+                            <span>Pembayaran instan melalui aplikasi DANA.</span>
+                        </div>
+                    </label>
+                    <label>
+                        <input type="radio" name="payment-method" value="ovo">
+                        <div class="method-info">
+                            <strong>OVO</strong>
+                            <span>Bayar dengan saldo OVO Anda.</span>
+                        </div>
+                    </label>
+                    <label>
+                        <input type="radio" name="payment-method" value="shopeepay">
+                        <div class="method-info">
+                            <strong>ShopeePay</strong>
+                            <span>Pembayaran melalui ShopeePay.</span>
+                        </div>
+                    </label>
+                    <label>
+                        <input type="radio" name="payment-method" value="seabanku">
+                        <div class="method-info">
+                            <strong>SeaBank</strong>
+                            <span>Transfer melalui Bank SeaBank.</span>
+                        </div>
+                    </label>
+                    <label>
+                        <input type="radio" name="payment-method" value="bca">
+                        <div class="method-info">
+                            <strong>Transfer Bank (BSI)</strong>
+                            <span>Pembayaran melalui transfer bank BSI.</span>
+                        </div>
+                    </label>
+                    <!-- Indomaret / Alfamart option removed -->
+                </div>
+            </div>
+
+            <button class="payment-button">Bayar Sekarang</button>
+        </section>
+    </main>
+
+    <footer class="footer">
+        © 2025 XiamoStore. Hak Cipta Dilindungi.
+    </footer>
+
+    <!-- Payment Instruction Modal -->
+    <div class="instruction-modal-overlay" id="instructionModal">
+        <div class="instruction-modal-content">
+            <div class="instruction-modal-header">
+                <h3 id="instructionModalTitle">Instruksi Pembayaran</h3>
+                <button class="close-btn" id="closeInstructionModalBtn">×</button>
+            </div>
+            <div class="instruction-modal-body">
+                <p>Silakan selesaikan pembayaran Anda menggunakan metode yang dipilih:</p>
+                <div class="payment-info" id="paymentDetailsContent">
+                    <!-- Dynamic payment details will be inserted here -->
+                </div>
+                <p style="margin-top: 20px;">Setelah transfer, mohon konfirmasi pembayaran Anda melalui WhatsApp dengan menyertakan bukti transfer.</p>
+                <a href="#" class="whatsapp-btn" id="whatsappConfirmBtn" target="_blank">
+                    <i class="fab fa-whatsapp"></i> Konfirmasi Pembayaran via WhatsApp
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const orderSummaryItems = document.getElementById('orderSummaryItems');
+            const checkoutTotal = document.getElementById('checkoutTotal');
+            const paymentButton = document.querySelector('.payment-button');
+
+            const instructionModal = document.getElementById('instructionModal');
+            const instructionModalTitle = document.getElementById('instructionModalTitle');
+            const paymentDetailsContent = document.getElementById('paymentDetailsContent');
+            const whatsappConfirmBtn = document.getElementById('whatsappConfirmBtn');
+            const closeInstructionModalBtn = document.getElementById('closeInstructionModalBtn');
+
+            // Data detail pembayaran untuk setiap metode
+            const paymentMethodsData = {
+                qris: { // QRIS moved to the top in the data object for consistency
+                    title: "Pembayaran via QRIS",
+                    instructions: "Scan QR code di bawah ini dengan aplikasi pembayaran apapun:",
+                    account_name: "Xiamo Cell",
+                    qris_label: "QRIS UNIVERSAL",
+                    image: "xiamoqris.jpeg" // Placeholder QRIS
+                },
+                dana: {
+                    title: "Pembayaran via DANA",
+                    instructions: "Transfer ke nomor DANA berikut:",
+                    detail: "081326067535 (a/n XiamoStore)",
+                    image: "logodana.jpeg" 
+                },
+                ovo: {
+                    title: "Pembayaran via OVO",
+                    instructions: "Transfer ke nomor OVO berikut:",
+                    detail: "089503816765 (a/n XiamoStore)",
+                    image: null
+                },
+                shopeepay: {
+                    title: "Pembayaran via ShopeePay",
+                    instructions: "Transfer ke nomor ShopeePay berikut:",
+                    detail: "081326067535 (a/n XiamoStore)",
+                    image: null
+                },
+                seabanku: {
+                    title: "Pembayaran via SeaBank",
+                    instructions: "Transfer ke rekening SeaBank berikut:",
+                    detail: "901133815310 (a/n Dhiya Raidah - PT Xiamo Digital)",
+                    image: null
+                },
+                bca: { // Mengubah data ini agar sesuai dengan BSI yang baru
+                    title: "Pembayaran via Transfer Bank BSI",
+                    instructions: "Transfer ke rekening Bank Syariah Indonesia (BSI) berikut:",
+                    detail: "7211158580 (a/n Dhiya Raidah - PT Xiamo Digital)",
+                    image: null
+                }
+                // Indomaret / Alfamart data removed
+            };
+
+            // Helper function to format currency
+            function formatRupiah(number) {
+                return new Intl.NumberFormat('id-ID', {
+                    style: 'currency',
+                    currency: 'IDR',
+                    minimumFractionDigits: 0
+                }).format(number);
+            }
+
+            // Load cart items from localStorage
+            const cartItemsString = localStorage.getItem('xiamoStoreCart');
+            let cartItems = [];
+            if (cartItemsString) {
+                try {
+                    cartItems = JSON.parse(cartItemsString);
+                } catch (e) {
+                    console.error("Error parsing cart data from localStorage:", e);
+                    cartItems = [];
+                }
+            }
+
+            let totalPayment = 0;
+            orderSummaryItems.innerHTML = ''; // Clear loading message
+
+            if (cartItems.length === 0) {
+                orderSummaryItems.innerHTML = '<p style="text-align: center; color: rgba(255,255,255,0.7);">Keranjang Anda kosong. Silakan kembali ke halaman produk.</p>';
+                paymentButton.disabled = true; // Disable payment button if cart is empty
+                paymentButton.textContent = "Keranjang Kosong";
+                paymentButton.style.opacity = '0.5';
+                paymentButton.style.cursor = 'not-allowed';
+            } else {
+                paymentButton.disabled = false;
+                paymentButton.textContent = "Bayar Sekarang"; // Reset text
+                paymentButton.style.opacity = '1';
+                paymentButton.style.cursor = 'pointer';
+
+                cartItems.forEach(item => {
+                    const itemElement = document.createElement('div');
+                    itemElement.classList.add('summary-item');
+                    itemElement.innerHTML = `
+                        <span class="summary-item-name">${item.name} (${item.quantity}x)</span>
+                        <span class="summary-item-price">${formatRupiah(item.price * item.quantity)}</span>
+                    `;
+                    orderSummaryItems.appendChild(itemElement);
+                    totalPayment += item.price * item.quantity;
+                });
+            }
+
+            checkoutTotal.textContent = formatRupiah(totalPayment);
+
+            // Function to open instruction modal
+            function openInstructionModal(method) {
+                const data = paymentMethodsData[method];
+                if (!data) {
+                    alert("Metode pembayaran tidak valid.");
+                    return;
+                }
+
+                instructionModalTitle.textContent = data.title;
+                let detailsHtml = `<p>${data.instructions}</p>`;
+                
+                // Kondisi khusus untuk QRIS
+                if (method === 'qris') {
+                    detailsHtml += `<div class="payment-info">
+                                        <strong>(a/n ${data.account_name})</strong>
+                                        <span class="qris-label-text">${data.qris_label}</span>`;
+                } else {
+                    detailsHtml += `<div class="payment-info"><strong>${data.detail}</strong>`;
+                }
+
+                if (data.image) {
+                    // Jika ada gambar (misal logo DANA atau QRIS), tampilkan di sini
+                    detailsHtml += `<img src="${data.image}" alt="Logo untuk ${data.title}">`;
+                }
+                detailsHtml += `</div>`;
+                paymentDetailsContent.innerHTML = detailsHtml;
+
+                // Prepare WhatsApp message
+                let whatsappMessage = `Halo Admin XiamoStore,\n\nSaya ingin konfirmasi pembayaran untuk pesanan saya.\n\nRingkasan Pesanan:\n`;
+                cartItems.forEach(item => {
+                    whatsappMessage += `- ${item.name} (${item.quantity}x) = ${formatRupiah(item.price * item.quantity)}\n`;
+                });
+                whatsappMessage += `\nTotal Pembayaran: ${formatRupiah(totalPayment)}`;
+                whatsappMessage += `\nMetode Pembayaran: ${data.title}\n\nMohon dicek dan proses pesanan saya. Terima kasih!`;
+
+                whatsappConfirmBtn.href = `https://wa.me/6287844643452?text=${encodeURIComponent(whatsappMessage)}`; // Ganti dengan nomor WhatsApp Anda
+
+                instructionModal.classList.add('active');
+            }
+
+            // Function to close instruction modal
+            function closeInstructionModal() {
+                instructionModal.classList.remove('active');
+            }
+
+            // Event listener for payment button
+            paymentButton.addEventListener('click', () => {
+                const selectedMethodRadio = document.querySelector('input[name="payment-method"]:checked');
+                if (selectedMethodRadio) {
+                    openInstructionModal(selectedMethodRadio.value);
+                } else {
+                    alert("Mohon pilih metode pembayaran terlebih dahulu.");
+                }
+            });
+
+            // Event listener for closing instruction modal
+            closeInstructionModalBtn.addEventListener('click', closeInstructionModal);
+            instructionModal.addEventListener('click', (event) => {
+                if (event.target === instructionModal) {
+                    closeInstructionModal();
+                }
+            });
+        });
+    </script>
+</body>
+</html>     
