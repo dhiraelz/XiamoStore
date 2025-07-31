@@ -939,7 +939,7 @@
             box-shadow: 0 10px 30px var(--shadow-deep);
             position: relative;
             transform: translateY(-20px);
-            transition: transform 0.3s ease-out;
+            transition: transform 0=0.3s ease-out;
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.2);
@@ -988,6 +988,137 @@
             }
             .info-modal-body {
                 font-size: 0.9em;
+            }
+        }
+        
+        /* Specific styles for Variation Modal (similar to cart modal) */
+        #variationModal .modal-content {
+            max-width: 400px; /* Adjust as needed */
+        }
+
+        .variation-options {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .variation-options label {
+            background-color: rgba(35, 48, 65, 0.5); /* Using dark-blue with transparency */
+            padding: 15px 20px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between; /* To space out name and price */
+            gap: 15px;
+            cursor: pointer;
+            border: 1px solid rgba(255, 255, 255, 0.1); /* Transparent border */
+            transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+        }
+
+        .variation-options label:hover {
+            border-color: var(--accent-glow);
+            background-color: rgba(35, 48, 65, 0.7);
+            box-shadow: 0 0 10px rgba(120, 190, 220, 0.3);
+        }
+
+        .variation-options input[type="radio"] {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 2px solid var(--accent-glow);
+            outline: none;
+            cursor: pointer;
+            position: relative;
+            flex-shrink: 0; /* Prevent shrinking */
+        }
+
+        .variation-options input[type="radio"]:checked {
+            background-color: var(--accent-glow);
+            border-color: var(--accent-glow);
+        }
+
+        .variation-options input[type="radio"]:checked::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: var(--dark-deep);
+        }
+
+        .variation-info {
+            flex-grow: 1;
+            text-align: left;
+        }
+
+        .variation-info strong {
+            display: block;
+            font-size: 1.1em;
+            color: var(--text-secondary);
+        }
+
+        .variation-info span {
+            font-size: 0.9em;
+            color: rgba(var(--text-primary), 0.7);
+        }
+
+        .variation-price {
+            font-size: 1.1em;
+            font-weight: 600;
+            color: var(--accent-glow);
+            flex-shrink: 0;
+        }
+
+        /* Make sure the add button in this modal also looks good */
+        #addVariedProductToCartBtn {
+            /* Uses existing .btn-lanjut-pembayaran styles */
+            margin-top: 0; /* Override default margin from .btn-lanjut-pembayaran */
+        }
+
+        /* Responsive adjustments for variation modal */
+        @media (max-width: 480px) {
+            #variationModal .modal-content {
+                padding: 15px;
+            }
+            .variation-options label {
+                padding: 12px 15px;
+                flex-direction: column; /* Stack duration and price on mobile */
+                align-items: flex-start;
+                gap: 5px;
+            }
+            .variation-info strong {
+                font-size: 1em;
+            }
+            .variation-info span {
+                font-size: 0.85em;
+            }
+            .variation-price {
+                font-size: 1em;
+                width: 100%; /* Take full width on mobile */
+                text-align: right;
+            }
+            .variation-options input[type="radio"] {
+                position: relative; /* Keep radio button left aligned */
+                margin-right: 10px; /* Add some margin to the right */
+                align-self: flex-start; /* Align self to start within flex column */
+                margin-top: 5px; /* Adjust spacing */
+            }
+            .variation-options label {
+                position: relative;
+                padding-left: 45px; /* Make space for custom radio button */
+            }
+            .variation-options input[type="radio"] {
+                position: absolute;
+                left: 15px;
+                top: 50%;
+                transform: translateY(-50%);
             }
         }
     </style>
@@ -1093,156 +1224,180 @@
                 <!-- Product Card 1: CapCut -->
                 <div class="product-card">
                     <span class="product-badge">DESAIN</span>
-                    <img src="capcutlogo.png" alt="CapCut Icon" class="product-image"> <!-- Diubah dari ikon ke gambar -->
+                    <img src="capcutlogo.png" alt="CapCut Icon" class="product-image">
                     <h5 class="product-name">CapCut</h5>
-                    <span class="product-price">Rp 50.000</span>
-                    <button class="add-to-cart-btn" data-product-name="CapCut" data-price="50000"><i class="fas fa-cart-plus"></i></button>
+                    <span class="product-price">Mulai dari Rp 5.000</span>
+                    <button class="add-to-cart-btn" data-product-name="CapCut"><i class="fas fa-cart-plus"></i></button>
                 </div>
-                <!-- Product Card 2: ChatGPT -->
+                <!-- Product Card 2: Blackbox AI (NEW) -->
                 <div class="product-card">
                     <span class="product-badge">AI</span>
-                    <i class="fas fa-robot product-icon-fa"></i> <!-- Icon untuk ChatGPT -->
-                    <h5 class="product-name">ChatGPT</h5>
-                    <span class="product-price">Rp 75.000</span>
-                    <button class="add-to-cart-btn" data-product-name="ChatGPT" data-price="75000"><i class="fas fa-cart-plus"></i></button>
+                    <img src="BlackboxAI.jpeg" alt="Blackbox AI Icon" class="product-image">
+                    <h5 class="product-name">Blackbox AI</h5>
+                    <span class="product-price">Mulai dari Rp 45.000</span>
+                    <button class="add-to-cart-btn" data-product-name="Blackbox AI"><i class="fas fa-cart-plus"></i></button>
                 </div>
-                <!-- Product Card 3: Claude -->
-                <div class="product-card">
-                    <span class="product-badge">AI</span>
-                    <img src="https://via.placeholder.com/80x80/2E3E50/FFFFFF?text=Claude" alt="Claude Icon" class="product-image">
-                    <h5 class="product-name">Claude</h5>
-                    <span class="product-price">Rp 60.000</span>
-                    <button class="add-to-cart-btn" data-product-name="Claude" data-price="60000"><i class="fas fa-cart-plus"></i></button>
-                </div>
-                <!-- Product Card 4: Crunchyroll -->
+                <!-- Product Card 3: Viu (NEW) -->
                 <div class="product-card">
                     <span class="product-badge">MUSIK & VIDEO</span>
-                    <img src="https://via.placeholder.com/80x80/2E3E50/FFFFFF?text=Crunchyroll" alt="Crunchyroll Icon" class="product-image">
-                    <h5 class="product-name">Crunchyroll</h5>
-                    <span class="product-price">Rp 45.000</span>
-                    <button class="add-to-cart-btn" data-product-name="Crunchyroll" data-price="45000"><i class="fas fa-cart-plus"></i></button>
+                    <img src="Viu.jpeg" alt="Viu Icon" class="product-image">
+                    <h5 class="product-name">Viu</h5>
+                    <span class="product-price">Mulai dari Rp 6.000</span>
+                    <button class="add-to-cart-btn" data-product-name="Viu"><i class="fas fa-cart-plus"></i></button>
                 </div>
-                <!-- Product Card 5: DeepL -->
+                <!-- Product Card 4: Spotify Premium (NEW) -->
+                <div class="product-card">
+                    <span class="product-badge">MUSIK & VIDEO</span>
+                    <img src="Spotify.jpeg" alt="Spotify Premium Icon" class="product-image">
+                    <h5 class="product-name">Spotify Premium</h5>
+                    <span class="product-price">Mulai dari Rp 9.000</span>
+                    <button class="add-to-cart-btn" data-product-name="Spotify Premium"><i class="fas fa-cart-plus"></i></button>
+                </div>
+                <!-- Product Card 5: YouTube Premium (NEW) -->
+                <div class="product-card">
+                    <span class="product-badge">MUSIK & VIDEO</span>
+                    <img src="YouTube Premium.jpeg" alt="YouTube Premium Icon" class="product-image">
+                    <h5 class="product-name">YouTube Premium</h5>
+                    <span class="product-price">Mulai dari Rp 55.000</span>
+                    <button class="add-to-cart-btn" data-product-name="YouTube Premium"><i class="fas fa-cart-plus"></i></button>
+                </div>
+                <!-- Product Card 6: DeepL -->
                 <div class="product-card">
                     <span class="product-badge">EDUKASI</span>
                     <img src="https://via.placeholder.com/80x80/2E3E50/FFFFFF?text=DeepL" alt="DeepL Icon" class="product-image">
                     <h5 class="product-name">DeepL</h5>
-                    <span class="product-price">Rp 35.000</span>
-                    <button class="add-to-cart-btn" data-product-name="DeepL" data-price="35000"><i class="fas fa-cart-plus"></i></button>
+                    <span class="product-price">Mulai dari Rp 35.000</span>
+                    <button class="add-to-cart-btn" data-product-name="DeepL"><i class="fas fa-cart-plus"></i></button>
                 </div>
-                <!-- Product Card 6: Duolingo -->
+                <!-- Product Card 7: Duolingo -->
                 <div class="product-card">
                     <span class="product-badge">EDUKASI</span>
-                    <img src="https://via.placeholder.com/80x80/2E3E50/FFFFFF?text=Duolingo" alt="Duolingo Icon" class="product-image">
+                    <img src="duolingo.png" alt="Duolingo Icon" class="product-image">
                     <h5 class="product-name">Duolingo</h5>
-                    <span class="product-price">Rp 30.000</span>
-                    <button class="add-to-cart-btn" data-product-name="Duolingo" data-price="30000"><i class="fas fa-cart-plus"></i></button>
+                    <span class="product-price">Mulai dari Rp 4.000</span>
+                    <button class="add-to-cart-btn" data-product-name="Duolingo"><i class="fas fa-cart-plus"></i></button>
                 </div>
-                <!-- Product Card 7: Gemini AI -->
+                <!-- Product Card 8: Gemini AI -->
                 <div class="product-card">
                     <span class="product-badge">AI</span>
                     <img src="https://via.placeholder.com/80x80/2E3E50/FFFFFF?text=Gemini" alt="Gemini AI Icon" class="product-image">
                     <h5 class="product-name">Gemini AI</h5>
-                    <span class="product-price">Rp 80.000</span>
-                    <button class="add-to-cart-btn" data-product-name="Gemini AI" data-price="80000"><i class="fas fa-cart-plus"></i></button>
+                    <span class="product-price">Mulai dari Rp 80.000</span>
+                    <button class="add-to-cart-btn" data-product-name="Gemini AI"><i class="fas fa-cart-plus"></i></button>
                 </div>
-                <!-- Product Card 8: Google Drive -->
+                
+                <!-- NEW PRODUCTS (Initially Hidden via JS) -->
+                <!-- Product Card 9: Google Drive -->
                 <div class="product-card">
                     <span class="product-badge">PRODUCTIVITY</span>
                     <img src="https://via.placeholder.com/80x80/2E3E50/FFFFFF?text=Drive" alt="Google Drive Icon" class="product-image">
                     <h5 class="product-name">Google Drive</h5>
-                    <span class="product-price">Rp 20.000</span>
-                    <button class="add-to-cart-btn" data-product-name="Google Drive" data-price="20000"><i class="fas fa-cart-plus"></i></button>
+                    <span class="product-price">Mulai dari Rp 20.000</span>
+                    <button class="add-to-cart-btn" data-product-name="Google Drive"><i class="fas fa-cart-plus"></i></button>
                 </div>
-
-                <!-- NEW PRODUCTS (Initially Hidden via JS) -->
-                <!-- Product Card 9: Canva Pro -->
+                <!-- Product Card 10: Canva Pro -->
                 <div class="product-card">
                     <span class="product-badge">DESAIN</span>
-                    <img src="https://via.placeholder.com/80x80/2E3E50/FFFFFF?text=Canva" alt="Canva Pro Icon" class="product-image">
+                    <img src="canva.png" alt="Canva Pro Icon" class="product-image">
                     <h5 class="product-name">Canva Pro</h5>
-                    <span class="product-price">Rp 65.000</span>
-                    <button class="add-to-cart-btn" data-product-name="Canva Pro" data-price="65000"><i class="fas fa-cart-plus"></i></button>
+                    <span class="product-price">Mulai dari Rp 2.500</span>
+                    <button class="add-to-cart-btn" data-product-name="Canva Pro"><i class="fas fa-cart-plus"></i></button>
                 </div>
-                <!-- Product Card 10: Picsart -->
+                <!-- Product Card 11: Picsart -->
                 <div class="product-card">
                     <span class="product-badge">DESAIN</span>
                     <img src="https://via.placeholder.com/80x80/2E3E50/FFFFFF?text=Picsart" alt="Picsart Icon" class="product-image">
                     <h5 class="product-name">Picsart</h5>
-                    <span class="product-price">Rp 40.000</span>
-                    <button class="add-to-cart-btn" data-product-name="Picsart" data-price="40000"><i class="fas fa-cart-plus"></i></button>
+                    <span class="product-price">Mulai dari Rp 10.000</span>
+                    <button class="add-to-cart-btn" data-product-name="Picsart"><i class="fas fa-cart-plus"></i></button>
                 </div>
-                <!-- Product Card 11: Scribd -->
+                <!-- Product Card 12: Scribd -->
                 <div class="product-card">
                     <span class="product-badge">EDUKASI</span>
                     <img src="https://via.placeholder.com/80x80/2E3E50/FFFFFF?text=Scribd" alt="Scribd Icon" class="product-image">
                     <h5 class="product-name">Scribd</h5>
-                    <span class="product-price">Rp 35.000</span>
-                    <button class="add-to-cart-btn" data-product-name="Scribd" data-price="35000"><i class="fas fa-cart-plus"></i></button>
+                    <span class="product-price">Mulai dari Rp 10.000</span>
+                    <button class="add-to-cart-btn" data-product-name="Scribd"><i class="fas fa-cart-plus"></i></button>
                 </div>
-                <!-- Product Card 12: WeTV -->
+                <!-- Product Card 13: WeTV -->
                 <div class="product-card">
                     <span class="product-badge">MUSIK & VIDEO</span>
                     <img src="https://via.placeholder.com/80x80/2E3E50/FFFFFF?text=WeTV" alt="WeTV Icon" class="product-image">
                     <h5 class="product-name">WeTV</h5>
-                    <span class="product-price">Rp 40.000</span>
-                    <button class="add-to-cart-btn" data-product-name="WeTV" data-price="40000"><i class="fas fa-cart-plus"></i></button>
+                    <span class="product-price">Mulai dari Rp 22.000</span>
+                    <button class="add-to-cart-btn" data-product-name="WeTV"><i class="fas fa-cart-plus"></i></button>
                 </div>
-                <!-- Product Card 13: VPN Express -->
+                <!-- Product Card 14: VPN Express -->
                 <div class="product-card">
                     <span class="product-badge">VPN</span>
                     <img src="https://via.placeholder.com/80x80/2E3E50/FFFFFF?text=Express" alt="VPN Express Icon" class="product-image">
                     <h5 class="product-name">VPN Express</h5>
-                    <span class="product-price">Rp 80.000</span>
-                    <button class="add-to-cart-btn" data-product-name="VPN Express" data-price="80000"><i class="fas fa-cart-plus"></i></button>
+                    <span class="product-price">Mulai dari Rp 8.000</span>
+                    <button class="add-to-cart-btn" data-product-name="VPN Express"><i class="fas fa-cart-plus"></i></button>
                 </div>
-                <!-- Product Card 14: VPN HMA -->
+                <!-- Product Card 15: VPN HMA -->
                 <div class="product-card">
                     <span class="product-badge">VPN</span>
                     <img src="https://via.placeholder.com/80x80/2E3E50/FFFFFF?text=HMA" alt="VPN HMA Icon" class="product-image">
                     <h5 class="product-name">VPN HMA</h5>
-                    <span class="product-price">Rp 70.000</span>
-                    <button class="add-to-cart-btn" data-product-name="VPN HMA" data-price="70000"><i class="fas fa-cart-plus"></i></button>
+                    <span class="product-price">Mulai dari Rp 8.000</span>
+                    <button class="add-to-cart-btn" data-product-name="VPN HMA"><i class="fas fa-cart-plus"></i></button>
                 </div>
-                <!-- Product Card 15: VPN Surfshark -->
+                <!-- Product Card 16: VPN Surfshark -->
                 <div class="product-card">
                     <span class="product-badge">VPN</span>
                     <img src="https://via.placeholder.com/80x80/2E3E50/FFFFFF?text=Surfshark" alt="VPN Surfshark Icon" class="product-image">
                     <h5 class="product-name">VPN Surfshark</h5>
-                    <span class="product-price">Rp 75.000</span>
-                    <button class="add-to-cart-btn" data-product-name="VPN Surfshark" data-price="75000"><i class="fas fa-cart-plus"></i></button>
+                    <span class="product-price">Mulai dari Rp 7.000</span>
+                    <button class="add-to-cart-btn" data-product-name="VPN Surfshark"><i class="fas fa-cart-plus"></i></button>
                 </div>
-                <!-- Product Card 16: Prime Video -->
+                <!-- Product Card 17: Prime Video -->
                 <div class="product-card">
                     <span class="product-badge">MUSIK & VIDEO</span>
                     <img src="https://via.placeholder.com/80x80/2E3E50/FFFFFF?text=Prime" alt="Prime Video Icon" class="product-image">
                     <h5 class="product-name">Prime Video</h5>
-                    <span class="product-price">Rp 50.000</span>
-                    <button class="add-to-cart-btn" data-product-name="Prime Video" data-price="50000"><i class="fas fa-cart-plus"></i></button>
+                    <span class="product-price">Mulai dari Rp 14.000</span>
+                    <button class="add-to-cart-btn" data-product-name="Prime Video"><i class="fas fa-cart-plus"></i></button>
                 </div>
-                <!-- Product Card 17: Apple Music -->
+                <!-- Product Card 18: Apple Music -->
                 <div class="product-card">
                     <span class="product-badge">MUSIK & VIDEO</span>
-                    <img src="https://via.placeholder.com/80x80/2E3E50/FFFFFF?text=Apple Music" alt="Apple Music Icon" class="product-image">
+                    <img src="applemusic.png" alt="Apple Music Icon" class="product-image">
                     <h5 class="product-name">Apple Music</h5>
-                    <span class="product-price">Rp 45.000</span>
-                    <button class="add-to-cart-btn" data-product-name="Apple Music" data-price="45000"><i class="fas fa-cart-plus"></i></button>
+                    <span class="product-price">Mulai dari Rp 9.000</span>
+                    <button class="add-to-cart-btn" data-product-name="Apple Music"><i class="fas fa-cart-plus"></i></button>
                 </div>
-                <!-- Product Card 18: Alight Motion -->
+                <!-- Product Card 19: Alight Motion -->
                 <div class="product-card">
                     <span class="product-badge">DESAIN</span>
                     <img src="https://via.placeholder.com/80x80/2E3E50/FFFFFF?text=Alight" alt="Alight Motion Icon" class="product-image">
                     <h5 class="product-name">Alight Motion</h5>
-                    <span class="product-price">Rp 50.000</span>
-                    <button class="add-to-cart-btn" data-product-name="Alight Motion" data-price="50000"><i class="fas fa-cart-plus"></i></button>
+                    <span class="product-price">Mulai dari Rp 10.000</span>
+                    <button class="add-to-cart-btn" data-product-name="Alight Motion"><i class="fas fa-cart-plus"></i></button>
                 </div>
-                <!-- Product Card 19: GDrive Lifetime -->
+                <!-- Product Card 20: GDrive Lifetime -->
                 <div class="product-card">
                     <span class="product-badge">PRODUCTIVITY</span>
                     <img src="https://via.placeholder.com/80x80/2E3E50/FFFFFF?text=GDrive" alt="Google Drive Lifetime Icon" class="product-image">
                     <h5 class="product-name">GDrive Lifetime</h5>
-                    <span class="product-price">Rp 150.000</span>
-                    <button class="add-to-cart-btn" data-product-name="GDrive Lifetime" data-price="150000"><i class="fas fa-cart-plus"></i></button>
+                    <span class="product-price">Mulai dari Rp 35.000</span>
+                    <button class="add-to-cart-btn" data-product-name="GDrive Lifetime"><i class="fas fa-cart-plus"></i></button>
+                </div>
+                <!-- Product Card 21: Unlock Slideshare (NEW) -->
+                <div class="product-card">
+                    <span class="product-badge">EDUKASI</span>
+                    <img src="https://via.placeholder.com/80x80/2E3E50/FFFFFF?text=Slideshare" alt="Unlock Slideshare Icon" class="product-image">
+                    <h5 class="product-name">Unlock Slideshare</h5>
+                    <span class="product-price">Mulai dari Rp 1.500</span>
+                    <button class="add-to-cart-btn" data-product-name="Unlock Slideshare"><i class="fas fa-cart-plus"></i></button>
+                </div>
+                <!-- Product Card 22: Zoom (NEW) -->
+                <div class="product-card">
+                    <span class="product-badge">PRODUCTIVITY</span>
+                    <img src="https://via.placeholder.com/80x80/2E3E50/FFFFFF?text=Zoom" alt="Zoom Icon" class="product-image">
+                    <h5 class="product-name">Zoom</h5>
+                    <span class="product-price">Mulai dari Rp 7.000</span>
+                    <button class="add-to-cart-btn" data-product-name="Zoom"><i class="fas fa-cart-plus"></i></button>
                 </div>
             </section>
 
@@ -1330,6 +1485,21 @@
         </div>
     </div>
 
+    <!-- NEW: Variation Selection Modal -->
+    <div class="modal-overlay" id="variationModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="variationModalTitle">Pilih Durasi Premium</h3>
+                <button class="modal-close-btn" id="closeVariationModalBtn">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="variation-options" id="variationOptionsContainer">
+                    <!-- Variations will be dynamically inserted here -->
+                </div>
+                <button class="btn-lanjut-pembayaran" id="addVariedProductToCartBtn">Tambahkan ke Keranjang</button>
+            </div>
+        </div>
+    </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
@@ -1410,6 +1580,230 @@
             const addToCartButtons = document.querySelectorAll('.add-to-cart-btn');
             const btnLanjutPembayaran = document.querySelector('.btn-lanjut-pembayaran');
 
+            // NEW: Elements for the Variation Selection Modal
+            const variationModal = document.getElementById('variationModal');
+            const closeVariationModalBtn = document.getElementById('closeVariationModalBtn');
+            const variationModalTitle = document.getElementById('variationModalTitle');
+            const variationOptionsContainer = document.getElementById('variationOptionsContainer');
+            const addVariedProductToCartBtn = document.getElementById('addVariedProductToCartBtn');
+
+            let currentProductForVariation = null; // To store the product being configured
+
+            // Define product data with variations (this is crucial!)
+            // Each product will have a 'variations' array
+            const allProductsData = {
+                "CapCut": {
+                    image: "capcutlogo.png",
+                    badge: "DESAIN",
+                    variations: [{
+                        duration: "7 Hari",
+                        price: 5000
+                    }, {
+                        duration: "1 Bulan",
+                        price: 15000
+                    }, {
+                        duration: "6 Bulan",
+                        price: 150000
+                    }]
+                },
+                "Blackbox AI": {
+                    image: "Blackbox.png",
+                    badge: "AI",
+                    variations: [{
+                        duration: "7 Hari",
+                        price: 45000
+                    }, {
+                        duration: "1 Bulan",
+                        price: 90000
+                    }, {
+                        duration: "3 Bulan",
+                        price: 240000
+                    }]
+                },
+                "Viu": {
+                    image: "Viu.jpeg",
+                    badge: "MUSIK & VIDEO",
+                    variations: [{
+                        duration: "12 Bulan",
+                        price: 6000
+                    }]
+                },
+                "Spotify Premium": {
+                    image: "Spotify.jpeg",
+                    badge: "MUSIK & VIDEO",
+                    variations: [{
+                        duration: "1 Bulan",
+                        price: 9000
+                    }]
+                },
+                "YouTube Premium": {
+                    image: "YouTube Premium.jpeg",
+                    badge: "MUSIK & VIDEO",
+                    variations: [{
+                        duration: "1 Bulan",
+                        price: 55000
+                    }, {
+                        duration: "3 Bulan",
+                        price: 150000
+                    }]
+                },
+                "DeepL": {
+                    image: "https://via.placeholder.com/80x80/2E3E50/FFFFFF?text=DeepL",
+                    badge: "EDUKASI",
+                    variations: [{
+                        duration: "1 Bulan",
+                        price: 35000
+                    }]
+                },
+                "Duolingo": {
+                    image: "duolingo.png",
+                    badge: "EDUKASI",
+                    variations: [{
+                        duration: "Code Redeem",
+                        price: 4000
+                    }]
+                },
+                "Gemini AI": {
+                    image: "https://via.placeholder.com/80x80/2E3E50/FFFFFF?text=Gemini",
+                    badge: "AI",
+                    variations: [{
+                        duration: "1 Bulan",
+                        price: 80000
+                    }, {
+                        duration: "3 Bulan",
+                        price: 220000
+                    }]
+                },
+                "Google Drive": {
+                    image: "https://via.placeholder.com/80x80/2E3E50/FFFFFF?text=Drive",
+                    badge: "PRODUCTIVITY",
+                    variations: [{
+                        duration: "1 Bulan",
+                        price: 20000
+                    }]
+                },
+                "Canva Pro": {
+                    image: "canva.png",
+                    badge: "DESAIN",
+                    variations: [{
+                        duration: "1 Bulan",
+                        price: 2500
+                    }, {
+                        duration: "3 Bulan",
+                        price: 6000
+                    }, {
+                        duration: "6 Bulan",
+                        price: 12000
+                    }, {
+                        duration: "1 Tahun",
+                        price: 24000
+                    }]
+                },
+                "Picsart": {
+                    image: "https://via.placeholder.com/80x80/2E3E50/FFFFFF?text=Picsart",
+                    badge: "DESAIN",
+                    variations: [{
+                        duration: "1 Bulan",
+                        price: 10000
+                    }]
+                },
+                "Scribd": {
+                    image: "https://via.placeholder.com/80x80/2E3E50/FFFFFF?text=Scribd",
+                    badge: "EDUKASI",
+                    variations: [{
+                        duration: "1 Bulan",
+                        price: 10000
+                    }]
+                },
+                "WeTV": {
+                    image: "https://via.placeholder.com/80x80/2E3E50/FFFFFF?text=WeTV",
+                    badge: "MUSIK & VIDEO",
+                    variations: [{
+                        duration: "1 Bulan",
+                        price: 22000
+                    }]
+                },
+                "VPN Express": {
+                    image: "https://via.placeholder.com/80x80/2E3E50/FFFFFF?text=Express",
+                    badge: "VPN",
+                    variations: [{
+                        duration: "1 Bulan",
+                        price: 8000
+                    }]
+                },
+                "VPN HMA": {
+                    image: "https://via.placeholder.com/80x80/2E3E50/FFFFFF?text=HMA",
+                    badge: "VPN",
+                    variations: [{
+                        duration: "1 Bulan",
+                        price: 8000
+                    }]
+                },
+                "VPN Surfshark": {
+                    image: "https://via.placeholder.com/80x80/2E3E50/FFFFFF?text=Surfshark",
+                    badge: "VPN",
+                    variations: [{
+                        duration: "Premium 7 Hari",
+                        price: 7000
+                    }, {
+                        duration: "Reedem 2 Bulan",
+                        price: 15000
+                    }, {
+                        duration: "Premium 2 Bulan",
+                        price: 32000
+                    }]
+                },
+                "Prime Video": {
+                    image: "https://via.placeholder.com/80x80/2E3E50/FFFFFF?text=Prime",
+                    badge: "MUSIK & VIDEO",
+                    variations: [{
+                        duration: "1 Bulan",
+                        price: 14000
+                    }]
+                },
+                "Apple Music": {
+                    image: "applemusic.png",
+                    badge: "MUSIK & VIDEO",
+                    variations: [{
+                        duration: "Lifetime",
+                        price: 9000
+                    }]
+                },
+                "Alight Motion": {
+                    image: "alightmotion.png",
+                    badge: "DESAIN",
+                    variations: [{
+                        duration: "12 Bulan",
+                        price: 10000
+                    }]
+                },
+                "GDrive Lifetime": {
+                    image: "https://via.placeholder.com/80x80/2E3E50/FFFFFF?text=GDrive",
+                    badge: "PRODUCTIVITY",
+                    variations: [{
+                        duration: "1 TB Storage",
+                        price: 35000
+                    }]
+                },
+                "Unlock Slideshare": {
+                    image: "https://via.placeholder.com/80x80/2E3E50/FFFFFF?text=Slideshare",
+                    badge: "EDUKASI",
+                    variations: [{
+                        duration: "1 Link",
+                        price: 1500
+                    }]
+                },
+                "Zoom": {
+                    image: "https://via.placeholder.com/80x80/2E3E50/FFFFFF?text=Zoom",
+                    badge: "PRODUCTIVITY",
+                    variations: [{
+                        duration: "14 Hari",
+                        price: 7000
+                    }]
+                }
+            };
+
+
             let cartItems = []; // Array untuk menyimpan item di keranjang
 
             // Load cart from localStorage saat halaman dimuat
@@ -1417,20 +1811,8 @@
                 const storedCart = localStorage.getItem('xiamoStoreCart');
                 if (storedCart) {
                     try {
-                        // Pastikan ini parsing data yang benar
                         const parsedCart = JSON.parse(storedCart);
-                        // Filter out single-item orders from "Jasa Suntik" page, if any.
-                        // We only want multi-item cart behavior for "Aplikasi Premium"
-                        // Or, assume cart is always replaced by Jasa Suntik, and needs to be cleared if coming from there
-                        // For this implementation, we simply load whatever is there.
-                        // A more robust solution might clear cart if navigated from 'jasasuntik.html'
-                        if (parsedCart.length === 1 && !parsedCart[0].isFromPremiumPage) { // Simplified check
-                             // If it's a single item potentially from Jasa Suntik, clear it if we want multi-item cart
-                             // For now, let's just use it as is, but be aware of potential mix.
-                             cartItems = parsedCart;
-                        } else {
-                            cartItems = parsedCart;
-                        }
+                        cartItems = parsedCart;
                     } catch (e) {
                         console.error("Error parsing cart data from localStorage:", e);
                         cartItems = []; // Reset if parsing fails
@@ -1466,8 +1848,7 @@
                     cartItems.forEach((item) => {
                         const cartItemDiv = document.createElement('div');
                         cartItemDiv.classList.add('cart-item');
-                        // Gunakan nama produk sebagai ID unik atau data-attribute jika diperlukan untuk penghapusan/kuantitas
-                        cartItemDiv.dataset.productName = item.name;
+                        cartItemDiv.dataset.productName = item.name; // Use full name with duration for uniqueness
 
                         cartItemDiv.innerHTML = `
                             <div class="cart-item-details">
@@ -1497,13 +1878,13 @@
                 localStorage.setItem('xiamoStoreCart', JSON.stringify(cartItems));
             }
 
-            // Fungsi untuk membuka modal
+            // Fungsi untuk membuka modal keranjang
             function openCartModal() {
                 updateCartDisplay(); // Pastikan tampilan keranjang terbaru saat dibuka
                 cartModal.classList.add('active');
             }
 
-            // Fungsi untuk menutup modal
+            // Fungsi untuk menutup modal keranjang
             function closeCartModal() {
                 cartModal.classList.remove('active');
             }
@@ -1527,36 +1908,103 @@
                 });
             }
 
-            // === Fungsionalitas Tombol 'Tambah ke Keranjang' di kartu produk ===
+            // === NEW: Fungsionalitas Modal Pemilihan Variasi ===
+
+            // Function to open variation modal
+            function openVariationModal(productName) {
+                currentProductForVariation = productName;
+                variationModalTitle.textContent = `Pilih Durasi Premium untuk ${productName}`;
+                variationOptionsContainer.innerHTML = ''; // Clear previous options
+
+                const productData = allProductsData[productName];
+                if (productData && productData.variations && productData.variations.length > 0) {
+                    productData.variations.forEach((variation, index) => {
+                        const label = document.createElement('label');
+                        label.innerHTML = `
+                            <input type="radio" name="product-duration" value="${variation.duration}" data-price="${variation.price}" ${index === 0 ? 'checked' : ''}>
+                            <div class="variation-info">
+                                <strong>${variation.duration}</strong>
+                                <span>Akses Premium</span>
+                            </div>
+                            <span class="variation-price">${formatRupiah(variation.price)}</span>
+                        `;
+                        variationOptionsContainer.appendChild(label);
+                    });
+                    addVariedProductToCartBtn.disabled = false;
+                    addVariedProductToCartBtn.style.opacity = '1';
+                    addVariedProductToCartBtn.style.cursor = 'pointer';
+                } else {
+                    variationOptionsContainer.innerHTML = `<p style="text-align: center; color: rgba(255,255,255,0.7);">Tidak ada variasi tersedia untuk produk ini.</p>`;
+                    addVariedProductToCartBtn.disabled = true;
+                    addVariedProductToCartBtn.style.opacity = '0.5';
+                    addVariedProductToCartBtn.style.cursor = 'not-allowed';
+                }
+
+                variationModal.classList.add('active');
+            }
+
+            // Function to close variation modal
+            function closeVariationModal() {
+                variationModal.classList.remove('active');
+                currentProductForVariation = null; // Clear the product context
+            }
+
+            // Event listener for opening the variation modal (replaces direct add to cart)
             addToCartButtons.forEach(button => {
+                // Pastikan tidak ada listener lama yang menumpuk jika kode ini dijalankan berkali-kali
+                // button.removeEventListener('click', (e) => { /* Dummy function to remove previous general handler */ });
                 button.addEventListener('click', () => {
                     const productName = button.dataset.productName;
-                    const productPrice = parseInt(button.dataset.price);
+                    openVariationModal(productName);
+                });
+            });
 
-                    // Cek apakah produk sudah ada di keranjang
-                    const existingItem = cartItems.find(item => item.name === productName);
+            // Event listener for adding product with variation to cart from the variation modal
+            addVariedProductToCartBtn.addEventListener('click', () => {
+                const selectedRadio = variationOptionsContainer.querySelector('input[name="product-duration"]:checked');
+
+                if (selectedRadio && currentProductForVariation) {
+                    const duration = selectedRadio.value;
+                    const price = parseInt(selectedRadio.dataset.price);
+
+                    const itemDisplayName = `${currentProductForVariation} (${duration})`;
+
+                    const existingItem = cartItems.find(item => item.name === itemDisplayName);
 
                     if (existingItem) {
-                        // Jika sudah ada, tambahkan kuantitasnya
                         existingItem.quantity++;
                     } else {
-                        // Jika belum ada, tambahkan item baru
                         cartItems.push({
-                            name: productName,
-                            price: productPrice,
+                            name: itemDisplayName,
+                            price: price,
                             quantity: 1
                         });
                     }
 
-                    updateCartDisplay(); // Perbarui tampilan keranjang
-                    alert(`'${productName}' telah ditambahkan ke keranjang!`); // Pesan konfirmasi
-                });
+                    updateCartDisplay();
+                    closeVariationModal();
+                    alert(`'${itemDisplayName}' telah ditambahkan ke keranjang!`);
+                } else {
+                    alert("Silakan pilih durasi terlebih dahulu.");
+                }
+            });
+
+            // Event listener for closing variation modal
+            closeVariationModalBtn.addEventListener('click', closeVariationModal);
+            variationModal.addEventListener('click', (event) => {
+                if (event.target === variationModal) {
+                    closeVariationModal();
+                }
             });
 
             // === Fungsionalitas Tombol 'Hapus', '+', '-' di dalam Modal & Input Kuantitas (menggunakan event delegation) ===
             modalCartItems.addEventListener('click', (event) => {
                 const targetBtn = event.target;
-                const productName = targetBtn.dataset.productName;
+                // Pastikan kita mendapatkan parent dengan data-product-name yang benar
+                const cartItemElement = targetBtn.closest('.cart-item');
+                if (!cartItemElement) return;
+
+                const productName = cartItemElement.dataset.productName;
                 let item = cartItems.find(i => i.name === productName);
 
                 if (!item) return; // Item tidak ditemukan
@@ -1617,30 +2065,74 @@
             updateCartDisplay();
 
             // === Fungsionalitas "Tampilkan Lebih Banyak" ===
-            const productCards = document.querySelectorAll('.product-grid .product-card');
-            const loadMoreButton = document.getElementById('loadMoreBtn');
-            const initialVisibleCount = 8; // Jumlah produk yang akan ditampilkan di awal
+            // Fungsi untuk menghasilkan kartu produk
+            function generateProductCard(productName, data) {
+                const card = document.createElement('div');
+                card.classList.add('product-card');
 
-            function initializeProductDisplay() {
-                if (productCards.length > initialVisibleCount) {
-                    for (let i = initialVisibleCount; i < productCards.length; i++) {
-                        productCards[i].classList.add('hidden');
-                    }
-                    loadMoreButton.style.display = 'block'; // Tampilkan tombol jika ada produk tersembunyi
-                } else {
-                    loadMoreButton.style.display = 'none'; // Sembunyikan tombol jika semua produk sudah terlihat
+                // Determine image or icon
+                let mediaHtml = '';
+                if (data.image) {
+                    mediaHtml = `<img src="${data.image}" alt="${productName} Icon" class="product-image">`;
+                } else if (data.iconClass) { // If you want to use Font Awesome icons directly
+                    mediaHtml = `<i class="${data.iconClass} product-icon-fa"></i>`;
+                } else { // Fallback if no specific image/icon is given
+                    mediaHtml = `<img src="https://via.placeholder.com/80x80/2E3E50/FFFFFF?text=${productName.replace(/\s/g, '+')}" alt="${productName} Icon" class="product-image">`;
                 }
+                
+                // Get the lowest price for display
+                const lowestPrice = data.variations.length > 0
+                    ? data.variations.reduce((min, p) => p.price < min ? p.price : min, data.variations[0].price)
+                    : 0; // Default to 0 if no variations
+
+                card.innerHTML = `
+                    <span class="product-badge">${data.badge}</span>
+                    ${mediaHtml}
+                    <h5 class="product-name">${productName}</h5>
+                    <span class="product-price">${lowestPrice > 0 ? 'Mulai dari ' + formatRupiah(lowestPrice) : 'Harga Tidak Tersedia'}</span>
+                    <button class="add-to-cart-btn" data-product-name="${productName}"><i class="fas fa-cart-plus"></i></button>
+                `;
+                return card;
             }
 
-            loadMoreButton.addEventListener('click', () => {
-                productCards.forEach(card => {
-                    card.classList.remove('hidden');
-                });
-                loadMoreButton.style.display = 'none'; // Sembunyikan tombol setelah semua ditampilkan
-            });
+            const productGrid = document.getElementById('productGrid');
+            const loadMoreButton = document.getElementById('loadMoreBtn');
+            const productsPerLoad = 8; // Number of products to show initially and per "Load More" click
+            let loadedProductCount = 0;
 
-            // Panggil ini saat DOM selesai dimuat untuk mengatur tampilan awal produk
-            initializeProductDisplay();
+            // Function to load products into the grid
+            function loadProducts() {
+                // Clear existing cards if refreshing the grid
+                productGrid.innerHTML = '';
+                loadedProductCount = 0;
+
+                const productNames = Object.keys(allProductsData);
+                
+                // Sort products alphabetically by name (optional)
+                productNames.sort();
+
+                productNames.forEach(name => {
+                    const productData = allProductsData[name];
+                    const card = generateProductCard(name, productData);
+                    productGrid.appendChild(card);
+                });
+
+                // Re-initialize add to cart buttons listeners after new cards are added
+                document.querySelectorAll('.add-to-cart-btn').forEach(button => {
+                    button.removeEventListener('click', (e) => { /* Dummy function */ }); // Remove old listeners if any
+                    button.addEventListener('click', (event) => {
+                        const productName = event.currentTarget.dataset.productName;
+                        openVariationModal(productName);
+                    });
+                });
+
+                // Update load more button visibility
+                loadMoreButton.style.display = 'none'; // With all products generated at once, no need for "Load More"
+            }
+
+            // Call loadProducts on page load to generate all products based on allProductsData
+            loadProducts();
+
 
             // === NEW: Fungsionalitas Info Modal (untuk link footer) ===
             const infoModal = document.getElementById('infoModal');
