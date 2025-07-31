@@ -381,12 +381,20 @@
             display: none;
         }
 
+        /* UPDATED: Larger product image by default */
         .product-image {
-            width: 80px;
-            height: 80px;
+            width: 100px; /* Increased size */
+            height: 100px; /* Increased size */
             object-fit: cover;
             border-radius: 10px;
             margin: 0 auto 15px;
+        }
+
+        /* Specific sizing for CapCut and Unlock Slideshare */
+        .product-image[src="capcutlogo.png"],
+        .product-image[src="slideshare.jpeg"] {
+            width: 80px;
+            height: 80px;
         }
 
         .product-icon-fa {
@@ -402,20 +410,7 @@
             border-radius: 10px;
         }
 
-        .product-badge {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            background: linear-gradient(90deg, var(--menu-item-start-gradient), var(--menu-item-end-gradient)); /* Gunakan gradien aksen */
-            color: var(--text-secondary);
-            padding: 5px 10px;
-            border-radius: 5px;
-            font-size: 0.75em;
-            font-weight: 600;
-            text-transform: uppercase;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-            z-index: 1;
-        }
+        /* REMOVED: .product-badge styles */
 
         .product-name {
             font-weight: 600;
@@ -1223,180 +1218,173 @@
                 <!-- Products initially visible -->
                 <!-- Product Card 1: CapCut -->
                 <div class="product-card">
-                    <span class="product-badge">DESAIN</span>
+                    <!-- REMOVED: <span class="product-badge">DESAIN</span> -->
                     <img src="capcutlogo.png" alt="CapCut Icon" class="product-image">
                     <h5 class="product-name">CapCut</h5>
-                    <span class="product-price">Mulai dari Rp 5.000</span>
+                    <span class="product-price">Rp 5.000</span>
                     <button class="add-to-cart-btn" data-product-name="CapCut"><i class="fas fa-cart-plus"></i></button>
                 </div>
                 <!-- Product Card 2: Blackbox AI (NEW) -->
                 <div class="product-card">
-                    <span class="product-badge">AI</span>
+                    <!-- REMOVED: <span class="product-badge">AI</span> -->
                     <img src="blackbox.png" alt="Blackbox AI Icon" class="product-image">
                     <h5 class="product-name">Blackbox AI</h5>
-                    <span class="product-price">Mulai dari Rp 45.000</span>
+                    <span class="product-price">Rp 45.000</span>
                     <button class="add-to-cart-btn" data-product-name="Blackbox AI"><i class="fas fa-cart-plus"></i></button>
                 </div>
                 <!-- Product Card 3: Viu (NEW) -->
                 <div class="product-card">
-                    <span class="product-badge">MUSIK & VIDEO</span>
+                    <!-- REMOVED: <span class="product-badge">MUSIK & VIDEO</span> -->
                     <img src="Viu.jpeg" alt="Viu Icon" class="product-image">
                     <h5 class="product-name">Viu</h5>
-                    <span class="product-price">Mulai dari Rp 6.000</span>
+                    <span class="product-price">Rp 6.000</span>
                     <button class="add-to-cart-btn" data-product-name="Viu"><i class="fas fa-cart-plus"></i></button>
                 </div>
                 <!-- Product Card 4: Spotify Premium (NEW) -->
                 <div class="product-card">
-                    <span class="product-badge">MUSIK & VIDEO</span>
+                    <!-- REMOVED: <span class="product-badge">MUSIK & VIDEO</span> -->
                     <img src="Spotify.jpeg" alt="Spotify Premium Icon" class="product-image">
                     <h5 class="product-name">Spotify Premium</h5>
-                    <span class="product-price">Mulai dari Rp 9.000</span>
+                    <span class="product-price">Rp 9.000</span>
                     <button class="add-to-cart-btn" data-product-name="Spotify Premium"><i class="fas fa-cart-plus"></i></button>
                 </div>
                 <!-- Product Card 5: YouTube Premium (NEW) -->
                 <div class="product-card">
-                    <span class="product-badge">MUSIK & VIDEO</span>
+                    <!-- REMOVED: <span class="product-badge">MUSIK & VIDEO</span> -->
                     <img src="YouTube Premium.jpeg" alt="YouTube Premium Icon" class="product-image">
                     <h5 class="product-name">YouTube Premium</h5>
-                    <span class="product-price">Mulai dari Rp 55.000</span>
+                    <span class="product-price">Rp 55.000</span>
                     <button class="add-to-cart-btn" data-product-name="YouTube Premium"><i class="fas fa-cart-plus"></i></button>
                 </div>
                 <!-- Product Card 6: DeepL -->
                 <div class="product-card">
-                    <span class="product-badge">EDUKASI</span>
+                    <!-- REMOVED: <span class="product-badge">EDUKASI</span> -->
                     <img src="deepl.png" alt="DeepL Icon" class="product-image">
                     <h5 class="product-name">DeepL</h5>
-                    <span class="product-price">Mulai dari Rp 35.000</span>
+                    <span class="product-price">Rp 35.000</span>
                     <button class="add-to-cart-btn" data-product-name="DeepL"><i class="fas fa-cart-plus"></i></button>
                 </div>
                 <!-- Product Card 7: Duolingo -->
                 <div class="product-card">
-                    <span class="product-badge">EDUKASI</span>
+                    <!-- REMOVED: <span class="product-badge">EDUKASI</span> -->
                     <img src="duolingo.png" alt="Duolingo Icon" class="product-image">
                     <h5 class="product-name">Duolingo</h5>
-                    <span class="product-price">Mulai dari Rp 4.000</span>
+                    <span class="product-price">Rp 4.000</span>
                     <button class="add-to-cart-btn" data-product-name="Duolingo"><i class="fas fa-cart-plus"></i></button>
                 </div>
                 <!-- Product Card 8: Gemini AI -->
                 <div class="product-card">
-                    <span class="product-badge">AI</span>
+                    <!-- REMOVED: <span class="product-badge">AI</span> -->
                     <img src="https://via.placeholder.com/80x80/2E3E50/FFFFFF?text=Gemini" alt="Gemini AI Icon" class="product-image">
                     <h5 class="product-name">Gemini AI</h5>
-                    <span class="product-price">Mulai dari Rp 80.000</span>
+                    <span class="product-price">Rp 80.000</span>
                     <button class="add-to-cart-btn" data-product-name="Gemini AI"><i class="fas fa-cart-plus"></i></button>
                 </div>
                 
                 <!-- NEW PRODUCTS (Initially Hidden via JS) -->
-                <!-- Product Card 9: Google Drive -->
-                <div class="product-card">
-                    <span class="product-badge">PRODUCTIVITY</span>
-                    <img src="https://via.placeholder.com/80x80/2E3E50/FFFFFF?text=Drive" alt="Google Drive Icon" class="product-image">
-                    <h5 class="product-name">Google Drive</h5>
-                    <span class="product-price">Mulai dari Rp 20.000</span>
-                    <button class="add-to-cart-btn" data-product-name="Google Drive"><i class="fas fa-cart-plus"></i></button>
-                </div>
+                <!-- REMOVED: Google Drive Product Card -->
                 <!-- Product Card 10: Canva Pro -->
                 <div class="product-card">
-                    <span class="product-badge">DESAIN</span>
+                    <!-- REMOVED: <span class="product-badge">DESAIN</span> -->
                     <img src="canva.png" alt="Canva Pro Icon" class="product-image">
                     <h5 class="product-name">Canva Pro</h5>
-                    <span class="product-price">Mulai dari Rp 2.500</span>
+                    <span class="product-price">Rp 2.500</span>
                     <button class="add-to-cart-btn" data-product-name="Canva Pro"><i class="fas fa-cart-plus"></i></button>
                 </div>
                 <!-- Product Card 11: Picsart -->
                 <div class="product-card">
-                    <span class="product-badge">DESAIN</span>
+                    <!-- REMOVED: <span class="product-badge">DESAIN</span> -->
                     <img src="https://via.placeholder.com/80x80/2E3E50/FFFFFF?text=Picsart" alt="Picsart Icon" class="product-image">
                     <h5 class="product-name">Picsart</h5>
-                    <span class="product-price">Mulai dari Rp 10.000</span>
+                    <span class="product-price">Rp 10.000</span>
                     <button class="add-to-cart-btn" data-product-name="Picsart"><i class="fas fa-cart-plus"></i></button>
                 </div>
                 <!-- Product Card 12: Scribd -->
                 <div class="product-card">
-                    <span class="product-badge">EDUKASI</span>
+                    <!-- REMOVED: <span class="product-badge">EDUKASI</span> -->
                     <img src="https://via.placeholder.com/80x80/2E3E50/FFFFFF?text=Scribd" alt="Scribd Icon" class="product-image">
                     <h5 class="product-name">Scribd</h5>
-                    <span class="product-price">Mulai dari Rp 10.000</span>
+                    <span class="product-price">Rp 10.000</span>
                     <button class="add-to-cart-btn" data-product-name="Scribd"><i class="fas fa-cart-plus"></i></button>
                 </div>
                 <!-- Product Card 13: WeTV -->
                 <div class="product-card">
-                    <span class="product-badge">MUSIK & VIDEO</span>
+                    <!-- REMOVED: <span class="product-badge">MUSIK & VIDEO</span> -->
                     <img src="https://via.placeholder.com/80x80/2E3E50/FFFFFF?text=WeTV" alt="WeTV Icon" class="product-image">
                     <h5 class="product-name">WeTV</h5>
-                    <span class="product-price">Mulai dari Rp 22.000</span>
+                    <span class="product-price">Rp 22.000</span>
                     <button class="add-to-cart-btn" data-product-name="WeTV"><i class="fas fa-cart-plus"></i></button>
                 </div>
                 <!-- Product Card 14: VPN Express -->
                 <div class="product-card">
-                    <span class="product-badge">VPN</span>
+                    <!-- REMOVED: <span class="product-badge">VPN</span> -->
                     <img src="https://via.placeholder.com/80x80/2E3E50/FFFFFF?text=Express" alt="VPN Express Icon" class="product-image">
                     <h5 class="product-name">VPN Express</h5>
-                    <span class="product-price">Mulai dari Rp 8.000</span>
+                    <span class="product-price">Rp 8.000</span>
                     <button class="add-to-cart-btn" data-product-name="VPN Express"><i class="fas fa-cart-plus"></i></button>
                 </div>
                 <!-- Product Card 15: VPN HMA -->
                 <div class="product-card">
-                    <span class="product-badge">VPN</span>
+                    <!-- REMOVED: <span class="product-badge">VPN</span> -->
                     <img src="https://via.placeholder.com/80x80/2E3E50/FFFFFF?text=HMA" alt="VPN HMA Icon" class="product-image">
                     <h5 class="product-name">VPN HMA</h5>
-                    <span class="product-price">Mulai dari Rp 8.000</span>
+                    <span class="product-price">Rp 8.000</span>
                     <button class="add-to-cart-btn" data-product-name="VPN HMA"><i class="fas fa-cart-plus"></i></button>
                 </div>
                 <!-- Product Card 16: VPN Surfshark -->
                 <div class="product-card">
-                    <span class="product-badge">VPN</span>
+                    <!-- REMOVED: <span class="product-badge">VPN</span> -->
                     <img src="https://via.placeholder.com/80x80/2E3E50/FFFFFF?text=Surfshark" alt="VPN Surfshark Icon" class="product-image">
                     <h5 class="product-name">VPN Surfshark</h5>
-                    <span class="product-price">Mulai dari Rp 7.000</span>
+                    <span class="product-price">Rp 7.000</span>
                     <button class="add-to-cart-btn" data-product-name="VPN Surfshark"><i class="fas fa-cart-plus"></i></button>
                 </div>
                 <!-- Product Card 17: Prime Video -->
                 <div class="product-card">
-                    <span class="product-badge">MUSIK & VIDEO</span>
+                    <!-- REMOVED: <span class="product-badge">MUSIK & VIDEO</span> -->
                     <img src="https://via.placeholder.com/80x80/2E3E50/FFFFFF?text=Prime" alt="Prime Video Icon" class="product-image">
                     <h5 class="product-name">Prime Video</h5>
-                    <span class="product-price">Mulai dari Rp 14.000</span>
+                    <span class="product-price">Rp 14.000</span>
                     <button class="add-to-cart-btn" data-product-name="Prime Video"><i class="fas fa-cart-plus"></i></button>
                 </div>
                 <!-- Product Card 18: Apple Music -->
                 <div class="product-card">
-                    <span class="product-badge">MUSIK & VIDEO</span>
+                    <!-- REMOVED: <span class="product-badge">MUSIK & VIDEO</span> -->
                     <img src="applemusic.png" alt="Apple Music Icon" class="product-image">
                     <h5 class="product-name">Apple Music</h5>
-                    <span class="product-price">Mulai dari Rp 9.000</span>
+                    <span class="product-price">Rp 9.000</span>
                     <button class="add-to-cart-btn" data-product-name="Apple Music"><i class="fas fa-cart-plus"></i></button>
                 </div>
                 <!-- Product Card 19: Alight Motion -->
                 <div class="product-card">
-                    <span class="product-badge">DESAIN</span>
+                    <!-- REMOVED: <span class="product-badge">DESAIN</span> -->
                     <img src="https://via.placeholder.com/80x80/2E3E50/FFFFFF?text=Alight" alt="Alight Motion Icon" class="product-image">
                     <h5 class="product-name">Alight Motion</h5>
-                    <span class="product-price">Mulai dari Rp 10.000</span>
+                    <span class="product-price">Rp 10.000</span>
                     <button class="add-to-cart-btn" data-product-name="Alight Motion"><i class="fas fa-cart-plus"></i></button>
                 </div>
                 <!-- Product Card 20: GDrive Lifetime -->
                 <div class="product-card">
-                    <span class="product-badge">PRODUCTIVITY</span>
+                    <!-- REMOVED: <span class="product-badge">PRODUCTIVITY</span> -->
                     <img src="https://via.placeholder.com/80x80/2E3E50/FFFFFF?text=GDrive" alt="Google Drive Lifetime Icon" class="product-image">
                     <h5 class="product-name">GDrive Lifetime</h5>
-                    <span class="product-price">Mulai dari Rp 35.000</span>
+                    <span class="product-price">Rp 35.000</span>
                     <button class="add-to-cart-btn" data-product-name="GDrive Lifetime"><i class="fas fa-cart-plus"></i></button>
                 </div>
                 <!-- Product Card 21: Unlock Slideshare (NEW) -->
                 <div class="product-card">
-                    <span class="product-badge">EDUKASI</span>
-                    <img src="https://via.placeholder.com/80x80/2E3E50/FFFFFF?text=Slideshare" alt="Unlock Slideshare Icon" class="product-image">
+                    <!-- REMOVED: <span class="product-badge">EDUKASI</span> -->
+                    <img src="slideshare.jpeg" alt="Unlock Slideshare Icon" class="product-image">
                     <h5 class="product-name">Unlock Slideshare</h5>
-                    <span class="product-price">Mulai dari Rp 1.500</span>
+                    <span class="product-price">Rp 1.500</span>
                     <button class="add-to-cart-btn" data-product-name="Unlock Slideshare"><i class="fas fa-cart-plus"></i></button>
                 </div>
                 <!-- Product Card 22: Zoom (NEW) -->
                 <div class="product-card">
-                    <span class="product-badge">PRODUCTIVITY</span>
+                    <!-- REMOVED: <span class="product-badge">PRODUCTIVITY</span> -->
                     <img src="https://via.placeholder.com/80x80/2E3E50/FFFFFF?text=Zoom" alt="Zoom Icon" class="product-image">
                     <h5 class="product-name">Zoom</h5>
-                    <span class="product-price">Mulai dari Rp 7.000</span>
+                    <span class="product-price">Rp 7.000</span>
                     <button class="add-to-cart-btn" data-product-name="Zoom"><i class="fas fa-cart-plus"></i></button>
                 </div>
             </section>
@@ -1621,7 +1609,7 @@
                     }]
                 },
                 "Viu": {
-                    image: "viu.png",
+                    image: "Viu.png", // Updated image name for consistency
                     badge: "MUSIK & VIDEO",
                     variations: [{
                         duration: "12 Bulan",
@@ -1629,7 +1617,7 @@
                     }]
                 },
                 "Spotify Premium": {
-                    image: "Spotify.png",
+                    image: "spotify.png", // Updated image name for consistency
                     badge: "MUSIK & VIDEO",
                     variations: [{
                         duration: "1 Bulan",
@@ -1637,7 +1625,7 @@
                     }]
                 },
                 "YouTube Premium": {
-                    image: "youtube.png",
+                    image: "youtube.png", // Updated image name for consistency
                     badge: "MUSIK & VIDEO",
                     variations: [{
                         duration: "1 Bulan",
@@ -1674,14 +1662,7 @@
                         price: 220000
                     }]
                 },
-                "Google Drive": {
-                    image: "gdrive.png",
-                    badge: "PRODUCTIVITY",
-                    variations: [{
-                        duration: "1 Bulan",
-                        price: 20000
-                    }]
-                },
+                // REMOVED: "Google Drive" entry from allProductsData
                 "Canva Pro": {
                     image: "canva.png",
                     badge: "DESAIN",
@@ -2086,10 +2067,10 @@
                     : 0; // Default to 0 if no variations
 
                 card.innerHTML = `
-                    <span class="product-badge">${data.badge}</span>
+                    <!-- REMOVED: <span class="product-badge">${data.badge}</span> -->
                     ${mediaHtml}
                     <h5 class="product-name">${productName}</h5>
-                    <span class="product-price">${lowestPrice > 0 ? 'Mulai dari ' + formatRupiah(lowestPrice) : 'Harga Tidak Tersedia'}</span>
+                    <span class="product-price">${formatRupiah(lowestPrice)}</span> <!-- REMOVED "Mulai dari " -->
                     <button class="add-to-cart-btn" data-product-name="${productName}"><i class="fas fa-cart-plus"></i></button>
                 `;
                 return card;
