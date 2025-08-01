@@ -484,6 +484,7 @@
                 flex: none;
                 width: 100%;
                 margin-bottom: 20px;
+                padding: 25px; /* Slightly reduced from 30px */
             }
         }
 
@@ -521,12 +522,15 @@
                 font-size: 1.6em;
             }
             .category-buttons {
-                grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+                grid-template-columns: repeat(auto-fit, minmax(90px, 1fr)); /* Further reduce minmax for more columns if possible */
                 padding: 10px;
             }
             .category-buttons .cat-btn {
                 padding: 8px 10px;
                 font-size: 0.8em;
+            }
+            .order-form-container, .info-panel {
+                padding: 20px; /* Reduced further for 768px */
             }
             .info-panel ul {
                 margin-left: 0;
@@ -544,7 +548,7 @@
                 font-size: 1.4em;
             }
             .category-buttons {
-                grid-template-columns: repeat(2, 1fr);
+                grid-template-columns: repeat(2, 1fr); /* Force 2 columns */
                 gap: 8px;
             }
             .category-buttons .cat-btn {
@@ -565,6 +569,28 @@
             .form-submit-btn {
                 padding: 12px 15px;
                 font-size: 1em;
+            }
+            .order-form-container, .info-panel {
+                padding: 15px; /* Further reduced for 480px */
+            }
+            .order-form-container h3, .info-panel h3 {
+                font-size: 1.3em; /* Adjust card titles */
+            }
+            .info-panel h4 {
+                font-size: 1em;
+            }
+            .info-panel p, .info-panel ul li {
+                font-size: 0.85em;
+            }
+            .service-details-display {
+                padding: 12px;
+                font-size: 0.9em;
+            }
+            .service-details-display .price-info {
+                font-size: 1em;
+            }
+            .service-details-display .min-max-info {
+                font-size: 0.8em;
             }
         }
     </style>
