@@ -14,30 +14,74 @@
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet" />
 
     <style>
+        /* CSS Variables for Dark Mode (Default) */
         :root {
-            /* Warna latar belakang dan kartu (Biru Keabu-abuan Gelap) */
-            --dark-deep: #1A2534; /* Sangat gelap, hampir hitam kebiruan */
-            --dark-blue: #233041; /* Biru keabu-abuan gelap yang kaya */
-            /* Menggunakan nilai RGBA untuk transparansi pada kartu utama dan elemen serupa */
-            --card-start-gradient: rgba(59, 77, 99, 0.65); /* #3B4D63 with opacity 65% */
-            --card-end-gradient: rgba(46, 62, 80, 0.65); /* #2E3E50 with opacity 65% */
+            --bg-deep: #1A2534; /* Body background, header background */
+            --bg-card-base: #233041; /* Base for transparent elements like search bar bg, cart items, select options */
+            --card-start-gradient: rgba(59, 77, 99, 0.65); /* Card gradient start */
+            --card-end-gradient: rgba(46, 62, 80, 0.65); /* Card gradient end */
 
-            /* Warna item menu dan elemen interaktif lainnya (Biru Keabu-abuan Terang) */
-            --menu-item-start-gradient: #6080A5; /* Biru keabu-abuan cerah yang hidup */
-            --menu-item-end-gradient: #8DAACB; /* Biru keabu-abuan yang lebih terang */
-            --menu-item-hover-start: #7FAACB; /* Hover start slightly lighter */
-            --menu-item-hover-end: #A0C2E2; /* Hover end slightly lighter */
+            --menu-item-start-gradient: #6080A5; /* Buttons, active categories gradient start */
+            --menu-item-end-gradient: #8DAACB; /* Buttons, active categories gradient end */
+            --menu-item-hover-start: #7FAACB; /* Button hover gradient start */
+            --menu-item-hover-end: #A0C2E2; /* Button hover gradient end */
 
-            /* Warna teks dan aksen */
-            --text-primary: #EBF2F7; /* Abu-abu kebiruan terang */
-            --text-secondary: #FFFFFF; /* Putih bersih */
-            --accent-glow: #78B2D4; /* Biru keabu-abuan cerah untuk efek glow */
-            --success-color: #4CAF50; /* Hijau untuk checkmark */
-            --red-alert-color: #FF5C5C; /* Merah untuk badge/alert */
+            --text-primary: #EBF2F7; /* Main text color */
+            --text-secondary: #FFFFFF; /* Headings, strong text, button text */
+            --accent-color: #78B2D4; /* Glow effects, some icons, prices, active elements */
+            --success-color: #4CAF50; /* Checkmarks, WhatsApp icon */
+            --red-alert-color: #FF5C5C; /* Cart badge, delete button */
 
-            /* Bayangan */
             --shadow-light: rgba(0, 0, 0, 0.45);
             --shadow-deep: rgba(0, 0, 0, 0.7);
+
+            --backdrop-filter-card: blur(8px); /* For hero, product cards, modals */
+            --backdrop-filter-panel: blur(5px); /* For category buttons, info panel (if used) */
+            --background-filter-blur: blur(10px); /* For fixed background image */
+            --blob-opacity: 0.28;
+
+            --input-bg-transparent: rgba(35, 48, 65, 0.5); /* Search input, form inputs */
+            --input-border-transparent: rgba(255, 255, 255, 0.1); /* Input borders */
+            --footer-bg: var(--dark-blue); /* Footer background */
+            --footer-text-muted: rgba(235, 242, 247, 0.7); /* Muted text in footer, info panel p, checkbox label */
+            --footer-border: rgba(255, 255, 255, 0.1); /* Footer top border, header bottom border */
+            --cart-item-bg: rgba(35, 48, 65, 0.5); /* Cart item background */
+            --quantity-editor-bg: rgba(0, 0, 0, 0.2); /* Quantity editor background */
+        }
+
+        /* CSS Variables for Light Mode */
+        body.light-mode {
+            --bg-deep: #F0F2F5;
+            --bg-card-base: #FFFFFF;
+            --card-start-gradient: rgba(255, 255, 255, 0.9);
+            --card-end-gradient: rgba(245, 247, 250, 0.9);
+
+            --menu-item-start-gradient: #4A69BD;
+            --menu-item-end-gradient: #6B8EED;
+            --menu-item-hover-start: #5C7CCD;
+            --menu-item-hover-end: #7DAFFF;
+
+            --text-primary: #333333;
+            --text-secondary: #1A1A1A;
+            --accent-color: #3B82F6;
+            --success-color: #28A745;
+            --red-alert-color: #E74C3C;
+
+            --shadow-light: rgba(0, 0, 0, 0.1);
+            --shadow-deep: rgba(0, 0, 0, 0.2);
+
+            --backdrop-filter-card: blur(4px);
+            --backdrop-filter-panel: blur(2px);
+            --background-filter-blur: blur(6px);
+            --blob-opacity: 0.15;
+
+            --input-bg-transparent: rgba(255, 255, 255, 0.8);
+            --input-border-transparent: rgba(0, 0, 0, 0.15);
+            --footer-bg: #E0E2E5;
+            --footer-text-muted: rgba(51, 51, 51, 0.7);
+            --footer-border: rgba(0, 0, 0, 0.1);
+            --cart-item-bg: rgba(255, 255, 255, 0.8);
+            --quantity-editor-bg: rgba(0, 0, 0, 0.05);
         }
 
         /* Base styles */
@@ -49,14 +93,15 @@
 
         body {
             font-family: 'Poppins', sans-serif;
-            background-color: var(--dark-deep); /* Fallback warna jika gambar tidak termuat */
+            background-color: var(--bg-deep);
             color: var(--text-primary);
             line-height: 1.6;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             overflow-x: hidden;
-            position: relative; /* Penting untuk penempatan background blur */
+            position: relative;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
 
         a {
@@ -72,54 +117,57 @@
 
         /* Background Image with Blur */
         .blurred-background {
-            position: fixed; /* Tetap di posisi yang sama saat scroll */
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: url('backgroundweb.jpeg'); /* Gunakan gambar Anda di sini */
+            background-image: url('backgroundweb.jpeg');
             background-size: cover;
             background-position: center;
-            filter: blur(10px); /* Tingkat blur yang bisa disesuaikan */
-            -webkit-filter: blur(10px); /* Untuk kompatibilitas browser */
-            z-index: -2; /* Di belakang semua elemen lain, termasuk blobs */
+            filter: var(--background-filter-blur);
+            -webkit-filter: var(--background-filter-blur);
+            z-index: -2;
+            transition: filter 0.3s ease;
         }
 
-        /* Background Blobs (Optional - uncomment if you want them on this page too) */
-        /* .background-blob {
+        /* Background Blobs */
+        .background-blob {
             position: fixed;
-            background: var(--accent-glow);
+            background: var(--accent-color);
             border-radius: 50%;
             filter: blur(130px);
-            opacity: 0.28;
+            opacity: var(--blob-opacity);
             z-index: -1;
             animation: pulse-blob 8s infinite alternate;
+            transition: opacity 0.3s ease, background 0.3s ease;
         }
         .blob-1 { width: 380px; height: 380px; top: 18%; left: 12%; transform: translate(-50%, -50%); animation-delay: 0s; }
-        .blob-2 { width: 300px; height: 300px; bottom: 22%; right: 15%; transform: translate(50%, 50%); background: rgba(120, 190, 220, 0.8); animation-delay: 2.5s; }
+        .blob-2 { width: 300px; height: 300px; bottom: 22%; right: 15%; transform: translate(50%, 50%); animation-delay: 2.5s; }
         @keyframes pulse-blob {
-            0% { transform: scale(1) translate(-50%, -50%); opacity: 0.28; }
-            50% { transform: scale(1.06) translate(-48%, -52%); opacity: 0.38; }
-            100% { transform: scale(1) translate(-50%, -50%); opacity: 0.28; }
-        } */
+            0% { transform: scale(1) translate(-50%, -50%); opacity: var(--blob-opacity); }
+            50% { transform: scale(1.06) translate(-48%, -52%); opacity: calc(var(--blob-opacity) + 0.1); }
+            100% { transform: scale(1) translate(-50%, -50%); opacity: var(--blob-opacity); }
+        }
 
         /* Container for content */
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
-            position: relative; /* Untuk z-index blobs */
-            z-index: 1; /* Di atas background blur */
+            position: relative;
+            z-index: 1;
         }
 
         /* Header */
         .header {
-            background-color: var(--dark-deep); /* Warna gelap dari palette baru */
+            background-color: var(--bg-deep);
             padding: 20px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Border warna transparan */
+            border-bottom: 1px solid var(--footer-border);
             position: sticky;
             top: 0;
             z-index: 1000;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
         }
 
         .header-content {
@@ -147,8 +195,8 @@
         }
 
         .back-button:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-            color: var(--accent-glow);
+            background-color: rgba(var(--text-primary), 0.1);
+            color: var(--accent-color);
         }
 
         .logo-text {
@@ -157,6 +205,7 @@
             font-size: 1.5em;
             color: var(--text-secondary);
             white-space: nowrap;
+            transition: color 0.3s ease;
         }
 
         .search-bar {
@@ -170,16 +219,18 @@
             padding: 12px 20px 12px 45px;
             border: none;
             border-radius: 10px;
-            background-color: rgba(35, 48, 65, 0.5); /* Menggunakan dark-blue dengan transparansi */
+            background-color: var(--input-bg-transparent);
             color: var(--text-primary);
             font-size: 1em;
             outline: none;
-            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: inset 0 2px 5px var(--shadow-light);
+            border: 1px solid var(--input-border-transparent);
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
         }
 
         .search-bar input::placeholder {
             color: rgba(var(--text-primary), 0.6);
+            transition: color 0.3s ease;
         }
 
         .search-bar .search-icon {
@@ -188,6 +239,7 @@
             top: 50%;
             transform: translateY(-50%);
             color: rgba(var(--text-primary), 0.6);
+            transition: color 0.3s ease;
         }
 
         .header-icons {
@@ -209,8 +261,28 @@
         }
 
         .header-icons .icon-btn:hover {
-            color: var(--accent-glow);
-            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--accent-color);
+            background-color: rgba(var(--text-primary), 0.1);
+        }
+
+        /* Theme Toggle Button */
+        .theme-toggle {
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1.8em; /* Match back button size */
+            cursor: pointer;
+            z-index: 10;
+            transition: color 0.3s ease, transform 0.2s ease;
+            outline: none;
+            padding: 5px; /* Consistent padding with other icons */
+        }
+        .theme-toggle:hover {
+            color: var(--accent-color);
+            transform: scale(1.1);
+        }
+        .theme-toggle:active {
+            transform: scale(0.95);
         }
 
         .cart-badge {
@@ -226,7 +298,8 @@
             min-width: 18px;
             text-align: center;
             line-height: 1;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 2px 5px var(--shadow-light);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
         }
 
         /* Main content area */
@@ -244,9 +317,10 @@
             overflow: hidden;
             box-shadow: 0 10px 30px var(--shadow-deep);
             min-height: 350px;
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
+            backdrop-filter: var(--backdrop-filter-card);
+            -webkit-backdrop-filter: var(--backdrop-filter-card);
             border: 1px solid rgba(255, 255, 255, 0.15);
+            transition: background 0.3s ease, box-shadow 0.3s ease, backdrop-filter 0.3s ease, border-color 0.3s ease;
         }
 
         .hero-slides-wrapper {
@@ -280,25 +354,29 @@
             margin-bottom: 10px;
             color: var(--text-secondary);
             text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            transition: color 0.3s ease, text-shadow 0.3s ease;
         }
 
         .hero-content p {
             font-size: 1.1em;
-            color: rgba(var(--text-primary), 0.9);
+            color: var(--footer-text-muted); /* Using muted text for paragraphs */
             margin-bottom: 20px;
+            transition: color 0.3s ease;
         }
 
         .admin-info {
             display: flex;
             align-items: center;
             font-size: 0.9em;
-            color: rgba(var(--text-primary), 0.7);
+            color: var(--footer-text-muted);
             margin-top: 20px;
+            transition: color 0.3s ease;
         }
 
         .admin-info i {
             margin-right: 8px;
-            color: var(--accent-glow);
+            color: var(--accent-color);
+            transition: color 0.3s ease;
         }
 
         .hero-images {
@@ -314,7 +392,8 @@
         .hero-images img {
             height: 300px;
             object-fit: contain;
-            filter: drop-shadow(0 15px 30px rgba(0, 0, 0, 0.4));
+            filter: drop-shadow(0 15px 30px var(--shadow-deep));
+            transition: filter 0.3s ease;
         }
 
         .hero-images img:nth-child(1) {
@@ -341,11 +420,15 @@
             cursor: pointer;
             transition: background-color 0.3s ease;
         }
+        body.light-mode .hero-dot {
+            background-color: rgba(var(--text-primary), 0.5);
+        }
 
         .hero-dot.active {
-            background-color: var(--accent-glow);
+            background-color: var(--accent-color);
             width: 25px;
             border-radius: 5px;
+            transition: background-color 0.3s ease, width 0.3s ease, border-radius 0.3s ease;
         }
 
         /* Product Grid */
@@ -357,20 +440,20 @@
         }
 
         .product-card {
-            background: linear-gradient(145deg, rgba(59, 77, 99, 0.6), rgba(46, 62, 80, 0.6)); /* Sedikit lebih transparan dari card utama */
+            background: linear-gradient(145deg, var(--card-start-gradient), var(--card-end-gradient));
             border-radius: 15px;
             overflow: hidden;
             box-shadow: 0 5px 20px var(--shadow-light);
             text-align: center;
             padding: 20px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease, border-color 0.3s ease, backdrop-filter 0.3s ease;
             position: relative;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             border: 1px solid rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(5px); /* Blur pada card produk */
-            -webkit-backdrop-filter: blur(5px);
+            backdrop-filter: var(--backdrop-filter-panel);
+            -webkit-backdrop-filter: var(--backdrop-filter-panel);
         }
 
         .product-card:hover {
@@ -381,16 +464,14 @@
             display: none;
         }
 
-        /* UPDATED: Larger product image by default */
         .product-image {
-            width: 100px; /* Increased size */
-            height: 100px; /* Increased size */
+            width: 100px;
+            height: 100px;
             object-fit: cover;
             border-radius: 10px;
             margin: 0 auto 15px;
         }
 
-        /* Specific sizing for CapCut and Unlock Slideshare */
         .product-image[src="capcutlogo.png"],
         .product-image[src="slideshare.jpeg"] {
             width: 80px;
@@ -405,12 +486,11 @@
             justify-content: center;
             align-items: center;
             margin: 0 auto 15px;
-            color: var(--accent-glow); /* Menggunakan accent-glow */
+            color: var(--accent-color);
             background-color: transparent;
             border-radius: 10px;
+            transition: color 0.3s ease;
         }
-
-        /* REMOVED: .product-badge styles */
 
         .product-name {
             font-weight: 600;
@@ -418,18 +498,20 @@
             margin-bottom: 8px;
             color: var(--text-secondary);
             flex-grow: 1;
+            transition: color 0.3s ease;
         }
 
         .product-price {
             font-size: 1em;
             font-weight: 500;
-            color: var(--accent-glow); /* Menggunakan accent-glow */
+            color: var(--accent-color);
             margin-bottom: 15px;
             display: block;
+            transition: color 0.3s ease;
         }
 
         .add-to-cart-btn {
-            background: linear-gradient(90deg, var(--menu-item-start-gradient), var(--menu-item-end-gradient)); /* Gradien aksen */
+            background: linear-gradient(90deg, var(--menu-item-start-gradient), var(--menu-item-end-gradient));
             color: var(--text-secondary);
             border: none;
             border-radius: 8px;
@@ -437,22 +519,21 @@
             font-size: 0.9em;
             font-weight: 600;
             cursor: pointer;
-            transition: background-color 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
+            transition: background 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease, color 0.3s ease;
             width: 100%;
             margin-top: 10px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-            /* NEW: Styles for the icon button */
-            display: flex; /* Make it a flex container */
-            justify-content: center; /* Center horizontally */
-            align-items: center; /* Center vertically */
-            gap: 8px; /* Space between icon and text, if text were present */
-            font-size: 1.1em; /* Make icon slightly larger */
+            box-shadow: 0 2px 5px var(--shadow-light);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            font-size: 1.1em;
         }
 
         .add-to-cart-btn:hover {
             background: linear-gradient(90deg, var(--menu-item-hover-start), var(--menu-item-hover-end));
             transform: translateY(-1px);
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 4px 10px var(--shadow-deep);
         }
 
         /* Load More Button */
@@ -467,7 +548,7 @@
             font-size: 1.1em;
             font-weight: 600;
             cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+            transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease, color 0.3s ease;
             box-shadow: 0 5px 15px var(--shadow-light);
         }
 
@@ -490,9 +571,10 @@
             position: relative;
             overflow: hidden;
             box-shadow: 0 10px 30px var(--shadow-deep);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
+            backdrop-filter: var(--backdrop-filter-card);
+            -webkit-backdrop-filter: var(--backdrop-filter-card);
             border: 1px solid rgba(255, 255, 255, 0.15);
+            transition: background 0.3s ease, box-shadow 0.3s ease, backdrop-filter 0.3s ease, border-color 0.3s ease;
         }
 
         .register-text-content {
@@ -507,12 +589,14 @@
             font-weight: 700;
             margin-bottom: 15px;
             color: var(--text-secondary);
+            transition: color 0.3s ease;
         }
 
         .register-banner p {
             font-size: 1.05em;
-            color: rgba(var(--text-primary), 0.9);
+            color: var(--footer-text-muted);
             margin-bottom: 25px;
+            transition: color 0.3s ease;
         }
 
         .register-btn {
@@ -524,7 +608,7 @@
             font-size: 1.1em;
             font-weight: 600;
             cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+            transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease, color 0.3s ease;
             box-shadow: 0 5px 15px var(--shadow-light);
         }
 
@@ -540,17 +624,20 @@
             bottom: 0;
             height: 250px;
             object-fit: contain;
-            filter: drop-shadow(0 15px 30px rgba(0, 0, 0, 0.4));
+            filter: drop-shadow(0 15px 30px var(--shadow-deep));
+            transition: filter 0.3s ease;
         }
 
         /* Footer */
         .footer {
-            background-color: var(--dark-blue); /* Warna gelap dari palette baru */
+            background-color: var(--footer-bg);
             padding: 50px 0 30px;
-            color: rgba(var(--text-primary), 0.7);
+            color: var(--footer-text-muted);
             font-size: 0.9em;
             position: relative;
-            z-index: 1; /* Pastikan di atas background blur */
+            z-index: 1;
+            transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 -2px 10px var(--shadow-light);
         }
 
         .footer-content {
@@ -566,6 +653,7 @@
             font-weight: 600;
             margin-bottom: 20px;
             color: var(--text-secondary);
+            transition: color 0.3s ease;
         }
 
         .footer-col ul {
@@ -585,23 +673,18 @@
             align-items: center;
             gap: 8px;
             margin-left: -5px;
+            color: var(--footer-text-muted); /* Ensure links follow muted text color */
         }
 
         .footer-col ul li a:hover {
-            color: var(--accent-glow);
+            color: var(--accent-color);
         }
 
         .footer-col ul li a .fab.fa-whatsapp {
-            font-size: 1.2em;
-            color: #25D366; /* Warna ikon WhatsApp standar */
+            color: #25D366; /* Specific color for WhatsApp icon */
+            transition: color 0.3s ease;
         }
         
-        .footer-col ul li a .fab.fa-instagram {
-            font-size: 1.2em;
-            /* Anda bisa menambahkan warna khusus untuk Instagram di sini jika mau */
-            /* color: #E4405F; */ 
-        }
-
         .footer-social-icons {
             display: flex;
             gap: 15px;
@@ -609,21 +692,25 @@
         }
 
         .footer-social-icons a {
-            color: rgba(var(--text-primary), 0.7);
+            color: var(--footer-text-muted);
             font-size: 1.5em;
             transition: color 0.3s ease;
         }
 
         .footer-social-icons a:hover {
-            color: var(--accent-glow);
+            color: var(--accent-color);
         }
 
         .footer-bottom {
             text-align: center;
             padding-top: 20px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-top: 1px solid var(--footer-border);
             font-size: 0.8em;
-            color: rgba(var(--text-primary), 0.5);
+            color: rgba(var(--text-primary), 0.5); /* Hardcoding opacity to prevent double opacity issues */
+            transition: color 0.3s ease, border-color 0.3s ease;
+        }
+        body.light-mode .footer-bottom {
+            color: rgba(51, 51, 51, 0.5); /* Specific muted color for light mode */
         }
 
         /* Styles for the Shopping Cart Modal */
@@ -657,9 +744,9 @@
             box-shadow: 0 10px 30px var(--shadow-deep);
             position: relative;
             transform: translateY(-20px);
-            transition: transform 0.3s ease-out;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            transition: transform 0.3s ease-out, background 0.3s ease, box-shadow 0.3s ease, backdrop-filter 0.3s ease, border-color 0.3s ease;
+            backdrop-filter: var(--backdrop-filter-card);
+            -webkit-backdrop-filter: var(--backdrop-filter-card);
             border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
@@ -679,6 +766,7 @@
             font-size: 1.6em;
             font-weight: 700;
             color: var(--text-secondary);
+            transition: color 0.3s ease;
         }
 
         .modal-close-btn {
@@ -700,52 +788,54 @@
 
         .cart-item {
             display: flex;
-            flex-wrap: wrap; /* Izinkan wrap untuk responsivitas di mobile */
+            flex-wrap: wrap;
             justify-content: space-between;
-            align-items: center; /* Vertikal center jika satu baris */
-            background-color: rgba(35, 48, 65, 0.5);
+            align-items: center;
+            background-color: var(--cart-item-bg);
             padding: 15px 20px;
             border-radius: 10px;
             margin-bottom: 15px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            gap: 10px; /* Jarak antar elemen dalam item keranjang */
+            border: 1px solid var(--input-border-transparent);
+            gap: 10px;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
         }
 
         .cart-item-details {
             display: flex;
             flex-direction: column;
             text-align: left;
-            flex-basis: 100%; /* Ambil lebar penuh di baris pertama untuk nama/harga */
-            margin-bottom: 10px; /* Jarak ke kontrol kuantitas */
+            flex-basis: 100%;
+            margin-bottom: 10px;
         }
         .cart-item-details strong {
             font-size: 1.05em;
             margin-bottom: 5px;
             color: var(--text-secondary);
+            transition: color 0.3s ease;
         }
         .cart-item-details span {
             font-size: 0.9em;
-            color: rgba(var(--text-primary), 0.7);
+            color: var(--footer-text-muted);
+            transition: color 0.3s ease;
         }
 
-        /* NEW: Container untuk kontrol kuantitas dan harga total item + tombol hapus */
         .cart-item-action-group {
             display: flex;
             align-items: center;
-            flex-grow: 1; /* Biarkan grup ini mengambil sisa ruang */
-            justify-content: space-between; /* Spasi antara kontrol kuantitas, harga, dan tombol hapus */
-            min-width: 250px; /* Berikan lebar minimum agar tidak terlalu menyusut */
+            flex-grow: 1;
+            justify-content: space-between;
+            min-width: 250px;
         }
 
-        /* Styles for quantity controls */
         .quantity-editor {
             display: flex;
             align-items: center;
-            background-color: rgba(0, 0, 0, 0.2); /* Latar belakang untuk kontrol kuantitas */
+            background-color: var(--quantity-editor-bg);
             border-radius: 5px;
             overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            flex-shrink: 0; /* Jangan biarkan menyusut */
+            border: 1px solid var(--input-border-transparent);
+            flex-shrink: 0;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
         }
 
         .quantity-editor .quantity-btn {
@@ -755,29 +845,29 @@
             padding: 8px 12px;
             font-size: 1.1em;
             cursor: pointer;
-            transition: background-color 0.2s ease;
+            transition: background-color 0.2s ease, color 0.3s ease;
             flex-shrink: 0;
         }
 
         .quantity-editor .quantity-btn:hover {
-            background-color: rgba(255, 255, 255, 0.1);
+            background-color: rgba(var(--text-secondary), 0.1);
         }
         .quantity-editor .quantity-btn:active {
-            background-color: rgba(255, 255, 255, 0.2);
+            background-color: rgba(var(--text-secondary), 0.2);
         }
 
-        .quantity-editor .item-quantity-input { /* INPUT field for quantity */
+        .quantity-editor .item-quantity-input {
             background: transparent;
             border: none;
             color: var(--text-secondary);
             font-weight: 500;
-            padding: 0 5px; /* Sesuaikan padding */
-            width: 40px; /* Lebar input */
+            padding: 0 5px;
+            width: 40px;
             text-align: center;
             font-size: 1em;
             outline: none;
+            transition: color 0.3s ease;
         }
-        /* Sembunyikan panah default di Chrome/Safari */
         .quantity-editor .item-quantity-input::-webkit-outer-spin-button,
         .quantity-editor .item-quantity-input::-webkit-inner-spin-button {
             -webkit-appearance: none;
@@ -787,11 +877,12 @@
         .item-line-total {
             font-size: 1em;
             font-weight: 600;
-            color: var(--accent-glow);
+            color: var(--accent-color);
             text-align: right;
-            flex-shrink: 0; /* Jangan biarkan menyusut */
-            margin-left: 10px; /* Jarak dari kontrol kuantitas */
-            min-width: 80px; /* Berikan min-width agar harga tidak pecah */
+            flex-shrink: 0;
+            margin-left: 10px;
+            min-width: 80px;
+            transition: color 0.3s ease;
         }
 
         .cart-item .hapus-btn {
@@ -799,13 +890,13 @@
             color: white;
             border: none;
             border-radius: 8px;
-            padding: 8px 12px; /* Sesuaikan padding */
+            padding: 8px 12px;
             font-size: 0.9em;
             font-weight: 500;
             cursor: pointer;
             transition: background-color 0.2s ease;
-            flex-shrink: 0; /* Jangan biarkan menyusut */
-            margin-left: 10px; /* Jarak dari harga total */
+            flex-shrink: 0;
+            margin-left: 10px;
         }
 
         .cart-item .hapus-btn:hover {
@@ -817,19 +908,22 @@
             justify-content: space-between;
             align-items: center;
             padding: 15px 0;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-top: 1px solid var(--footer-border);
             margin-top: 20px;
+            transition: border-color 0.3s ease;
         }
 
         .cart-total strong {
             font-size: 1.2em;
             color: var(--text-secondary);
+            transition: color 0.3s ease;
         }
 
         .cart-total span {
             font-size: 1.2em;
             font-weight: 600;
-            color: var(--accent-glow);
+            color: var(--accent-color);
+            transition: color 0.3s ease;
         }
 
         .btn-lanjut-pembayaran {
@@ -843,7 +937,7 @@
             font-size: 1.1em;
             font-weight: 600;
             cursor: pointer;
-            transition: background-color 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
+            transition: background 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease, color 0.3s ease;
             margin-top: 25px;
             box-shadow: 0 5px 15px var(--shadow-light);
         }
@@ -866,33 +960,33 @@
                 font-size: 1.5em;
             }
             .cart-item {
-                flex-direction: column; /* Tumpuk item secara vertikal */
-                align-items: flex-start; /* Sejajakan ke kiri */
+                flex-direction: column;
+                align-items: flex-start;
                 padding: 12px 15px;
             }
             .cart-item-details {
-                flex-basis: auto; /* Reset flex-basis */
+                flex-basis: auto;
                 margin-bottom: 8px;
             }
             .cart-item-action-group {
-                flex-direction: row; /* Tetap horizontal untuk aksi */
+                flex-direction: row;
                 justify-content: space-between;
-                width: 100%; /* Ambil lebar penuh */
-                min-width: unset; /* Hapus min-width */
+                width: 100%;
+                min-width: unset;
             }
             .quantity-editor {
-                padding: 0; /* Hapus padding */
+                padding: 0;
             }
             .item-line-total {
                 font-size: 0.9em;
-                margin-left: 0; /* Reset margin */
+                margin-left: 0;
                 min-width: unset;
-                text-align: left; /* Teks harga rata kiri */
+                text-align: left;
             }
             .hapus-btn {
                 padding: 6px 10px;
                 font-size: 0.8em;
-                margin-left: 0; /* Reset margin */
+                margin-left: 0;
             }
             .cart-total {
                 font-size: 1em;
@@ -914,7 +1008,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            z-index: 1200; /* Higher than cart modal */
+            z-index: 1200;
             visibility: hidden;
             opacity: 0;
             transition: visibility 0.3s, opacity 0.3s;
@@ -929,14 +1023,14 @@
             background: linear-gradient(145deg, var(--card-start-gradient), var(--card-end-gradient));
             border-radius: 15px;
             padding: 30px;
-            max-width: 500px; /* Slightly wider than cart modal */
+            max-width: 500px;
             width: 90%;
             box-shadow: 0 10px 30px var(--shadow-deep);
             position: relative;
             transform: translateY(-20px);
-            transition: transform 0=0.3s ease-out;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            transition: transform 0.3s ease-out, background 0.3s ease, box-shadow 0.3s ease, backdrop-filter 0.3s ease, border-color 0.3s ease;
+            backdrop-filter: var(--backdrop-filter-card);
+            -webkit-backdrop-filter: var(--backdrop-filter-card);
             border: 1px solid rgba(255, 255, 255, 0.2);
             text-align: center;
         }
@@ -950,8 +1044,9 @@
         }
 
         .info-modal-content .modal-header h3 {
-            font-size: 1.8em; /* Slightly larger title for info modal */
+            font-size: 1.8em;
             margin-bottom: 0;
+            transition: color 0.3s ease;
         }
 
         .info-modal-body {
@@ -959,19 +1054,22 @@
             color: var(--text-primary);
             margin-bottom: 20px;
             line-height: 1.8;
-            text-align: left; /* Align text to left within body */
+            text-align: left;
+            transition: color 0.3s ease;
         }
-        /* Specific content for each link to make it more realistic */
         .info-modal-body p {
             margin-bottom: 10px;
+            transition: color 0.3s ease;
         }
         .info-modal-body ul {
             list-style: disc;
             margin-left: 20px;
             margin-bottom: 10px;
+            transition: color 0.3s ease;
         }
         .info-modal-body ul li {
             margin-bottom: 5px;
+            transition: color 0.3s ease;
         }
 
         @media (max-width: 480px) {
@@ -988,7 +1086,7 @@
         
         /* Specific styles for Variation Modal (similar to cart modal) */
         #variationModal .modal-content {
-            max-width: 400px; /* Adjust as needed */
+            max-width: 400px;
         }
 
         .variation-options {
@@ -999,22 +1097,22 @@
         }
 
         .variation-options label {
-            background-color: rgba(35, 48, 65, 0.5); /* Using dark-blue with transparency */
+            background-color: var(--cart-item-bg);
             padding: 15px 20px;
             border-radius: 10px;
             display: flex;
             align-items: center;
-            justify-content: space-between; /* To space out name and price */
+            justify-content: space-between;
             gap: 15px;
             cursor: pointer;
-            border: 1px solid rgba(255, 255, 255, 0.1); /* Transparent border */
+            border: 1px solid var(--input-border-transparent);
             transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
         }
 
         .variation-options label:hover {
-            border-color: var(--accent-glow);
-            background-color: rgba(35, 48, 65, 0.7);
-            box-shadow: 0 0 10px rgba(120, 190, 220, 0.3);
+            border-color: var(--accent-color);
+            background-color: var(--bg-card-base);
+            box-shadow: 0 0 10px rgba(var(--accent-color), 0.3);
         }
 
         .variation-options input[type="radio"] {
@@ -1024,16 +1122,17 @@
             width: 20px;
             height: 20px;
             border-radius: 50%;
-            border: 2px solid var(--accent-glow);
+            border: 2px solid var(--accent-color);
             outline: none;
             cursor: pointer;
             position: relative;
-            flex-shrink: 0; /* Prevent shrinking */
+            flex-shrink: 0;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
         }
 
         .variation-options input[type="radio"]:checked {
-            background-color: var(--accent-glow);
-            border-color: var(--accent-glow);
+            background-color: var(--accent-color);
+            border-color: var(--accent-color);
         }
 
         .variation-options input[type="radio"]:checked::after {
@@ -1045,7 +1144,8 @@
             width: 10px;
             height: 10px;
             border-radius: 50%;
-            background-color: var(--dark-deep);
+            background-color: var(--bg-deep);
+            transition: background-color 0.3s ease;
         }
 
         .variation-info {
@@ -1057,24 +1157,26 @@
             display: block;
             font-size: 1.1em;
             color: var(--text-secondary);
+            transition: color 0.3s ease;
         }
 
         .variation-info span {
-            font-size: 0.9em;
-            color: rgba(var(--text-primary), 0.7);
+                font-size: 0.9em;
+                color: var(--footer-text-muted);
+                transition: color 0.3s ease;
         }
 
         .variation-price {
             font-size: 1.1em;
             font-weight: 600;
-            color: var(--accent-glow);
+            color: var(--accent-color);
             flex-shrink: 0;
+            transition: color 0.3s ease;
         }
 
         /* Make sure the add button in this modal also looks good */
         #addVariedProductToCartBtn {
-            /* Uses existing .btn-lanjut-pembayaran styles */
-            margin-top: 0; /* Override default margin from .btn-lanjut-pembayaran */
+            margin-top: 0;
         }
 
         /* Responsive adjustments for variation modal */
@@ -1084,7 +1186,7 @@
             }
             .variation-options label {
                 padding: 12px 15px;
-                flex-direction: column; /* Stack duration and price on mobile */
+                flex-direction: column;
                 align-items: flex-start;
                 gap: 5px;
             }
@@ -1096,18 +1198,18 @@
             }
             .variation-price {
                 font-size: 1em;
-                width: 100%; /* Take full width on mobile */
+                width: 100%;
                 text-align: right;
             }
             .variation-options input[type="radio"] {
-                position: relative; /* Keep radio button left aligned */
-                margin-right: 10px; /* Add some margin to the right */
-                align-self: flex-start; /* Align self to start within flex column */
-                margin-top: 5px; /* Adjust spacing */
+                position: relative;
+                margin-right: 10px;
+                align-self: flex-start;
+                margin-top: 5px;
             }
             .variation-options label {
                 position: relative;
-                padding-left: 45px; /* Make space for custom radio button */
+                padding-left: 45px;
             }
             .variation-options input[type="radio"] {
                 position: absolute;
@@ -1122,9 +1224,9 @@
     <!-- Background Image with Blur -->
     <div class="blurred-background"></div>
 
-    <!-- Background Blobs (Optional, uncomment in CSS if desired) -->
-    <!-- <div class="background-blob blob-1"></div>
-    <div class="background-blob blob-2"></div> -->
+    <!-- Background Blobs -->
+    <div class="background-blob blob-1"></div>
+    <div class="background-blob blob-2"></div>
 
     <header class="header">
         <div class="container header-content">
@@ -1137,11 +1239,13 @@
                 <input type="text" placeholder="Cari produk ">
             </div>
             <div class="header-icons">
+                <button class="icon-btn" id="theme-toggle" aria-label="Toggle theme">
+                    <i class="fas fa-sun"></i> <!-- Initial icon for dark mode (to switch to light) -->
+                </button>
                 <button class="icon-btn" id="cartIcon">
                     <i class="fas fa-shopping-cart"></i>
                     <span class="cart-badge" id="cartBadge">0</span>
                 </button>
-                <!-- Ikon login (fa-user-circle) telah dihapus dari sini -->
             </div>
         </div>
     </header>
@@ -1218,7 +1322,6 @@
                 <!-- Products initially visible -->
                 <!-- Product Card 1: CapCut -->
                 <div class="product-card">
-                    <!-- REMOVED: <span class="product-badge">DESAIN</span> -->
                     <img src="capcutlogo.png" alt="CapCut Icon" class="product-image">
                     <h5 class="product-name">CapCut</h5>
                     <span class="product-price">Rp 5.000</span>
@@ -1226,7 +1329,6 @@
                 </div>
                 <!-- Product Card 2: Blackbox AI (NEW) -->
                 <div class="product-card">
-                    <!-- REMOVED: <span class="product-badge">AI</span> -->
                     <img src="blackbox.png" alt="Blackbox AI Icon" class="product-image">
                     <h5 class="product-name">Blackbox AI</h5>
                     <span class="product-price">Rp 45.000</span>
@@ -1234,7 +1336,6 @@
                 </div>
                 <!-- Product Card 3: Viu (NEW) -->
                 <div class="product-card">
-                    <!-- REMOVED: <span class="product-badge">MUSIK & VIDEO</span> -->
                     <img src="Viu.jpeg" alt="Viu Icon" class="product-image">
                     <h5 class="product-name">Viu</h5>
                     <span class="product-price">Rp 6.000</span>
@@ -1242,7 +1343,6 @@
                 </div>
                 <!-- Product Card 4: Spotify Premium (NEW) -->
                 <div class="product-card">
-                    <!-- REMOVED: <span class="product-badge">MUSIK & VIDEO</span> -->
                     <img src="Spotify.jpeg" alt="Spotify Premium Icon" class="product-image">
                     <h5 class="product-name">Spotify Premium</h5>
                     <span class="product-price">Rp 9.000</span>
@@ -1250,7 +1350,6 @@
                 </div>
                 <!-- Product Card 5: YouTube Premium (NEW) -->
                 <div class="product-card">
-                    <!-- REMOVED: <span class="product-badge">MUSIK & VIDEO</span> -->
                     <img src="YouTube Premium.jpeg" alt="YouTube Premium Icon" class="product-image">
                     <h5 class="product-name">YouTube Premium</h5>
                     <span class="product-price">Rp 55.000</span>
@@ -1258,7 +1357,6 @@
                 </div>
                 <!-- Product Card 6: DeepL -->
                 <div class="product-card">
-                    <!-- REMOVED: <span class="product-badge">EDUKASI</span> -->
                     <img src="deepl.png" alt="DeepL Icon" class="product-image">
                     <h5 class="product-name">DeepL</h5>
                     <span class="product-price">Rp 35.000</span>
@@ -1266,7 +1364,6 @@
                 </div>
                 <!-- Product Card 7: Duolingo -->
                 <div class="product-card">
-                    <!-- REMOVED: <span class="product-badge">EDUKASI</span> -->
                     <img src="duolingo.png" alt="Duolingo Icon" class="product-image">
                     <h5 class="product-name">Duolingo</h5>
                     <span class="product-price">Rp 4.000</span>
@@ -1274,7 +1371,6 @@
                 </div>
                 <!-- Product Card 8: Gemini AI -->
                 <div class="product-card">
-                    <!-- REMOVED: <span class="product-badge">AI</span> -->
                     <img src="https://via.placeholder.com/80x80/2E3E50/FFFFFF?text=Gemini" alt="Gemini AI Icon" class="product-image">
                     <h5 class="product-name">Gemini AI</h5>
                     <span class="product-price">Rp 80.000</span>
@@ -1282,10 +1378,8 @@
                 </div>
                 
                 <!-- NEW PRODUCTS (Initially Hidden via JS) -->
-                <!-- REMOVED: Google Drive Product Card -->
                 <!-- Product Card 10: Canva Pro -->
                 <div class="product-card">
-                    <!-- REMOVED: <span class="product-badge">DESAIN</span> -->
                     <img src="canva.png" alt="Canva Pro Icon" class="product-image">
                     <h5 class="product-name">Canva Pro</h5>
                     <span class="product-price">Rp 2.500</span>
@@ -1293,7 +1387,6 @@
                 </div>
                 <!-- Product Card 11: Picsart -->
                 <div class="product-card">
-                    <!-- REMOVED: <span class="product-badge">DESAIN</span> -->
                     <img src="https://via.placeholder.com/80x80/2E3E50/FFFFFF?text=Picsart" alt="Picsart Icon" class="product-image">
                     <h5 class="product-name">Picsart</h5>
                     <span class="product-price">Rp 10.000</span>
@@ -1301,7 +1394,6 @@
                 </div>
                 <!-- Product Card 12: Scribd -->
                 <div class="product-card">
-                    <!-- REMOVED: <span class="product-badge">EDUKASI</span> -->
                     <img src="https://via.placeholder.com/80x80/2E3E50/FFFFFF?text=Scribd" alt="Scribd Icon" class="product-image">
                     <h5 class="product-name">Scribd</h5>
                     <span class="product-price">Rp 10.000</span>
@@ -1309,7 +1401,6 @@
                 </div>
                 <!-- Product Card 13: WeTV -->
                 <div class="product-card">
-                    <!-- REMOVED: <span class="product-badge">MUSIK & VIDEO</span> -->
                     <img src="https://via.placeholder.com/80x80/2E3E50/FFFFFF?text=WeTV" alt="WeTV Icon" class="product-image">
                     <h5 class="product-name">WeTV</h5>
                     <span class="product-price">Rp 22.000</span>
@@ -1317,7 +1408,6 @@
                 </div>
                 <!-- Product Card 14: VPN Express -->
                 <div class="product-card">
-                    <!-- REMOVED: <span class="product-badge">VPN</span> -->
                     <img src="https://via.placeholder.com/80x80/2E3E50/FFFFFF?text=Express" alt="VPN Express Icon" class="product-image">
                     <h5 class="product-name">VPN Express</h5>
                     <span class="product-price">Rp 8.000</span>
@@ -1325,7 +1415,6 @@
                 </div>
                 <!-- Product Card 15: VPN HMA -->
                 <div class="product-card">
-                    <!-- REMOVED: <span class="product-badge">VPN</span> -->
                     <img src="https://via.placeholder.com/80x80/2E3E50/FFFFFF?text=HMA" alt="VPN HMA Icon" class="product-image">
                     <h5 class="product-name">VPN HMA</h5>
                     <span class="product-price">Rp 8.000</span>
@@ -1333,7 +1422,6 @@
                 </div>
                 <!-- Product Card 16: VPN Surfshark -->
                 <div class="product-card">
-                    <!-- REMOVED: <span class="product-badge">VPN</span> -->
                     <img src="https://via.placeholder.com/80x80/2E3E50/FFFFFF?text=Surfshark" alt="VPN Surfshark Icon" class="product-image">
                     <h5 class="product-name">VPN Surfshark</h5>
                     <span class="product-price">Rp 7.000</span>
@@ -1341,7 +1429,6 @@
                 </div>
                 <!-- Product Card 17: Prime Video -->
                 <div class="product-card">
-                    <!-- REMOVED: <span class="product-badge">MUSIK & VIDEO</span> -->
                     <img src="https://via.placeholder.com/80x80/2E3E50/FFFFFF?text=Prime" alt="Prime Video Icon" class="product-image">
                     <h5 class="product-name">Prime Video</h5>
                     <span class="product-price">Rp 14.000</span>
@@ -1349,7 +1436,6 @@
                 </div>
                 <!-- Product Card 18: Apple Music -->
                 <div class="product-card">
-                    <!-- REMOVED: <span class="product-badge">MUSIK & VIDEO</span> -->
                     <img src="applemusic.png" alt="Apple Music Icon" class="product-image">
                     <h5 class="product-name">Apple Music</h5>
                     <span class="product-price">Rp 9.000</span>
@@ -1357,7 +1443,6 @@
                 </div>
                 <!-- Product Card 19: Alight Motion -->
                 <div class="product-card">
-                    <!-- REMOVED: <span class="product-badge">DESAIN</span> -->
                     <img src="https://via.placeholder.com/80x80/2E3E50/FFFFFF?text=Alight" alt="Alight Motion Icon" class="product-image">
                     <h5 class="product-name">Alight Motion</h5>
                     <span class="product-price">Rp 10.000</span>
@@ -1365,7 +1450,6 @@
                 </div>
                 <!-- Product Card 20: GDrive Lifetime -->
                 <div class="product-card">
-                    <!-- REMOVED: <span class="product-badge">PRODUCTIVITY</span> -->
                     <img src="https://via.placeholder.com/80x80/2E3E50/FFFFFF?text=GDrive" alt="Google Drive Lifetime Icon" class="product-image">
                     <h5 class="product-name">GDrive Lifetime</h5>
                     <span class="product-price">Rp 35.000</span>
@@ -1373,7 +1457,6 @@
                 </div>
                 <!-- Product Card 21: Unlock Slideshare (NEW) -->
                 <div class="product-card">
-                    <!-- REMOVED: <span class="product-badge">EDUKASI</span> -->
                     <img src="slideshare.jpeg" alt="Unlock Slideshare Icon" class="product-image">
                     <h5 class="product-name">Unlock Slideshare</h5>
                     <span class="product-price">Rp 1.500</span>
@@ -1381,7 +1464,6 @@
                 </div>
                 <!-- Product Card 22: Zoom (NEW) -->
                 <div class="product-card">
-                    <!-- REMOVED: <span class="product-badge">PRODUCTIVITY</span> -->
                     <img src="https://via.placeholder.com/80x80/2E3E50/FFFFFF?text=Zoom" alt="Zoom Icon" class="product-image">
                     <h5 class="product-name">Zoom</h5>
                     <span class="product-price">Rp 7.000</span>
@@ -1394,9 +1476,9 @@
             <!-- Register Banner -->
             <section class="register-banner">
                 <div class="register-text-content">
-                    <h3>Dapatkan Berbagai Keuntungan Dengan Mendaftar</h3>
-                    <p>Kamu akan bebas biaya admin, lebih mudah mengelola transaksi dan pesanan, serta bebas mengatur jumlah dan menyimpannya ke dalam keranjang. Tunggu apa lagi?</p>
-                    <button class="register-btn">Daftar Sekarang</button>
+                    <h3>Dapatkan Berbagai Keuntungan Dengan Bergabung Menjadi Reseller</h3>
+                    <p>Kamu akan bebas biaya admin, lebih mudah mengelola pesanan, serta bebas mengatur jumlah dan menyimpannya ke dalam keranjang. Tunggu apa lagi?</p>
+                    <button class="register-btn">Gabung Sekarang</button>
                 </div>
                 <img src="https://via.placeholder.com/250x250/3B4D63/FFFFFF?text=Robot+Mascot" alt="Robot Mascot" class="register-illustration">
             </section>
@@ -1412,7 +1494,6 @@
                     <div class="footer-social-icons">
                         <a href="https://wa.me/6287844643452" target="_blank"><i class="fab fa-whatsapp"></i></a>
                         <a href="https://instagram.com/xiamostore.id" target="_blank"><i class="fab fa-instagram"></i></a>
-                        <!-- Ikon YouTube dihapus -->
                         <a href="https://t.me/xiamostore" target="_blank"><i class="fab fa-telegram-plane"></i></a>
                     </div>
                 </div>
@@ -1496,6 +1577,45 @@
             const dots = document.querySelectorAll('.hero-dot');
             let currentSlideIndex = 0;
             let slideInterval;
+
+            // === Theme Toggle Logic ===
+            const themeToggle = document.getElementById('theme-toggle');
+            const body = document.body;
+
+            // Function to set the theme
+            function setTheme(theme) {
+                if (theme === 'light') {
+                    body.classList.add('light-mode');
+                    themeToggle.innerHTML = '<i class="fas fa-moon"></i>'; // Moon icon for light mode (to switch to dark)
+                    localStorage.setItem('theme', 'light');
+                } else {
+                    body.classList.remove('light-mode');
+                    themeToggle.innerHTML = '<i class="fas fa-sun"></i>'; // Sun icon for dark mode (to switch to light)
+                    localStorage.setItem('theme', 'dark');
+                }
+            }
+
+            // Check for saved theme preference or system preference on load
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme) {
+                setTheme(savedTheme);
+            } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+                // If no saved theme, check system preference. If system prefers light, set to light.
+                setTheme('light');
+            } else {
+                // Default to dark mode if no preference found or system prefers dark
+                setTheme('dark');
+            }
+
+            // Toggle theme on button click
+            themeToggle.addEventListener('click', () => {
+                if (body.classList.contains('light-mode')) {
+                    setTheme('dark');
+                } else {
+                    setTheme('light');
+                }
+            });
+
 
             // Set the first dot as active initially if no slide has the 'active' class
             if (slides.length > 0 && !document.querySelector('.hero-slide.active')) {
@@ -1609,7 +1729,7 @@
                     }]
                 },
                 "Viu": {
-                    image: "viu.png", // Updated image name for consistency
+                    image: "viu.png",
                     badge: "MUSIK & VIDEO",
                     variations: [{
                         duration: "12 Bulan",
@@ -1617,7 +1737,7 @@
                     }]
                 },
                 "Spotify Premium": {
-                    image: "spotify.png", // Updated image name for consistency
+                    image: "spotify.png",
                     badge: "MUSIK & VIDEO",
                     variations: [{
                         duration: "1 Bulan",
@@ -1625,7 +1745,7 @@
                     }]
                 },
                 "YouTube Premium": {
-                    image: "youtube.png", // Updated image name for consistency
+                    image: "youtube.png",
                     badge: "MUSIK & VIDEO",
                     variations: [{
                         duration: "1 Bulan",
@@ -1662,7 +1782,6 @@
                         price: 220000
                     }]
                 },
-                // REMOVED: "Google Drive" entry from allProductsData
                 "Canva Pro": {
                     image: "canva.png",
                     badge: "DESAIN",
@@ -1817,7 +1936,7 @@
                 let itemCount = 0;
 
                 if (cartItems.length === 0) {
-                    modalCartItems.innerHTML = '<p style="text-align: center; color: rgba(255,255,255,0.7);">Keranjang Anda kosong.</p>';
+                    modalCartItems.innerHTML = '<p style="text-align: center; color: var(--footer-text-muted);">Keranjang Anda kosong.</p>';
                     btnLanjutPembayaran.disabled = true; // Nonaktifkan tombol jika keranjang kosong
                     btnLanjutPembayaran.style.opacity = '0.5'; // Memberi efek visual nonaktif
                     btnLanjutPembayaran.style.cursor = 'not-allowed';
@@ -1894,7 +2013,7 @@
             // Function to open variation modal
             function openVariationModal(productName) {
                 currentProductForVariation = productName;
-                variationModalTitle.textContent = `Pilih Durasi Premium untuk ${productName}`;
+                variationModalTitle.textContent = `Pilih Durasi untuk ${productName}`; // Changed "Premium" to "Durasi"
                 variationOptionsContainer.innerHTML = ''; // Clear previous options
 
                 const productData = allProductsData[productName];
@@ -1915,7 +2034,7 @@
                     addVariedProductToCartBtn.style.opacity = '1';
                     addVariedProductToCartBtn.style.cursor = 'pointer';
                 } else {
-                    variationOptionsContainer.innerHTML = `<p style="text-align: center; color: rgba(255,255,255,0.7);">Tidak ada variasi tersedia untuk produk ini.</p>`;
+                    variationOptionsContainer.innerHTML = `<p style="text-align: center; color: var(--footer-text-muted);">Tidak ada variasi tersedia untuk produk ini.</p>`;
                     addVariedProductToCartBtn.disabled = true;
                     addVariedProductToCartBtn.style.opacity = '0.5';
                     addVariedProductToCartBtn.style.cursor = 'not-allowed';
@@ -2053,24 +2172,27 @@
 
                 // Determine image or icon
                 let mediaHtml = '';
-                if (data.image) {
+                // Check if the image source is a placeholder link
+                if (data.image && data.image.includes('via.placeholder.com')) {
+                    // If it's a placeholder, remove the text and use the actual product name in alt
+                    mediaHtml = `<img src="${data.image.split('?')[0]}" alt="${productName} Icon" class="product-image">`;
+                } else if (data.image) {
                     mediaHtml = `<img src="${data.image}" alt="${productName} Icon" class="product-image">`;
-                } else if (data.iconClass) { // If you want to use Font Awesome icons directly
+                } else if (data.iconClass) {
                     mediaHtml = `<i class="${data.iconClass} product-icon-fa"></i>`;
-                } else { // Fallback if no specific image/icon is given
+                } else {
                     mediaHtml = `<img src="https://via.placeholder.com/80x80/2E3E50/FFFFFF?text=${productName.replace(/\s/g, '+')}" alt="${productName} Icon" class="product-image">`;
                 }
                 
                 // Get the lowest price for display
                 const lowestPrice = data.variations.length > 0
                     ? data.variations.reduce((min, p) => p.price < min ? p.price : min, data.variations[0].price)
-                    : 0; // Default to 0 if no variations
+                    : 0;
 
                 card.innerHTML = `
-                    <!-- REMOVED: <span class="product-badge">${data.badge}</span> -->
                     ${mediaHtml}
                     <h5 class="product-name">${productName}</h5>
-                    <span class="product-price">${formatRupiah(lowestPrice)}</span> <!-- REMOVED "Mulai dari " -->
+                    <span class="product-price">${formatRupiah(lowestPrice)}</span>
                     <button class="add-to-cart-btn" data-product-name="${productName}"><i class="fas fa-cart-plus"></i></button>
                 `;
                 return card;
@@ -2078,14 +2200,14 @@
 
             const productGrid = document.getElementById('productGrid');
             const loadMoreButton = document.getElementById('loadMoreBtn');
-            const productsPerLoad = 8; // Number of products to show initially and per "Load More" click
+            const productsPerLoad = 8;
             let loadedProductCount = 0;
 
             // Function to load products into the grid
             function loadProducts() {
-                // Clear existing cards if refreshing the grid
+                // Clear existing cards if refreshing the grid (for full reload scenario, not for 'load more')
                 productGrid.innerHTML = '';
-                loadedProductCount = 0;
+                loadedProductCount = 0; // Reset for a full redraw
 
                 const productNames = Object.keys(allProductsData);
                 
@@ -2100,14 +2222,13 @@
 
                 // Re-initialize add to cart buttons listeners after new cards are added
                 document.querySelectorAll('.add-to-cart-btn').forEach(button => {
-                    button.removeEventListener('click', (e) => { /* Dummy function */ }); // Remove old listeners if any
+                    button.removeEventListener('click', (e) => { /* Dummy function */ });
                     button.addEventListener('click', (event) => {
                         const productName = event.currentTarget.dataset.productName;
                         openVariationModal(productName);
                     });
                 });
 
-                // Update load more button visibility
                 loadMoreButton.style.display = 'none'; // With all products generated at once, no need for "Load More"
             }
 
@@ -2120,6 +2241,8 @@
             const infoModalTitle = document.getElementById('infoModalTitle');
             const infoModalBody = document.getElementById('infoModalBody');
             const closeInfoModalBtn = document.getElementById('closeInfoModalBtn');
+            const footerProductCategories = document.getElementById('footerProductCategories');
+            const footerOtherLinks = document.getElementById('footerOtherLinks');
 
             function openInfoModal(title, content) {
                 infoModalTitle.textContent = title;
@@ -2160,7 +2283,7 @@
                         <li>Setelah selesai memilih, klik ikon keranjang di pojok kanan atas untuk melihat ringkasan belanja Anda.</li>
                         <li>Pastikan semua item dan jumlah sudah benar, lalu klik "Lanjutkan ke Pembayaran".</li>
                         <li>Ikuti instruksi pembayaran yang tersedia.</li>
-                        <li>Setelah pembayaran dikonfirmasi, Anda akan menerima detail akses produk melalui email atau WhatsApp.</li>
+                        <li>Setelah pembayaran dikonfirmasi, Anda akan menerima detail akses produk melalui WhatsApp.</li>
                     </ol>
                 `,
                 "Tips Hemat": `
@@ -2169,15 +2292,15 @@
                         <li><strong>Ikuti Promo Khusus:</strong> Pastikan Anda selalu mengecek banner carousel di halaman utama kami untuk promo dan diskon terbaru.</li>
                         <li><strong>Beli Paket Bundling:</strong> Terkadang kami menawarkan paket produk yang lebih hemat jika dibeli bersamaan.</li>
                         <li><strong>Manfaatkan Program Referral:</strong> Ajak teman untuk berbelanja dan dapatkan keuntungan bersama! (Jika tersedia)</li>
-                        <li><strong>Daftar Akun:</strong> Dengan mendaftar, Anda mungkin mendapatkan penawaran eksklusif atau poin loyalitas.</li>
-                        <li><strong>Pantau Media Sosial:</strong> Kami sering mengumumkan flash sale atau diskon mendadak di media sosial kami.</li>
+                        <li><strong>Daftar Akun:</strong> Dengan menjadi Reseller, Anda mungkin mendapatkan penawaran eksklusif atau poin loyalitas.</li>
+                        <li><strong>Pantau Media Sosial:</strong> Kami sering mengumumkandiskon mendadak di media sosial kami.</li>
                     </ul>
                     <p>Jangan lewatkan kesempatan untuk mendapatkan produk digital premium dengan harga terbaik!</p>
                 `,
                 "FAQ": `
                     <h4>Pertanyaan yang Sering Diajukan (FAQ):</h4>
                     <p><strong>Q: Bagaimana cara mendapatkan akses setelah pembelian?</strong><br>
-                    A: Setelah pembayaran Anda terverifikasi, detail akses (akun/lisensi) akan dikirimkan ke email atau nomor WhatsApp yang Anda daftarkan dalam waktu singkat (biasanya 5-15 menit pada jam kerja).</p>
+                    A: Setelah pembayaran Anda terverifikasi, detail akses (akun/lisensi) akan dikirimkan melalui nomor WhatsApp yang akan diarahkan setelah mengkonfirmasi pembayaran, dan akan diproses dalam waktu singkat (biasanya 1-15 menit pada jam kerja).</p>
                     <p><strong>Q: Apakah produk digital di XiamoStore legal dan aman?</strong><br>
                     A: Ya, semua produk digital yang kami tawarkan adalah legal dan diperoleh dari sumber resmi. Kami menjamin keamanan dan keabsahan setiap layanan.</p>
                     <p><strong>Q: Bisakah saya mengubah atau membatalkan pesanan?</strong><br>
