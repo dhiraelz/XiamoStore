@@ -276,12 +276,6 @@
             padding: 0;
             margin-left: 15px;
         }
-        .info-panel ul li {
-            position: relative;
-            margin-bottom: 8px;
-            font-size: 0.95em;
-            color: rgba(var(--text-primary), 0.7); /* Teks muted */
-        }
         .info-panel ul li::before {
             content: "•";
             color: var(--accent-glow); /* Bullet color */
@@ -622,6 +616,7 @@
             <button class="cat-btn" data-category="Pinterest"><i class="fab fa-pinterest"></i> Pinterest</button>
             <button class="cat-btn" data-category="Snack Video"><i class="fas fa-video"></i> Snack Video</button>
             <button class="cat-btn" data-category="TripAdvisor"><i class="fab fa-tripadvisor"></i> TripAdvisor</button>
+            <button class="cat-btn" data-category="Threads"><i class="fab fa-threads"></i> Threads</button>
         </div>
 
         <div class="order-section-wrapper">
@@ -734,12 +729,12 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             // === Data Layanan ===
-            // Pastikan data ini lengkap sesuai semua layanan yang Anda tawarkan
+            // Harga di bawah ini adalah harga PER UNIT/KUANTITAS (Harga/1 pcs)
             const allServicesData = {
                 "Instagram": [
                     {
                         name: "Followers Instagram (Garansi)",
-                        price: 48, // 4800 / 100 followers
+                        price: 48, // Harga per followers: Rp 48
                         desc: "⚠️ Mohon Baca Deskripsi ⚠️<br><br>Target : Link/username<br><br>Catatan:<br>- Saat Server sibuk, kecepatan bisa berubah.<br>- Jangan melakukan pemesanan kedua pada link yang sama sebelum pesanan Anda selesai di sistem.<br>- Jika ada masalah dengan layanan, silakan hubungi dukungan.<br><br>Waktu Rata-rata: 8 menit 59 detik",
                         min: 10,
                         max: 10000,
@@ -748,7 +743,7 @@
                     },
                     {
                         name: "Followers Instagram (Indonesia)",
-                        price: 65, // 6500 / 100 followers
+                        price: 65, // Harga per followers: Rp 65
                         desc: "⚠️ Mohon Baca Deskripsi ⚠️<br><br>Target : Link/username<br><br>Refill : 3 Hari<br>Speed : Ultra Instant<br>Kualitas : Indonesia<br><br>Catatan:<br>- Saat Server sibuk, kecepatan bisa berubah.<br>- Jangan melakukan pemesanan kedua pada link yang sama sebelum pesanan Anda selesai di sistem.<br>- Jika ada masalah dengan layanan, silakan hubungi dukungan.<br><br>Waktu Rata-rata: 2 jam 40 menit 55 detik",
                         min: 100,
                         max: 10000,
@@ -757,7 +752,7 @@
                     },
                     {
                         name: "Likes Instagram (Bot)",
-                        price: 48, // 4800 / 100 likes
+                        price: 48, // Harga per likes: Rp 48
                         desc: "⚠️ Mohon Baca Deskripsi ⚠️<br><br>Target : Link POST<br><br>Catatan:<br>- Saat Server sibuk, kecepatan bisa berubah.<br>- Jangan melakukan pemesanan kedua pada link yang sama sebelum pesanan Anda selesai di sistem.<br>- Jika ada masalah dengan layanan, silakan hubungi dukungan.<br><br>Waktu Rata-rata: 29 menit 34 detik",
                         min: 10,
                         max: 5000,
@@ -766,7 +761,7 @@
                     },
                     {
                         name: "Likes Instagram (Indonesia)",
-                        price: 17.5, // 1750 / 100 likes
+                        price: 17.5, // Harga per likes: Rp 17.5
                         desc: "⚠️ Mohon Baca Deskripsi ⚠️<br><br>Target : Link Post<br><br>Kualitas: Indonesia ( Bisa berupa foto/nama/keduanya)<br><br>Catatan:<br>- Saat Server sibuk, kecepatan bisa berubah.<br>- Jangan melakukan pemesanan kedua pada link yang sama sebelum pesanan Anda selesai di sistem.<br>- Jika ada masalah dengan layanan, silakan hubungi dukungan.<br><br>Waktu Rata-rata: 2 jam 34 menit 22 detik",
                         min: 100,
                         max: 5000,
@@ -775,7 +770,7 @@
                     },
                     {
                         name: "Instagram Saves",
-                        price: 9.5, // 950 / 100 saves
+                        price: 9.5, // Harga per saves: Rp 9.5
                         desc: "⚠️ Mohon Baca Deskripsi ⚠️<br><br>Target : Link POST<br><br>Catatan:<br>- Saat Server sibuk, kecepatan bisa berubah.<br>- Jangan melakukan pemesanan kedua pada link yang sama sebelum pesanan Anda selesai di sistem.<br>- Jika ada masalah dengan layanan, silakan hubungi dukungan.<br><br>Waktu Rata-rata: 1 jam 53 detik",
                         min: 100,
                         max: 10000,
@@ -784,65 +779,220 @@
                     },
                     {
                         name: "Instagram Views Reels",
-                        price: 5, // 500 / 100 views
+                        price: 5, // Harga per views: Rp 5
                         desc: "⚠️ Mohon Baca Deskripsi ⚠️<br><br>Target : LINK POST<br><br>Catatan:<br>- Saat Server sibuk, kecepatan bisa berubah.<br>- Jangan melakukan pemesanan kedua pada link yang sama sebelum pesanan Anda selesai di sistem.<br>- Jika ada masalah dengan layanan, silakan hubungi dukungan.<br><br>Waktu Rata-rata: 22 menit 27 detik",
                         min: 100,
                         max: 50000,
                         unit: "Views",
                         isFavorite: false
                     },
-                    { name: "Komentar Instagram", price: 20000, desc: "Tambahkan komentar positif pada postingan Instagram Anda.", min: 10, max: 500, unit: "Komentar", isFavorite: false }
+                    { name: "Komentar Instagram", price: 200, desc: "Tambahkan komentar positif pada postingan Instagram Anda.", min: 10, max: 500, unit: "Komentar", isFavorite: false } 
                 ],
                 "TikTok": [
                     {
-                        name: "Followers TikTok (Garansi)",
-                        price: 5, // 500 / 100 views (Assuming the price unit is followers despite the text "views")
-                        desc: "⚠️ Mohon Baca Deskripsi ⚠️<br><br>Target : Link/username<br><br>Catatan:<br>- Saat Server sibuk, kecepatan bisa berubah.<br>- Jangan melakukan pemesanan kedua pada link yang sama sebelum pesanan Anda selesai di sistem.<br>- Jika ada masalah dengan layanan, silakan hubungi dukungan.<br><br>Waktu Rata-rata: 19 menit 41 detik",
+                        name: "TikTok Video Views",
+                        price: 1.5, // Harga per view: Rp 1.5
+                        desc: "⚠️ Mohon Baca Deskripsi ⚠️<br><br>Target : Link VT<br><br>Catatan:<br>- Saat Server sibuk, kecepatan bisa berubah.<br>- Jangan melakukan pemesanan kedua pada link yang sama sebelum pesanan Anda selesai di sistem.<br>- Jika ada masalah dengan layanan, silakan hubungi dukungan.",
+                        min: 100,
+                        max: 2147483647,
+                        unit: "Views",
+                        isFavorite: false
+                    },
+                    {
+                        name: "TikTok Video Share",
+                        price: 5, // Harga per share: Rp 5
+                        desc: "⚠️ Mohon Baca Deskripsi ⚠️<br><br>Target : Link VT<br><br>Catatan:<br>- Saat Server sibuk, kecepatan bisa berubah.<br>- Jangan melakukan pemesanan kedua pada link yang sama sebelum pesanan Anda selesai di sistem.<br>- Jika ada masalah dengan layanan, silakan hubungi dukungan.",
                         min: 10,
-                        max: 8000,
+                        max: 2147483647,
+                        unit: "Shares",
+                        isFavorite: false
+                    },
+                    {
+                        name: "TikTok Saves",
+                        price: 5, // Harga per save: Rp 5
+                        desc: "⚠️ Mohon Baca Deskripsi ⚠️<br><br>Target : Link VT<br><br>Catatan:<br>- Saat Server sibuk, kecepatan bisa berubah.<br>- Jangan melakukan pemesanan kedua pada link yang sama sebelum pesanan Anda selesai di sistem.",
+                        min: 100,
+                        max: 2147483647,
+                        unit: "Saves",
+                        isFavorite: false
+                    },
+                    {
+                        name: "TikTok Likes",
+                        price: 4.5, // Harga per like: Rp 4.5
+                        desc: "⚠️ Mohon Baca Deskripsi ⚠️<br><br>Target : Link VT<br><br>Catatan:<br>- Saat Server sibuk, kecepatan bisa berubah.<br>- Jangan melakukan pemesanan kedua pada link yang sama sebelum pesanan Anda selesai di sistem.<br>- Jika ada masalah dengan layanan, silakan hubungi dukungan.",
+                        min: 10,
+                        max: 5000000,
+                        unit: "Likes",
+                        isFavorite: false
+                    }
+                ],
+                "YouTube": [
+                    {
+                        name: "YouTube Subscriber Garansi",
+                        price: 98, // Harga per subscriber: Rp 98
+                        desc: "⚠️ Mohon Baca Deskripsi ⚠️<br><br>Target : Link Channel<br><br>Catatan:<br>- Saat Server sibuk, kecepatan bisa berubah.<br>- Jangan melakukan pemesanan kedua pada link yang sama sebelum pesanan Anda selesai di sistem.<br>- Jika ada masalah dengan layanan, silakan hubungi dukungan.",
+                        min: 50,
+                        max: 200000,
+                        unit: "Subscribers",
+                        isFavorite: false
+                    },
+                    {
+                        name: "Youtube Likes",
+                        price: 6, // Harga per like: Rp 6
+                        desc: "⚠️ Mohon Baca Deskripsi ⚠️<br><br>Target : Link Video<br><br>Catatan:<br>- Saat Server sibuk, kecepatan bisa berubah.<br>- Jangan melakukan pemesanan kedua pada link yang sama sebelum pesanan Anda selesai di sistem.<br>- Jika ada masalah dengan layanan, silakan hubungi dukungan.",
+                        min: 10,
+                        max: 1000000,
+                        unit: "Likes",
+                        isFavorite: false
+                    }
+                ],
+                "Facebook": [
+                    { name: "Likes Facebook", price: 120, desc: "Tingkatkan jumlah like pada postingan Facebook Anda.", min: 100, max: 10000, unit: "Likes", isFavorite: false }, 
+                    { name: "Views Facebook", price: 150, desc: "Dapatkan lebih banyak penonton untuk video Facebook Anda.", min: 500, max: 50000, unit: "Views", isFavorite: false } 
+                ],
+                "Twitter": [
+                    {
+                        name: "Twitter Followers",
+                        price: 156, // Harga per follower: Rp 156
+                        desc: "⚠️ Mohon Baca Deskripsi ⚠️<br><br>Target : username (contoh: xiamostore)<br><br>Catatan:<br>- Saat Server sibuk, kecepatan bisa berubah.<br>- Jangan melakukan pemesanan kedua pada link yang sama sebelum pesanan Anda selesai di sistem.<br>- Jika ada masalah dengan layanan, silakan hubungi dukungan.",
+                        min: 10,
+                        max: 50000,
                         unit: "Followers",
                         isFavorite: false
                     },
-                    { name: "Likes TikTok", price: 15000, desc: "Dapatkan lebih banyak like untuk video TikTok Anda.", min: 100, max: 10000, unit: "Likes", isFavorite: false },
-                    { name: "Views TikTok", price: 10000, desc: "Tingkatkan jumlah penonton video TikTok Anda dengan cepat.", min: 500, max: 50000, unit: "Views", isFavorite: false }
-                ],
-                "YouTube": [
-                    { name: "Views YouTube", price: 18000, desc: "Tingkatkan jumlah penonton video YouTube Anda dengan cepat.", min: 1000, max: 100000, unit: "Views", isFavorite: false },
-                    { name: "Subscribers YouTube", price: 50000, desc: "Dapatkan subscriber baru untuk channel YouTube Anda.", min: 100, max: 5000, unit: "Subscribers", isFavorite: false },
-                    { name: "Jam Tayang YouTube", price: 60000, desc: "Capai persyaratan monetisasi dengan cepat.", min: 100, max: 4000, unit: "Jam", isFavorite: false }
-                ],
-                "Facebook": [
-                    { name: "Likes Facebook", price: 12000, desc: "Tingkatkan jumlah like pada postingan Facebook Anda.", min: 100, max: 10000, unit: "Likes", isFavorite: false },
-                    { name: "Views Facebook", price: 15000, desc: "Dapatkan lebih banyak penonton untuk video Facebook Anda.", min: 500, max: 50000, unit: "Views", isFavorite: false }
-                ],
-                "Twitter": [
-                    { name: "Retweets Twitter", price: 14000, desc: "Menambah jumlah retweet untuk tweet Anda. Tingkatkan engagement!", min: 50, max: 2000, unit: "Retweets", isFavorite: false },
-                    { name: "Followers Twitter", price: 22000, desc: "Tingkatkan jumlah pengikut di akun Twitter Anda.", min: 100, max: 5000, unit: "Followers", isFavorite: false }
+                    {
+                        name: "Twitter Video Views",
+                        price: 6, // Harga per view: Rp 6
+                        desc: "⚠️ Mohon Baca Deskripsi ⚠️<br><br>Target : Link Video<br><br>Catatan:<br>- Saat Server sibuk, kecepatan bisa berubah.<br>- Jangan melakukan pemesanan kedua pada link yang sama sebelum pesanan Anda selesai di sistem.<br>- Jika ada masalah dengan layanan, silakan hubungi dukungan.", 
+                        min: 250,
+                        max: 100000000,
+                        unit: "Views",
+                        isFavorite: false
+                    },
+                    {
+                        name: "Twitter Likes",
+                        price: 50, // Harga per like: Rp 50
+                        desc: "⚠️ Mohon Baca Deskripsi ⚠️<br><br>Target : Link Tweet<br><br>Catatan:<br>- Saat Server sibuk, kecepatan bisa berubah.<br>- Jangan melakukan pemesanan kedua pada link yang sama sebelum pesanan Anda selesai di sistem.<br>- Jika ada masalah dengan layanan, silakan hubungi dukungan.", 
+                        min: 20,
+                        max: 10000,
+                        unit: "Likes",
+                        isFavorite: false
+                    }
                 ],
                 "Telegram": [
-                     { name: "Member Telegram", price: 30000, desc: "Tambahkan anggota ke grup atau channel Telegram Anda.", min: 50, max: 10000, unit: "Member", isFavorite: false }
+                     { name: "Member Telegram", price: 300, desc: "Tambahkan anggota ke grup atau channel Telegram Anda.", min: 50, max: 10000, unit: "Member", isFavorite: false } 
                 ],
                 "WhatsApp": [
-                    { name: "Member Grup WhatsApp", price: 35000, desc: "Tambahkan anggota aktif ke grup WhatsApp Anda.", min: 20, max: 500, unit: "Member", isFavorite: false }
+                    {
+                        name: "Whatsapp Channel Members",
+                        price: 80, // Harga per member: Rp 80
+                        desc: "⚠️ Mohon Baca Deskripsi ⚠️<br><br>Target : Link Channel<br><br>Catatan:<br>- Saat Server sibuk, kecepatan bisa berubah.<br>- Jangan melakukan pemesanan kedua pada link yang sama sebelum pesanan Anda selesai di sistem.<br>- Jika ada masalah dengan layanan, silakan hubungi dukungan.",
+                        min: 10,
+                        max: 1000,
+                        unit: "Members",
+                        isFavorite: false
+                    },
+                    {
+                        name: "Whatsapp Channel Emoji Reactions | Mix - 👍❤️😂😲😥🙏",
+                        price: 60, // Harga per reaction: Rp 60
+                        desc: "⚠️ Mohon Baca Deskripsi ⚠️<br><br>Target : Link Channel<br><br>Catatan:<br>- Saat Server sibuk, kecepatan bisa berubah.<br>- Jangan melakukan pemesanan kedua pada link yang sama sebelum pesanan Anda selesai di sistem.<br>- Jika ada masalah dengan layanan, silakan hubungi dukungan.",
+                        min: 10,
+                        max: 3000,
+                        unit: "Reactions",
+                        isFavorite: false
+                    }
                 ],
                 "Marketplace": [
-                    { name: "Ulasan Toko Online", price: 25000, desc: "Tingkatkan reputasi toko online Anda dengan ulasan positif.", min: 5, max: 100, unit: "Ulasan", isFavorite: false }
+                    {
+                        name: "Bukalapak Followers Indonesia",
+                        price: 73, // Harga per follower: Rp 73
+                        desc: "⚠️ Mohon Baca Deskripsi ⚠️<br><br>Target : Username<br><br>Catatan:<br>- Saat Server sibuk, kecepatan bisa berubah.<br>- Jangan melakukan pemesanan kedua pada link yang sama sebelum pesanan Anda selesai di sistem.<br>- Jika ada masalah dengan layanan, silakan hubungi dukungan.",
+                        min: 50,
+                        max: 4000,
+                        unit: "Followers",
+                        isFavorite: false
+                    },
+                    {
+                        name: "Bukalapak Produk Likes Indonesia",
+                        price: 2.9, // Harga per like: Rp 2.9
+                        desc: "⚠️ Mohon Baca Deskripsi ⚠️<br><br>Target : Link/Url<br><br>Catatan:<br>- Saat Server sibuk, kecepatan bisa berubah.<br>- Jangan melakukan pemesanan kedua pada link yang sama sebelum pesanan Anda selesai di sistem.<br>- Jika ada masalah dengan layanan, silakan hubungi dukungan.",
+                        min: 50,
+                        max: 5000,
+                        unit: "Likes",
+                        isFavorite: false
+                    },
+                    {
+                        name: "Bukalapak Product Views Indonesia",
+                        price: 35, // Harga per view: Rp 35
+                        desc: "⚠️ Mohon Baca Deskripsi ⚠️<br><br>Target : Link/Url<br><br>Catatan:<br>- Saat Server sibuk, kecepatan bisa berubah.<br>- Jangan melakukan pemesanan kedua pada link yang sama sebelum pesanan Anda selesai di sistem.<br>- Jika ada masalah dengan layanan, silakan hubungi dukungan.",
+                        min: 50,
+                        max: 5000,
+                        unit: "Views",
+                        isFavorite: false
+                    },
+                    {
+                        name: "Shopee Followers Indonesia",
+                        price: 12, // Harga per follower: Rp 12
+                        desc: "Contoh Target : https://shopee.co.id/xiamostore<br>Garansi: tidak ada garansi isi ulang",
+                        min: 100,
+                        max: 30000,
+                        unit: "Followers",
+                        isFavorite: false
+                    },
+                    {
+                        name: "Shopee Likes SHOPEE VIDEO Indonesia",
+                        price: 10, // Harga per like: Rp 10
+                        desc: "⚠️ Mohon Baca Deskripsi ⚠️<br><br>Target : LINK SHOPEE VIDEO <br><br>Catatan:<br>- Saat Server sibuk, kecepatan bisa berubah.<br>- Jangan melakukan pemesanan kedua pada link yang sama sebelum pesanan Anda selesai di sistem.<br>- Jika ada masalah dengan layanan, silakan hubungi dukungan.",
+                        min: 50,
+                        max: 100000,
+                        unit: "Likes",
+                        isFavorite: false
+                    },
+                    {
+                        name: "Shopee Livestream Views",
+                        price: 50, // Harga per view: Rp 50
+                        desc: "Target : Link Live<br>Refund: Tidak<br>Screenshoot : Wajib sertakan jika ada masalah dengan pesanan<br><br>Catatan:<br>- Saat Server sibuk, kecepatan bisa berubah.<br>- Jangan melakukan pemesanan kedua pada link yang sama sebelum pesanan Anda selesai di sistem.<br>- Jika ada masalah dengan layanan, silakan hubungi dukungan.",
+                        min: 10,
+                        max: 100000,
+                        unit: "Views",
+                        isFavorite: false
+                    }
                 ],
                 "Discord": [
-                    { name: "Member Discord", price: 28000, desc: "Tambahkan anggota ke server Discord Anda.", min: 20, max: 1000, unit: "Member", isFavorite: false }
+                    { name: "Member Discord", price: 280, desc: "Tambahkan anggota ke server Discord Anda.", min: 20, max: 1000, unit: "Member", isFavorite: false } 
                 ],
                 "Twitch": [
-                    { name: "Followers Twitch", price: 20000, desc: "Dapatkan follower baru untuk channel Twitch Anda.", min: 50, max: 2000, unit: "Followers", isFavorite: false }
+                    { name: "Followers Twitch", price: 200, desc: "Dapatkan follower baru untuk channel Twitch Anda.", min: 50, max: 2000, unit: "Followers", isFavorite: false } 
                 ],
                 "Pinterest": [
-                    { name: "Followers Pinterest", price: 18000, desc: "Tingkatkan jumlah pengikut di akun Pinterest Anda.", min: 50, max: 2000, unit: "Followers", isFavorite: false }
+                    { name: "Followers Pinterest", price: 180, desc: "Tingkatkan jumlah pengikut di akun Pinterest Anda.", min: 50, max: 2000, unit: "Followers", isFavorite: false } 
                 ],
                 "Snack Video": [
-                    { name: "Followers Snack Video", price: 16000, desc: "Menambah follower untuk akun Snack Video Anda.", min: 50, max: 5000, unit: "Followers", isFavorite: false },
-                    { name: "Likes Snack Video", price: 8000, desc: "Dapatkan lebih banyak like untuk video Snack Video Anda.", min: 100, max: 10000, unit: "Likes", isFavorite: false }
+                    { name: "Followers Snack Video", price: 160, desc: "Menambah follower untuk akun Snack Video Anda.", min: 50, max: 5000, unit: "Followers", isFavorite: false }, 
+                    { name: "Likes Snack Video", price: 80, desc: "Dapatkan lebih banyak like untuk video Snack Video Anda.", min: 100, max: 10000, unit: "Likes", isFavorite: false } 
                 ],
                 "TripAdvisor": [
-                    { name: "Ulasan TripAdvisor", price: 40000, desc: "Tingkatkan rating bisnis Anda di TripAdvisor dengan ulasan asli.", min: 1, max: 20, unit: "Ulasan", isFavorite: false }
+                    { name: "Ulasan TripAdvisor", price: 400, desc: "Tingkatkan rating bisnis Anda di TripAdvisor dengan ulasan asli.", min: 1, max: 20, unit: "Ulasan", isFavorite: false } 
+                ],
+                "Threads": [
+                    {
+                        name: "Threads Followers",
+                        price: 92, // Harga per follower: Rp 92
+                        desc: "⚠️ Mohon Baca Deskripsi ⚠️<br><br>Target : Link/username<br><br>- Saat Server sibuk, kecepatan bisa berubah.<br>- Jangan melakukan pemesanan kedua pada link yang sama sebelum pesanan Anda selesai di sistem.<br>- Jika ada masalah dengan layanan, silakan hubungi dukungan.",
+                        min: 100,
+                        max: 100000,
+                        unit: "Followers",
+                        isFavorite: false
+                    },
+                    {
+                        name: "Threads Likes",
+                        price: 65, // Harga per like: Rp 65
+                        desc: "⚠️ Mohon Baca Deskripsi ⚠️<br><br>Target : Link Post<br><br>Catatan:<br>- Saat Server sibuk, kecepatan bisa berubah.<br>- Jangan melakukan pemesanan kedua pada link yang sama sebelum pesanan Anda selesai di sistem.<br>- Jika ada masalah dengan layanan, silakan hubungi dukungan.", 
+                        min: 50,
+                        max: 300000,
+                        unit: "Likes",
+                        isFavorite: false
+                    }
                 ]
             };
 
@@ -850,7 +1000,7 @@
             const categoryButtons = document.querySelectorAll('.category-buttons .cat-btn');
             const categorySelect = document.getElementById('categorySelect');
             const serviceSelect = document.getElementById('serviceSelect');
-            const orderTargetInput = document.getElementById('orderTarget'); // New input
+            const orderTargetInput = document.getElementById('orderTarget'); 
             const orderQuantityInput = document.getElementById('orderQuantity');
             const favoriteServiceCheckbox = document.getElementById('favoriteServiceCheckbox');
             const orderForm = document.getElementById('orderForm');
@@ -866,19 +1016,22 @@
                 return new Intl.NumberFormat('id-ID', {
                     style: 'currency',
                     currency: 'IDR',
-                    minimumFractionDigits: 0
+                    minimumFractionDigits: 0, // Tampilkan 0 desimal secara default
+                    maximumFractionDigits: 2 // Tapi izinkan hingga 2 desimal jika ada
                 }).format(number);
             }
 
             // Populate Category Select (Dropdown)
             function populateCategorySelect() {
                 categorySelect.innerHTML = '<option value="">Pilih...</option>';
-                for (const category in allServicesData) {
+                // Urutkan kategori secara alfabetis untuk urutan yang konsisten
+                const sortedCategories = Object.keys(allServicesData).sort();
+                sortedCategories.forEach(category => {
                     const option = document.createElement('option');
                     option.value = category;
                     option.textContent = category;
                     categorySelect.appendChild(option);
-                }
+                });
             }
 
             // Update Service Select (Dropdown) based on selected category and favorite filter
@@ -886,7 +1039,7 @@
                 const selectedCategory = categorySelect.value;
                 const showFavorites = favoriteServiceCheckbox.checked;
                 serviceSelect.innerHTML = '<option value="">Pilih...</option>';
-                serviceDetailsDisplay.style.display = 'none'; // Hide details when service selection changes
+                serviceDetailsDisplay.style.display = 'none'; // Sembunyikan detail saat pilihan layanan berubah
 
                 if (selectedCategory && allServicesData[selectedCategory]) {
                     let services = allServicesData[selectedCategory];
@@ -896,7 +1049,7 @@
                     
                     services.forEach((service, index) => {
                         const option = document.createElement('option');
-                        option.value = index; // Use index to easily retrieve service details
+                        option.value = index; // Gunakan indeks untuk mengambil detail layanan dengan mudah
                         option.textContent = service.name;
                         serviceSelect.appendChild(option);
                     });
@@ -910,18 +1063,18 @@
 
                 if (selectedCategory && selectedServiceIndex !== "" && allServicesData[selectedCategory]) {
                     const service = allServicesData[selectedCategory][selectedServiceIndex];
-                    serviceDescriptionDisplay.innerHTML = service.desc; // Use innerHTML to render line breaks
+                    serviceDescriptionDisplay.innerHTML = service.desc; // Gunakan innerHTML untuk merender baris baru
                     minQuantityDisplay.textContent = service.min;
                     maxQuantityDisplay.textContent = service.max;
-                    servicePriceDisplay.textContent = formatRupiah(service.price);
+                    servicePriceDisplay.textContent = formatRupiah(service.price); // Tampilkan harga per unit
                     quantityUnitDisplay.textContent = service.unit;
 
                     orderQuantityInput.min = service.min;
                     orderQuantityInput.max = service.max;
-                    orderQuantityInput.value = service.min; // Set default quantity to min
-                    serviceDetailsDisplay.style.display = 'flex'; // Show details
+                    orderQuantityInput.value = service.min; // Set kuantitas default ke min
+                    serviceDetailsDisplay.style.display = 'flex'; // Tampilkan detail
                 } else {
-                    serviceDetailsDisplay.style.display = 'none'; // Hide if no service selected
+                    serviceDetailsDisplay.style.display = 'none'; // Sembunyikan jika tidak ada layanan yang dipilih
                 }
             }
 
@@ -929,36 +1082,36 @@
             categorySelect.addEventListener('change', updateServiceSelect);
             serviceSelect.addEventListener('change', displayServiceDetails);
             favoriteServiceCheckbox.addEventListener('change', () => {
-                updateServiceSelect(); // Re-populate service dropdown with favorite filter applied
-                displayServiceDetails(); // Update details in case selected service is affected by filter
+                updateServiceSelect(); // Isi ulang dropdown layanan dengan filter favorit diterapkan
+                displayServiceDetails(); // Perbarui detail jika layanan yang dipilih terpengaruh oleh filter
             });
 
             // Event Listeners for Category Buttons (top section)
             categoryButtons.forEach(button => {
                 button.addEventListener('click', () => {
-                    // Remove active class from all buttons
+                    // Hapus kelas aktif dari semua tombol
                     categoryButtons.forEach(btn => btn.classList.remove('active-category'));
-                    // Add active class to clicked button
+                    // Tambahkan kelas aktif ke tombol yang diklik
                     button.classList.add('active-category');
 
                     const categoryName = button.dataset.category;
                     if (categoryName === "Semua") {
-                        categorySelect.value = ""; // Clear category selection in dropdown
+                        categorySelect.value = ""; // Hapus pilihan kategori di dropdown
                     } else {
-                        categorySelect.value = categoryName; // Set dropdown to selected category
+                        categorySelect.value = categoryName; // Set dropdown ke kategori yang dipilih
                     }
-                    updateServiceSelect(); // Update service dropdown
-                    displayServiceDetails(); // Update service details
+                    updateServiceSelect(); // Perbarui dropdown layanan
+                    displayServiceDetails(); // Perbarui detail layanan
                 });
             });
 
             // Handle Form Submission (Direct to Payment - does NOT add to a multi-item cart)
             orderForm.addEventListener('submit', (event) => {
-                event.preventDefault(); // Prevent default form submission
+                event.preventDefault(); // Mencegah pengiriman formulir default
 
                 const selectedCategory = categorySelect.value;
                 const selectedServiceIndex = serviceSelect.value;
-                const target = orderTargetInput.value.trim(); // Get target value
+                const target = orderTargetInput.value.trim(); // Dapatkan nilai target
                 const quantity = parseInt(orderQuantityInput.value);
 
                 if (!selectedCategory || selectedServiceIndex === "") {
@@ -979,30 +1132,30 @@
 
                 const service = allServicesData[selectedCategory][selectedServiceIndex];
 
-                // Validate quantity against min/max
+                // Validasi kuantitas terhadap min/max
                 if (quantity < service.min || quantity > service.max) {
                     alert(`Jumlah pesanan harus antara ${service.min} dan ${service.max} untuk layanan ini.`);
-                    orderQuantityInput.value = service.min; // Reset to min
+                    orderQuantityInput.value = service.min; // Atur ulang ke min
                     return;
                 }
 
-                // Prepare order data for payment page.
-                // This will OVERWRITE any previous 'xiamoStoreCart' data,
-                // effectively acting as a direct "buy now" for a single item.
+                // Siapkan data pesanan untuk halaman pembayaran.
+                // Ini akan MENIMPA data 'xiamoStoreCart' sebelumnya,
+                // secara efektif bertindak sebagai "beli sekarang" langsung untuk satu item.
                 const orderData = [{
-                    name: `${service.name} (${target})`, // Include target in product name
-                    price: service.price * quantity, // Total price for the quantity
+                    name: `${service.name} (${target})`, // Sertakan target dalam nama produk
+                    price: service.price * quantity, // Total harga untuk kuantitas
                     quantity: quantity
                 }];
 
-                // Save to localStorage and redirect
-                localStorage.setItem('xiamoStoreCart', JSON.stringify(orderData)); // Overwrite previous cart with this single order
+                // Simpan ke localStorage dan alihkan
+                localStorage.setItem('xiamoStoreCart', JSON.stringify(orderData)); // Timpa keranjang sebelumnya dengan pesanan tunggal ini
                 window.location.href = 'pembayaran.html';
             });
 
             // Initial population of category dropdown
             populateCategorySelect();
-            // Trigger a click on "Semua Kategori" button initially to set dropdown and active state
+            // Picu klik pada tombol "Semua Kategori" di awal untuk mengatur dropdown dan status aktif
             document.querySelector('.cat-btn[data-category="Semua"]').click();
         });
     </script>
