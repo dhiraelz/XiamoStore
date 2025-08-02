@@ -1049,6 +1049,7 @@
             transition: color 0.3s ease;
         }
 
+        /* START MODIFIED CSS FOR SCROLLABILITY */
         .info-modal-body {
             font-size: 1em;
             color: var(--text-primary);
@@ -1056,7 +1057,12 @@
             line-height: 1.8;
             text-align: left;
             transition: color 0.3s ease;
+            max-height: 70vh; /* Make it scrollable if content is too tall */
+            overflow-y: auto; /* Add vertical scrollbar when content overflows */
+            padding-right: 15px; /* Add some padding to prevent text from touching scrollbar */
         }
+        /* END MODIFIED CSS FOR SCROLLABILITY */
+
         .info-modal-body p {
             margin-bottom: 10px;
             transition: color 0.3s ease;
@@ -1493,8 +1499,8 @@
                     <p>XiamoStore adalah destinasi utama Anda untuk beragam produk digital premium. Kami menawarkan akses mudah ke layanan terbaik di bidang AI, desain grafis, hiburan musik dan video, serta alat produktivitas dan edukasi, semuanya dengan harga terjangkau. Nikmati pengalaman digital yang aman, cepat, dan terpercaya bersama kami!</p>
                     <div class="footer-social-icons">
                         <a href="https://wa.me/6287844643452" target="_blank"><i class="fab fa-whatsapp"></i></a>
-                        <a href="https://instagram.com/xiamostore.id" target="_blank"><i class="fab fa-instagram"></i></a>
-                        <a href="https://t.me/xiamostore" target="_blank"><i class="fab fa-telegram-plane"></i></a>
+                        <a href="https://instagram.com/xiamostore" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="https://t.me/XiamoCell" target="_blank"><i class="fab fa-telegram-plane"></i></a>
                     </div>
                 </div>
                 <div class="footer-col" id="footerProductCategories">
