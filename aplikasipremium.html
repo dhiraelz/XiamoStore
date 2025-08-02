@@ -177,6 +177,10 @@
             gap: 20px;
         }
 
+        .header-top-row { /* New container for top row elements on desktop */
+            display: contents; /* Makes children participate in flex layout of parent .header-content */
+        }
+
         .left-header-group {
             display: flex;
             align-items: center;
@@ -618,15 +622,7 @@
             box-shadow: 0 8px 20px var(--shadow-deep);
         }
 
-        .register-illustration {
-            position: absolute;
-            right: 0;
-            bottom: 0;
-            height: 250px;
-            object-fit: contain;
-            filter: drop-shadow(0 15px 30px var(--shadow-deep));
-            transition: filter 0.3s ease;
-        }
+        /* REMOVED .register-illustration CSS RULE */
 
         /* Footer */
         .footer {
@@ -1232,37 +1228,33 @@
 
             /* Header */
             .header-content {
-                flex-direction: row; /* Keep row for now, but allow wrapping */
-                flex-wrap: wrap; /* Allow wrapping */
-                justify-content: space-between;
-                align-items: center;
+                flex-direction: column; /* Always stack for mobile views */
+                align-items: center; /* Center main blocks (top-row and search-bar) */
+                gap: 15px; /* Adjust spacing */
                 padding: 15px; /* Adjust padding */
             }
 
+            .header-top-row { /* New container for top row elements */
+                width: 100%;
+                display: flex;
+                justify-content: space-between; /* Distribute items to edges */
+                align-items: center;
+            }
+
             .left-header-group {
-                width: auto; /* Allow content to dictate width */
-                flex-grow: 1; /* Allow it to grow */
-                order: 1; /* Keep it first */
+                gap: 10px; /* Reduce gap */
+            }
+            .logo-text {
+                font-size: 1.3em; /* Slightly smaller logo */
+            }
+            .back-button, .theme-toggle, .header-icons .icon-btn {
+                font-size: 1.6em; /* Slightly smaller icons */
+                padding: 8px;
             }
 
             .search-bar {
                 width: 100%; /* Make search bar full width */
-                order: 3; /* Move search bar below icons */
-                margin-top: 15px; /* Add space above search bar */
-            }
-
-            .header-icons {
-                order: 2; /* Keep icons to the right */
-                flex-shrink: 0;
-            }
-
-            .logo-text {
-                font-size: 1.3em; /* Slightly smaller logo */
-            }
-
-            .back-button, .theme-toggle, .header-icons .icon-btn {
-                font-size: 1.6em; /* Slightly smaller icons */
-                padding: 8px;
+                margin-top: 0; /* No extra margin if already in column flow */
             }
 
             /* Hero Section */
@@ -1372,7 +1364,7 @@
 
             .register-text-content {
                 max-width: 100%; /* Take full width */
-                margin-bottom: 25px; /* Space between text and illustration */
+                margin-bottom: 0; /* Removed space as illustration is gone */
             }
 
             .register-banner h3 {
@@ -1382,18 +1374,12 @@
 
             .register-banner p {
                 font-size: 0.95em; /* Smaller paragraph text */
+                margin-bottom: 20px; /* Keep some space below paragraph */
             }
 
             .register-btn {
                 padding: 12px 25px;
                 font-size: 1em;
-            }
-
-            .register-illustration {
-                position: static; /* Remove absolute positioning */
-                margin: 0 auto; /* Center illustration */
-                height: 180px; /* Smaller illustration height */
-                filter: drop-shadow(0 8px 15px var(--shadow-light)); /* Lighter shadow */
             }
 
             /* Footer */
@@ -1438,98 +1424,94 @@
                 padding: 0 10px;
             }
 
-            /* Header */
-            .header-content {
-                padding: 10px;
-                flex-direction: column; /* Stack header items */
-                align-items: flex-start; /* Align to start */
-            }
-
-            .left-header-group {
-                width: 100%;
-                justify-content: space-between; /* Space out back button and logo */
-                margin-bottom: 10px;
-                order: 1;
-            }
+            /* Header - Fine-tuning for smallest phones */
             .logo-text {
-                font-size: 1.4em;
+                font-size: 1.2em; /* Slightly smaller logo text for very small screens */
             }
-            .back-button {
-                font-size: 1.7em;
+            .back-button, .theme-toggle, .header-icons .icon-btn {
+                font-size: 1.5em; /* Slightly smaller icons for very small screens */
             }
-
-            .search-bar {
-                margin-top: 0; /* Remove top margin */
-                order: 3;
+            .search-bar input {
+                padding: 10px 15px 10px 40px; /* Adjust padding for smaller input */
+                font-size: 0.9em;
             }
-
-            .header-icons {
-                width: 100%;
-                justify-content: flex-end; /* Push icons to the right */
-                margin-bottom: 10px;
-                order: 2;
-            }
-            .header-icons .icon-btn {
-                font-size: 1.5em; /* Further reduce icon size */
+            .search-bar .search-icon {
+                left: 10px; /* Adjust icon position */
+                font-size: 1.2em;
             }
 
             /* Hero Section */
             .hero-section {
-                padding: 20px 10px;
+                padding: 15px 10px;
             }
             .hero-content h2 {
-                font-size: 1.8em;
+                font-size: 1.6em;
             }
             .hero-content p {
-                font-size: 0.9em;
+                font-size: 0.85em;
             }
             .hero-images img {
-                height: 140px;
+                height: 120px;
             }
             .hero-images img:nth-child(1) {
-                height: 120px;
+                height: 100px;
+            }
+            .admin-info {
+                font-size: 0.8em;
             }
 
             /* Product Grid */
             .product-grid {
                 grid-template-columns: 1fr 1fr; /* Force two columns on very small screens */
-                gap: 15px;
+                gap: 10px;
             }
-
+            .product-card {
+                padding: 10px;
+            }
             .product-image {
-                width: 70px;
-                height: 70px;
+                width: 60px;
+                height: 60px;
+                margin-bottom: 8px;
             }
             .product-image[src="capcutlogo.png"],
             .product-image[src="slideshare.jpeg"] {
-                width: 60px;
-                height: 60px;
+                width: 50px;
+                height: 50px;
             }
             .product-icon-fa {
-                font-size: 2.5em;
-                width: 60px;
-                height: 60px;
+                font-size: 2.2em;
+                width: 50px;
+                height: 50px;
+                margin-bottom: 8px;
             }
             .product-name {
                 font-size: 0.9em;
+                margin-bottom: 5px;
             }
             .product-price {
                 font-size: 0.85em;
+                margin-bottom: 10px;
             }
             .add-to-cart-btn {
-                padding: 6px 10px;
+                padding: 5px 8px;
                 font-size: 0.85em;
             }
 
             /* Register Banner */
             .register-banner {
-                padding: 25px 15px;
+                padding: 20px 10px;
             }
             .register-banner h3 {
-                font-size: 1.6em;
+                font-size: 1.4em;
+                margin-bottom: 10px;
             }
-            .register-illustration {
-                height: 150px;
+            .register-banner p {
+                font-size: 0.8em;
+                margin-bottom: 15px;
+            }
+            .register-btn {
+                padding: 10px 20px;
+                font-size: 0.9em;
             }
         }
         /* END NEW MEDIA QUERIES FOR MOBILE OPTIMIZATION */
@@ -1545,22 +1527,25 @@
 
     <header class="header">
         <div class="container header-content">
-            <div class="left-header-group">
-                <button class="back-button" onclick="history.back()"><i class="fas fa-arrow-left"></i></button>
-                <div class="logo-text">XiamoStore</div>
+            <!-- NEW: Wrap left-header-group and header-icons in a new container -->
+            <div class="header-top-row">
+                <div class="left-header-group">
+                    <button class="back-button" onclick="history.back()"><i class="fas fa-arrow-left"></i></button>
+                    <div class="logo-text">XiamoStore</div>
+                </div>
+                <div class="header-icons">
+                    <button class="icon-btn" id="theme-toggle" aria-label="Toggle theme">
+                        <i class="fas fa-sun"></i> <!-- Initial icon for dark mode (to switch to light) -->
+                    </button>
+                    <button class="icon-btn" id="cartIcon">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-badge" id="cartBadge">0</span>
+                    </button>
+                </div>
             </div>
             <div class="search-bar">
                 <i class="fas fa-search search-icon"></i>
                 <input type="text" placeholder="Cari produk ">
-            </div>
-            <div class="header-icons">
-                <button class="icon-btn" id="theme-toggle" aria-label="Toggle theme">
-                    <i class="fas fa-sun"></i> <!-- Initial icon for dark mode (to switch to light) -->
-                </button>
-                <button class="icon-btn" id="cartIcon">
-                    <i class="fas fa-shopping-cart"></i>
-                    <span class="cart-badge" id="cartBadge">0</span>
-                </button>
             </div>
         </div>
     </header>
@@ -1795,7 +1780,7 @@
                     <p>Kamu akan bebas biaya admin, lebih mudah mengelola pesanan, serta bebas mengatur jumlah dan menyimpannya ke dalam keranjang. Tunggu apa lagi?</p>
                     <button class="register-btn">Gabung Sekarang</button>
                 </div>
-                <img src="https://via.placeholder.com/250x250/3B4D63/FFFFFF?text=Robot+Mascot" alt="Robot Mascot" class="register-illustration">
+                <!-- REMOVED THE MASCOT IMAGE -->
             </section>
         </div>
     </main>
