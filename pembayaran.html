@@ -202,25 +202,47 @@
             gap: 10px;
         }
 
+        /* Updated .summary-item for multi-line display */
         .summary-item {
             display: flex;
-            justify-content: space-between;
+            flex-direction: column; /* Stack details vertically */
             padding: 10px 0;
             border-bottom: 1px dashed rgba(255, 255, 255, 0.1); /* Border dashed transparan */
+            text-align: left; /* Align text within item to left */
+            line-height: 1.4; /* Adjust line height for stacked text */
         }
 
         .summary-item:last-child {
             border-bottom: none;
         }
 
+        .summary-item-line {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+        }
+
         .summary-item-name {
+            font-weight: 500; /* Slightly bolder for service name */
+            color: var(--text-primary);
+            font-size: 1em; /* Adjust font size */
+            margin-bottom: 5px; /* Space between name and target/qty */
+        }
+
+        .summary-item-target,
+        .summary-item-quantity {
             font-weight: 400;
-            color: rgba(var(--text-primary), 0.8); /* Teks utama sedikit transparan */
+            color: rgba(var(--text-primary), 0.7); /* Muted for target and quantity */
+            font-size: 0.9em; /* Smaller font size */
+            display: block; /* Ensure it takes full width for alignment */
         }
 
         .summary-item-price {
-            font-weight: 500;
-            color: var(--text-primary); /* Teks utama */
+            font-weight: 600; /* Bolder for the price itself */
+            color: var(--accent-glow); /* Accent color for total price */
+            font-size: 1.1em; /* Larger for emphasis */
+            text-align: right; /* Align price to the right */
+            margin-top: 5px; /* Space between qty and price */
         }
 
         .order-total {
@@ -405,7 +427,9 @@
             color: var(--text-primary); /* Teks utama */
             font-size: 1.8em;
             cursor: pointer;
-            transition: color 0.2s ease;
+            padding: 5px;
+            line-height: 1; /* Untuk memastikan ikon terpusat vertikal */
+            transition: color 0.2s ease, background-color 0.2s ease;
             position: absolute;
             right: 20px;
             top: 20px;
@@ -431,7 +455,7 @@
             padding: 15px;
             border-radius: 10px;
             margin-top: 15px;
-            font-size: 1.1em;
+            font-size: 1.05em; /* Slightly adjusted base for info block */
             font-weight: 500;
             color: var(--accent-glow); /* Warna aksen */
             overflow-wrap: break-word;
@@ -441,7 +465,7 @@
 
         .instruction-modal-body .payment-info strong {
             display: block;
-            font-size: 1em;
+            font-size: 1.15em; /* Slightly larger than parent .payment-info for emphasis */
             color: var(--text-secondary); /* Putih bersih */
             margin-bottom: 5px;
         }
@@ -508,11 +532,11 @@
                 font-size: 0.9em;
             }
             .instruction-modal-body .payment-info {
-                font-size: 1em;
+                font-size: 0.95em; /* Adjusted base for mobile */
                 padding: 10px;
             }
             .instruction-modal-body .payment-info strong {
-                font-size: 1.1em;
+                font-size: 1.1em; /* Slightly larger than mobile .payment-info */
             }
             .instruction-modal-body .payment-info img {
                 max-width: 180px;
@@ -717,7 +741,7 @@
 
             // Data detail pembayaran untuk setiap metode
             const paymentMethodsData = {
-                qris: { // QRIS moved to the top in the data object for consistency
+                qris: {
                     title: "Pembayaran via QRIS",
                     instructions: "Scan QR code di bawah ini dengan aplikasi pembayaran apapun:",
                     account_name: "Xiamo Cell",
@@ -745,16 +769,15 @@
                 seabanku: {
                     title: "Pembayaran via SeaBank",
                     instructions: "Transfer ke rekening SeaBank berikut:",
-                    detail: "901133815310 (a/n Dhiya Raidah - PT Xiamo Digital)",
+                    detail: "901133815310 (a/n Dhiya Raidah)",
                     image: null
                 },
-                bca: { // Mengubah data ini agar sesuai dengan BSI yang baru
-                    title: "Pembayaran via Transfer Bank BSI",
-                    instructions: "Transfer ke rekening Bank Syariah Indonesia (BSI) berikut:",
-                    detail: "7211158580 (a/n Dhiya Raidah - PT Xiamo Digital)",
+                bca: {
+                    title: "Pembayaran via Transfer Bank BSI", // Changed from BCA to BSI as per comment
+                    instructions: "Transfer ke rekening Bank Syariah Indonesia berikut:",
+                    detail: "7198277104 (a/n Dhiya Raidah)",
                     image: null
                 }
-                // Indomaret / Alfamart data removed
             };
 
             // Helper function to format currency
@@ -783,25 +806,62 @@
 
             if (cartItems.length === 0) {
                 orderSummaryItems.innerHTML = '<p style="text-align: center; color: rgba(255,255,255,0.7);">Keranjang Anda kosong. Silakan kembali ke halaman produk.</p>';
-                paymentButton.disabled = true; // Disable payment button if cart is empty
+                paymentButton.disabled = true;
                 paymentButton.textContent = "Keranjang Kosong";
                 paymentButton.style.opacity = '0.5';
                 paymentButton.style.cursor = 'not-allowed';
             } else {
                 paymentButton.disabled = false;
-                paymentButton.textContent = "Bayar Sekarang"; // Reset text
+                paymentButton.textContent = "Bayar Sekarang";
                 paymentButton.style.opacity = '1';
                 paymentButton.style.cursor = 'pointer';
 
                 cartItems.forEach(item => {
+                    let serviceName = item.name || "Layanan Tidak Diketahui";
+                    let targetInfo = "N/A"; // Default
+                    let quantity = item.quantity || 1;
+                    let lineTotal = 0;
+
+                    // Regex to parse item.name for "Product Name (Duration)" or "Service Name (Target)"
+                    // This is crucial because `item.price` means different things based on origin
+                    const regexProductPage = /^(.*?)\s*\(((\d+\sDays?|\d+\sMonths?|\d+\sYears?|Code Redeem|1 Link|Lifetime|\d+\sTB Storage|\d+\sHari))\)$/;
+                    const regexJasaSuntik = /^(.*?)\s*\((https?:\/\/[^\s)]+|[\w\d.\-]+)\)$/;
+
+                    let matchProduct = serviceName.match(regexProductPage);
+                    let matchJasaSuntik = serviceName.match(regexJasaSuntik);
+
+                    if (matchProduct) {
+                        // This likely came from the main product page (e.g., "CapCut (7 Hari)")
+                        serviceName = matchProduct[1].trim(); // "CapCut"
+                        targetInfo = matchProduct[2].trim(); // "7 Hari"
+                        // For items from main products, `item.price` is the unit price (per duration)
+                        lineTotal = item.price * quantity; 
+                    } else if (matchJasaSuntik) {
+                        // This likely came from the "buat-pesanan-jasa-suntik" page (e.g., "WhatsApp Channel Members (link)")
+                        serviceName = matchJasaSuntik[1].trim(); // "WhatsApp Channel Members"
+                        targetInfo = matchJasaSuntik[2].trim(); // "https://wa.me/..."
+                        // For items from jasa suntik, `item.price` is already the total price for the given quantity
+                        lineTotal = item.price;
+                    } else {
+                        // Fallback for items that don't match expected patterns
+                        // Assume `item.price` is the total for this line, and `item.name` is the full service name including any info.
+                        serviceName = item.name; // Keep original name
+                        targetInfo = "Tidak terurai / Langsung di nama"; // Indicate it couldn't be parsed
+                        lineTotal = item.price;
+                    }
+
                     const itemElement = document.createElement('div');
                     itemElement.classList.add('summary-item');
                     itemElement.innerHTML = `
-                        <span class="summary-item-name">${item.name} (${item.quantity}x)</span>
-                        <span class="summary-item-price">${formatRupiah(item.price * item.quantity)}</span>
+                        <div class="summary-item-line">
+                            <span class="summary-item-name">${serviceName}</span>
+                            <span class="summary-item-price">${formatRupiah(lineTotal)}</span>
+                        </div>
+                        <span class="summary-item-target">Target: ${targetInfo}</span>
+                        <span class="summary-item-quantity">Jumlah Pesanan: ${quantity}</span>
                     `;
                     orderSummaryItems.appendChild(itemElement);
-                    totalPayment += item.price * item.quantity;
+                    totalPayment += lineTotal;
                 });
             }
 
@@ -818,7 +878,6 @@
                 instructionModalTitle.textContent = data.title;
                 let detailsHtml = `<p>${data.instructions}</p>`;
                 
-                // Kondisi khusus untuk QRIS
                 if (method === 'qris') {
                     detailsHtml += `<div class="payment-info">
                                         <strong>(a/n ${data.account_name})</strong>
@@ -828,21 +887,49 @@
                 }
 
                 if (data.image) {
-                    // Jika ada gambar (misal logo DANA atau QRIS), tampilkan di sini
                     detailsHtml += `<img src="${data.image}" alt="Logo untuk ${data.title}">`;
                 }
                 detailsHtml += `</div>`;
                 paymentDetailsContent.innerHTML = detailsHtml;
 
-                // Prepare WhatsApp message
+                // Prepare WhatsApp message based on parsed details
                 let whatsappMessage = `Halo Admin XiamoStore,\n\nSaya ingin konfirmasi pembayaran untuk pesanan saya.\n\nRingkasan Pesanan:\n`;
                 cartItems.forEach(item => {
-                    whatsappMessage += `- ${item.name} (${item.quantity}x) = ${formatRupiah(item.price * item.quantity)}\n`;
+                    let serviceName = item.name || "Layanan Tidak Diketahui";
+                    let targetInfo = "N/A";
+                    let quantity = item.quantity || 1;
+                    let lineTotal = 0;
+
+                    const regexProductPage = /^(.*?)\s*\(((\d+\sDays?|\d+\sMonths?|\d+\sYears?|Code Redeem|1 Link|Lifetime|\d+\sTB Storage|\d+\sHari))\)$/;
+                    const regexJasaSuntik = /^(.*?)\s*\((https?:\/\/[^\s)]+|[\w\d.\-]+)\)$/;
+
+                    let matchProduct = serviceName.match(regexProductPage);
+                    let matchJasaSuntik = serviceName.match(regexJasaSuntik);
+
+                    if (matchProduct) {
+                        serviceName = matchProduct[1].trim();
+                        targetInfo = matchProduct[2].trim();
+                        lineTotal = item.price * quantity;
+                    } else if (matchJasaSuntik) {
+                        serviceName = matchJasaSuntik[1].trim();
+                        targetInfo = matchJasaSuntik[2].trim();
+                        lineTotal = item.price;
+                    } else {
+                        serviceName = item.name;
+                        targetInfo = "Tidak terurai";
+                        lineTotal = item.price;
+                    }
+                    
+                    whatsappMessage += `- Jenis Layanan: ${serviceName}\n`;
+                    whatsappMessage += `  Target: ${targetInfo}\n`;
+                    whatsappMessage += `  Jumlah Pesanan: ${quantity}\n`;
+                    whatsappMessage += `  Subtotal: ${formatRupiah(lineTotal)}\n`;
                 });
+
                 whatsappMessage += `\nTotal Pembayaran: ${formatRupiah(totalPayment)}`;
                 whatsappMessage += `\nMetode Pembayaran: ${data.title}\n\nMohon dicek dan proses pesanan saya. Terima kasih!`;
 
-                whatsappConfirmBtn.href = `https://wa.me/6287844643452?text=${encodeURIComponent(whatsappMessage)}`; // Ganti dengan nomor WhatsApp Anda
+                whatsappConfirmBtn.href = `https://wa.me/6287844643452?text=${encodeURIComponent(whatsappMessage)}`;
 
                 instructionModal.classList.add('active');
             }
@@ -872,4 +959,4 @@
         });
     </script>
 </body>
-</html>     
+</html>```
