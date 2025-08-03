@@ -312,128 +312,93 @@
             padding: 30px 0;
         }
 
-        /* Hero Section (Carousel) */
-        .hero-section {
+        /* --- NEW CUSTOM SLIDER STYLES --- */
+        .hero-section.custom-slider {
             background: linear-gradient(145deg, var(--card-start-gradient), var(--card-end-gradient));
             border-radius: 20px;
             margin-bottom: 40px;
             position: relative;
-            overflow: hidden;
+            overflow: hidden; /* Crucial for hiding parts of slides outside */
             box-shadow: 0 10px 30px var(--shadow-deep);
-            min-height: 350px;
+            min-height: 400px; /* Adjusted to fit images well */
             backdrop-filter: var(--backdrop-filter-card);
             -webkit-backdrop-filter: var(--backdrop-filter-card);
             border: 1px solid rgba(255, 255, 255, 0.15);
             transition: background 0.3s ease, box-shadow 0.3s ease, backdrop-filter 0.3s ease, border-color 0.3s ease;
+            display: flex; /* To center the track */
+            justify-content: center;
+            align-items: center;
+            padding: 20px 0; /* Adjust padding for visual balance */
         }
 
-        .hero-slides-wrapper {
-            display: flex;
+        .custom-carousel-track {
+            position: relative;
             width: 100%;
             height: 100%;
-            transition: transform 0.8s ease-in-out;
-        }
-
-        .hero-slide {
-            flex: 0 0 100%;
             display: flex;
+            justify-content: center; /* Center items within the track */
             align-items: center;
-            justify-content: space-between;
-            padding: 40px;
-            position: relative;
-            height: 100%;
+            min-height: 350px; /* Ensure track has height for items */
         }
 
-        .hero-content {
-            text-align: left;
-            max-width: 50%;
-            z-index: 1;
-            position: relative;
-        }
-
-        .hero-content h2 {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 2.8em;
-            font-weight: 800;
-            margin-bottom: 10px;
-            color: var(--text-secondary);
-            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-            transition: color 0.3s ease, text-shadow 0.3s ease;
-        }
-
-        .hero-content p {
-            font-size: 1.1em;
-            color: var(--footer-text-muted); /* Using muted text for paragraphs */
-            margin-bottom: 20px;
-            transition: color 0.3s ease;
-        }
-
-        .admin-info {
-            display: flex;
-            align-items: center;
-            font-size: 0.9em;
-            color: var(--footer-text-muted);
-            margin-top: 20px;
-            transition: color 0.3s ease;
-        }
-
-        .admin-info i {
-            margin-right: 8px;
-            color: var(--accent-color);
-            transition: color 0.3s ease;
-        }
-
-        .hero-images {
-            position: absolute;
-            right: 40px;
-            bottom: 0;
-            display: flex;
-            gap: 20px;
-            align-items: flex-end;
-            z-index: 0;
-        }
-
-        .hero-images img {
-            height: 300px;
-            object-fit: contain;
-            filter: drop-shadow(0 15px 30px var(--shadow-deep));
-            transition: filter 0.3s ease;
-        }
-
-        .hero-images img:nth-child(1) {
-            transform: rotate(-5deg);
-            height: 280px;
-            margin-bottom: 20px;
-        }
-
-        .hero-dots {
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 10px;
-            z-index: 2;
-        }
-
-        .hero-dot {
-            width: 8px;
-            height: 8px;
-            background-color: rgba(var(--text-secondary), 0.5);
-            border-radius: 50%;
+        .custom-carousel-item {
+            position: absolute; /* Allows precise positioning and overlap */
+            width: 550px; /* Base width for items */
+            height: auto; /* Height will scale with width */
+            border-radius: 15px; /* Curved corners */
+            overflow: hidden;
+            box-shadow: 0 10px 30px var(--shadow-deep);
             cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-        body.light-mode .hero-dot {
-            background-color: rgba(var(--text-primary), 0.5);
+            /* Transition for smooth movement, opacity, scale, and z-index (delayed) */
+            transition: transform 0.8s ease-in-out, opacity 0.8s ease-in-out, left 0.8s ease-in-out, z-index 0.0s 0.4s;
+            opacity: 0; /* Default hidden state */
         }
 
-        .hero-dot.active {
-            background-color: var(--accent-color);
-            width: 25px;
-            border-radius: 5px;
-            transition: background-color 0.3s ease, width 0.3s ease, border-radius 0.3s ease;
+        .custom-carousel-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 15px; /* Apply border-radius to image as well */
         }
+
+        /* Position classes for the 3-card layout */
+        .custom-carousel-item.left-pos {
+            left: 50%;
+            transform: translateX(calc(-50% - 280px)) scale(0.85); /* Shift left and scale down */
+            opacity: 1;
+            z-index: 2; /* Behind center */
+        }
+
+        .custom-carousel-item.center-pos {
+            left: 50%;
+            transform: translateX(-50%) scale(1.15); /* Centered and larger */
+            opacity: 1;
+            z-index: 3; /* On top */
+        }
+
+        .custom-carousel-item.right-pos {
+            left: 50%;
+            transform: translateX(calc(-50% + 280px)) scale(0.85); /* Shift right and scale down */
+            opacity: 1;
+            z-index: 2; /* Behind center */
+        }
+
+        /* Off-screen positions for items not currently visible (optional, but good for transition) */
+        .custom-carousel-item.off-left {
+            left: 50%;
+            transform: translateX(calc(-50% - 560px)) scale(0.6); /* Far left, smaller, hidden */
+            opacity: 0;
+            z-index: 1;
+        }
+
+        .custom-carousel-item.off-right {
+            left: 50%;
+            transform: translateX(calc(-50% + 560px)) scale(0.6); /* Far right, smaller, hidden */
+            opacity: 0;
+            z-index: 1;
+        }
+        /* --- END NEW CUSTOM SLIDER STYLES --- */
+
 
         /* Product Grid */
         .product-grid {
@@ -1257,55 +1222,30 @@
                 margin-top: 0; /* No extra margin if already in column flow */
             }
 
-            /* Hero Section */
-            .hero-section {
-                padding: 30px 15px; /* Adjust padding */
-                min-height: auto; /* Allow height to adjust */
+            /* Hero Section / Custom Slider */
+            .hero-section.custom-slider {
+                min-height: 300px; /* Adjust for smaller screens */
+                padding: 15px 0;
+            }
+            .custom-carousel-item {
+                width: 200px; /* Smaller base width for tablets/mobiles */
+            }
+            .custom-carousel-item.left-pos {
+                transform: translateX(calc(-50% - 200px)) scale(0.8);
+            }
+            .custom-carousel-item.center-pos {
+                transform: translateX(-50%) scale(1.1); /* Slightly less large on mobile */
+            }
+            .custom-carousel-item.right-pos {
+                transform: translateX(calc(-50% + 200px)) scale(0.8);
+            }
+            .custom-carousel-item.off-left {
+                transform: translateX(calc(-50% - 400px)) scale(0.6);
+            }
+            .custom-carousel-item.off-right {
+                transform: translateX(calc(-50% + 400px)) scale(0.6);
             }
 
-            .hero-slide {
-                flex-direction: column; /* Stack content and image vertically */
-                text-align: center;
-                padding: 25px; /* Adjust padding for slides */
-            }
-
-            .hero-content {
-                max-width: 100%; /* Take full width */
-                margin-bottom: 25px; /* Space between content and image */
-            }
-
-            .hero-content h2 {
-                font-size: 2em; /* Smaller heading */
-                line-height: 1.2;
-            }
-
-            .hero-content p {
-                font-size: 0.95em; /* Smaller paragraph text */
-            }
-
-            .hero-images {
-                position: static; /* Remove absolute positioning */
-                display: flex; /* Keep flex for images */
-                justify-content: center;
-                align-items: flex-end; /* Align to bottom for visual effect if multiple */
-                gap: 10px; /* Reduce gap */
-                margin: 0 auto; /* Center images */
-                width: 100%; /* Ensure it takes full width */
-            }
-
-            .hero-images img {
-                height: 180px; /* Smaller image height */
-                filter: drop-shadow(0 8px 15px var(--shadow-light)); /* Lighter shadow */
-            }
-            .hero-images img:nth-child(1) {
-                transform: none; /* Remove previous transform */
-                height: 160px; /* Adjust for stacked effect */
-                margin-bottom: 10px;
-            }
-
-            .hero-dots {
-                bottom: 15px; /* Adjust dot position */
-            }
 
             /* Product Grid */
             .product-grid {
@@ -1440,24 +1380,27 @@
                 font-size: 1.2em;
             }
 
-            /* Hero Section */
-            .hero-section {
-                padding: 15px 10px;
+            /* Hero Section / Custom Slider */
+            .hero-section.custom-slider {
+                min-height: 250px;
             }
-            .hero-content h2 {
-                font-size: 1.6em;
+            .custom-carousel-item {
+                width: 150px; /* Even smaller base width */
             }
-            .hero-content p {
-                font-size: 0.85em;
+            .custom-carousel-item.left-pos {
+                transform: translateX(calc(-50% - 150px)) scale(0.75); /* Smaller scale on very small screens */
             }
-            .hero-images img {
-                height: 120px;
+            .custom-carousel-item.center-pos {
+                transform: translateX(-50%) scale(1.05); /* Slightly smaller center on very small screens */
             }
-            .hero-images img:nth-child(1) {
-                height: 100px;
+            .custom-carousel-item.right-pos {
+                transform: translateX(calc(-50% + 150px)) scale(0.75);
             }
-            .admin-info {
-                font-size: 0.8em;
+            .custom-carousel-item.off-left {
+                transform: translateX(calc(-50% - 300px)) scale(0.5);
+            }
+            .custom-carousel-item.off-right {
+                transform: translateX(calc(-50% + 300px)) scale(0.5);
             }
 
             /* Product Grid */
@@ -1552,68 +1495,17 @@
 
     <main class="main-content">
         <div class="container">
-            <!-- Hero Section / Carousel -->
-            <section class="hero-section">
-                <div class="hero-slides-wrapper">
-                    <!-- Slide 1: ChatGPT+ -->
-                    <div class="hero-slide">
-                        <div class="hero-content">
-                            <h2>XiamoStore<br>ChatGPT+</h2>
-                            <p>Nikmati: ChatGPT+ dan akses semua AI dan fitur ekslusif lainnya</p>
-                            <div class="admin-info">
-                                <a href="https://wa.me/6287844643452" target="_blank" style="color: inherit; text-decoration: none; display: flex; align-items: center;">
-                                    <i class="fab fa-whatsapp"></i> Admin XiamoStore <br>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="hero-images">
-                            <img src="https://via.placeholder.com/200x400/3B4D63/FFFFFF?text=Mobile+app+screenshot+1" alt="Mobile app screenshot 1">
-                            <img src="https://via.placeholder.com/200x400/3B4D63/FFFFFF?text=Mobile+app+screenshot+2" alt="Mobile app screenshot 2">
-                        </div>
+            <!-- Hero Section / Custom Slider (replacing the old one) -->
+                <div class="custom-carousel-track">
+                    <div class="custom-carousel-item" data-id="0">
+                        <img src="poster1.png" alt="Poster 1">
                     </div>
-
-                    <!-- Slide 2: Desain Premium -->
-                    <div class="hero-slide">
-                        <div class="hero-content">
-                            <h2>XiamoStore<br>Desain Premium</h2>
-                            <p>Kreativitas tanpa batas dengan akses ke tool desain profesional.</p>
-                            <div class="admin-info">
-                                <a href="https://wa.me/6287844643452" target="_blank" style="color: inherit; text-decoration: none; display: flex; align-items: center;">
-                                    <i class="fab fa-whatsapp"></i> Admin XiamoStore <br>+62 8xx xxxx xxxx
-                                </a>
-                            </div>
-                        </div>
-                        <div class="hero-images">
-                            <img src="https://via.placeholder.com/200x400/6080A5/FFFFFF?text=Banner+2+App+1" alt="Design app screenshot 1">
-                            <img src="https://via.placeholder.com/200x400/6080A5/FFFFFF?text=Banner+2+App+2" alt="Design app screenshot 2">
-                        </div>
+                    <div class="custom-carousel-item" data-id="1">
+                        <img src="poster2.png" alt="Poster 2">
                     </div>
-
-                    <!-- Slide 3: Hiburan Tanpa Batas -->
-                    <div class="hero-slide">
-                        <div class="hero-content">
-                            <h2>XiamoStore<br>Hiburan Tanpa Batas</h2>
-                            <p>Streaming film, musik, dan konten favorit tanpa iklan.</p>
-                            <div class="admin-info">
-                                <a href="https://wa.me/6287844643452" target="_blank" style="color: inherit; text-decoration: none; display: flex; align-items: center;">
-                                    <i class="fab fa-whatsapp"></i> Admin XiamoStore <br>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="hero-images">
-                            <img src="https://via.placeholder.com/200x400/78B2D4/FFFFFF?text=Banner+3+App+1" alt="Entertainment app screenshot 1">
-                            <img src="https://via.placeholder.com/200x400/78B2D4/FFFFFF?text=Banner+3+App+2" alt="Entertainment app screenshot 2">
-                        </div>
+                    <div class="custom-carousel-item" data-id="2">
+                        <img src="poster3.png" alt="Poster 3">
                     </div>
-
-                    <!-- Tambahkan lebih banyak slide di sini sesuai kebutuhan Anda -->
-
-                </div>
-                <div class="hero-dots">
-                    <span class="hero-dot active"></span>
-                    <span class="hero-dot"></span>
-                    <span class="hero-dot"></span>
-                    <!-- Pastikan jumlah dot sesuai dengan jumlah hero-slide -->
                 </div>
             </section>
 
@@ -1631,7 +1523,7 @@
                 <div class="product-card">
                     <img src="blackbox.png" alt="Blackbox AI Icon" class="product-image">
                     <h5 class="product-name">Blackbox AI</h5>
-                    <span class="product-price">Rp 45.000</span>
+                    <span class="product-price">Rp 15.000</span>
                     <button class="add-to-cart-btn" data-product-name="Blackbox AI"><i class="fas fa-cart-plus"></i></button>
                 </div>
                 <!-- Product Card 3: Viu (NEW) -->
@@ -1738,7 +1630,7 @@
                 <div class="product-card">
                     <img src="applemusic.png" alt="Apple Music Icon" class="product-image">
                     <h5 class="product-name">Apple Music</h5>
-                    <span class="product-price">Rp 9.000</span>
+                    <span class="product-price">Rp 6.000</span>
                     <button class="add-to-cart-btn" data-product-name="Apple Music"><i class="fas fa-cart-plus"></i></button>
                 </div>
                 <!-- Product Card 19: Alight Motion -->
@@ -1872,12 +1764,6 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const slidesWrapper = document.querySelector('.hero-slides-wrapper');
-            const slides = document.querySelectorAll('.hero-slide');
-            const dots = document.querySelectorAll('.hero-dot');
-            let currentSlideIndex = 0;
-            let slideInterval;
-
             // === Theme Toggle Logic ===
             const themeToggle = document.getElementById('theme-toggle');
             const body = document.body;
@@ -1917,66 +1803,70 @@
             });
 
 
-            // Set the first dot as active initially if no slide has the 'active' class
-            if (slides.length > 0 && !document.querySelector('.hero-slide.active')) {
-                slides[0].classList.add('active');
-            }
-            if (dots.length > 0 && !document.querySelector('.hero-dot.active')) {
-                dots[0].classList.add('active');
-            }
+            // --- NEW: Custom 3-Card Carousel Logic ---
+            const carouselItems = document.querySelectorAll('.custom-carousel-item');
+            const totalItems = carouselItems.length;
 
-            function showSlide(index) {
-                // Pastikan index berada dalam batas yang valid
-                if (index >= slides.length) {
-                    index = 0;
-                } else if (index < 0) {
-                    index = slides.length - 1;
-                }
-
-                // Hapus kelas 'active' dari semua slide dan dot
-                slides.forEach(slide => slide.classList.remove('active'));
-                dots.forEach(dot => dot.classList.remove('active'));
-
-                // Tambahkan kelas 'active' ke slide dan dot saat ini
-                //slides[index].classList.add('active'); // No need to add 'active' class to slide for transform
-                dots[index].classList.add('active');
-
-                // Geser wrapper slide untuk menampilkan slide yang benar
-                slidesWrapper.style.transform = `translateX(-${index * 100}%)`;
-
-                currentSlideIndex = index;
+            // Initialize currentVisualOrder with the actual DOM elements for the initial [left, center, right] positions
+            let currentVisualOrder = [];
+            if (totalItems >= 3) {
+                currentVisualOrder = [
+                    carouselItems[0], // poster1.png initially in left-pos
+                    carouselItems[1], // poster2.png initially in center-pos
+                    carouselItems[2]  // poster3.png initially in right-pos
+                ];
+            } else {
+                console.error("Tidak cukup item carousel untuk slider 3 kartu. Dibutuhkan minimal 3.");
+                // Fallback or disable slider if not enough items
+                return; // Stop execution if critical items are missing
             }
 
-            function nextSlide() {
-                showSlide(currentSlideIndex + 1);
-            }
-
-            function startAutoSlide() {
-                // Bersihkan interval sebelumnya untuk menghindari duplikasi
-                clearInterval(slideInterval);
-                slideInterval = setInterval(nextSlide, 3000); // Ganti slide setiap 5 detik
-            }
-
-            function stopAutoSlide() {
-                clearInterval(slideInterval);
-            }
-
-            // Tambahkan event listener untuk navigasi dot manual
-            dots.forEach((dot, index) => {
-                dot.addEventListener('click', () => {
-                    stopAutoSlide(); // Hentikan auto-slide saat interaksi manual
-                    showSlide(index);
-                    startAutoSlide(); // Mulai kembali auto-slide setelah interaksi
+            function applyCarouselPositions() {
+                // First, remove all position classes from all carousel items
+                carouselItems.forEach(item => {
+                    item.classList.remove('left-pos', 'center-pos', 'right-pos', 'off-left', 'off-right');
                 });
-            });
 
-            // Tampilkan slide pertama saat halaman dimuat dan mulai auto-slide
-            showSlide(currentSlideIndex);
-            startAutoSlide();
+                // Apply specific position classes to the items in currentVisualOrder
+                currentVisualOrder[0].classList.add('left-pos');
+                currentVisualOrder[1].classList.add('center-pos');
+                currentVisualOrder[2].classList.add('right-pos');
 
-            // Opsional: Jeda auto-slide saat hover di area banner
-            slidesWrapper.addEventListener('mouseenter', stopAutoSlide);
-            slidesWrapper.addEventListener('mouseleave', startAutoSlide);
+                // For any other items (if totalItems > 3, though here it's fixed at 3),
+                // they would be put into an 'off-screen' class.
+                // Since we only have 3 items, the ones in currentVisualOrder cover all cases.
+            }
+
+            function nextCarouselSlide() {
+                // Get the current elements from their visual roles
+                const oldLeft = currentVisualOrder[0];
+                const oldCenter = currentVisualOrder[1];
+                const oldRight = currentVisualOrder[2];
+
+                // Update the order based on the requested animation:
+                // Right card moves to front (center)
+                // Front (center) card moves to left
+                // Left card moves to the far right (cyclically)
+                // So, the new order of elements will be: [oldCenter, oldRight, oldLeft]
+                currentVisualOrder = [oldCenter, oldRight, oldLeft];
+
+                applyCarouselPositions();
+            }
+
+            // Initial setup of the carousel positions
+            applyCarouselPositions();
+
+            // Start automatic sliding every 2 seconds
+            let slideInterval = setInterval(nextCarouselSlide, 2000);
+
+            // Optional: Pause carousel on hover
+            const customSliderSection = document.querySelector('.custom-slider');
+            if (customSliderSection) {
+                customSliderSection.addEventListener('mouseenter', () => clearInterval(slideInterval));
+                customSliderSection.addEventListener('mouseleave', () => slideInterval = setInterval(nextCarouselSlide, 2000));
+            }
+            // --- END NEW CUSTOM SLIDER LOGIC ---
+
 
             // === Fungsionalitas Modal Keranjang Belanja ===
             const cartIcon = document.getElementById('cartIcon');
@@ -2018,14 +1908,8 @@
                     image: "blackbox.png",
                     badge: "AI",
                     variations: [{
-                        duration: "7 Hari",
-                        price: 45000
-                    }, {
-                        duration: "1 Bulan",
-                        price: 90000
-                    }, {
-                        duration: "3 Bulan",
-                        price: 240000
+                        duration: "60 Hari",
+                        price: 15000
                     }]
                 },
                 "Viu": {
@@ -2096,7 +1980,7 @@
                         price: 12000
                     }, {
                         duration: "1 Tahun",
-                        price: 24000
+                        price: 25000
                     }]
                 },
                 "Picsart": {
@@ -2104,7 +1988,7 @@
                     badge: "DESAIN",
                     variations: [{
                         duration: "1 Bulan",
-                        price: 10000
+                        price: 8000
                     }]
                 },
                 "Scribd": {
@@ -2112,7 +1996,7 @@
                     badge: "EDUKASI",
                     variations: [{
                         duration: "1 Bulan",
-                        price: 10000
+                        price: 9000
                     }]
                 },
                 "WeTV": {
@@ -2151,6 +2035,9 @@
                     }, {
                         duration: "Premium 2 Bulan",
                         price: 32000
+                   }, {
+                        duration: "Premium 1 Tahun",
+                        price: 65000
                     }]
                 },
                 "Prime Video": {
@@ -2158,15 +2045,15 @@
                     badge: "MUSIK & VIDEO",
                     variations: [{
                         duration: "1 Bulan",
-                        price: 14000
+                        price: 12000
                     }]
                 },
                 "Apple Music": {
                     image: "applemusic.png",
                     badge: "MUSIK & VIDEO",
                     variations: [{
-                        duration: "Lifetime",
-                        price: 9000
+                        duration: "30 hari",
+                        price: 6000
                     }]
                 },
                 "Alight Motion": {
@@ -2182,7 +2069,7 @@
                     badge: "PRODUCTIVITY",
                     variations: [{
                         duration: "1 TB Storage",
-                        price: 35000
+                        price: 32000
                     }]
                 },
                 "Unlock Slideshare": {
