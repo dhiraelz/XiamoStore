@@ -1196,7 +1196,7 @@
                 flex-direction: column; /* Always stack for mobile views */
                 align-items: center; /* Center main blocks (top-row and search-bar) */
                 gap: 15px; /* Adjust spacing */
-                padding: 15px; /* Adjust padding */
+                padding: 10px 15px; /* Reduced from 15px */
             }
 
             .header-top-row { /* New container for top row elements */
@@ -1222,10 +1222,15 @@
                 margin-top: 0; /* No extra margin if already in column flow */
             }
 
+            /* Main content area */
+            .main-content {
+                padding: 20px 0; /* Reduced from 30px */
+            }
+
             /* Hero Section / Custom Slider */
             .hero-section.custom-slider {
                 min-height: 380px; /* Adjusted to fit images well, up from 300px */
-                padding: 15px 0;
+                padding: 10px 0; /* Reduced from 15px */
             }
             .custom-carousel-item {
                 width: 400px; /* Significantly larger base width for tablets/mobiles, up from 200px */
@@ -1250,17 +1255,17 @@
             /* Product Grid */
             .product-grid {
                 grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Allow smaller cards, aim for 2-3 columns */
-                gap: 20px; /* Reduce gap */
+                gap: 15px; /* Reduced from 20px */
             }
 
             .product-card {
-                padding: 15px; /* Adjust card padding */
+                padding: 12px; /* Reduced from 15px */
             }
 
             .product-image {
                 width: 80px;
                 height: 80px;
-                margin-bottom: 10px;
+                margin-bottom: 8px; /* Reduced from 10px */
             }
 
             .product-image[src="capcutlogo.png"],
@@ -1273,7 +1278,7 @@
                 font-size: 3em;
                 width: 70px;
                 height: 70px;
-                margin-bottom: 10px;
+                margin-bottom: 8px; /* Reduced from 10px */
             }
 
             .product-name {
@@ -1292,13 +1297,13 @@
             .load-more-btn {
                 padding: 12px 25px;
                 font-size: 1em;
-                margin-bottom: 30px;
+                margin: 0 auto 20px; /* Reduced margin-bottom from 30px */
             }
 
             /* Register Banner */
             .register-banner {
                 flex-direction: column; /* Stack content and illustration vertically */
-                padding: 30px 20px; /* Adjust padding */
+                padding: 25px 15px; /* Reduced from 30px 20px */
                 text-align: center;
             }
 
@@ -1310,11 +1315,12 @@
             .register-banner h3 {
                 font-size: 1.8em; /* Smaller heading */
                 line-height: 1.2;
+                margin-bottom: 10px; /* Reduced from 15px */
             }
 
             .register-banner p {
                 font-size: 0.95em; /* Smaller paragraph text */
-                margin-bottom: 20px; /* Keep some space below paragraph */
+                margin-bottom: 15px; /* Reduced from 20px */
             }
 
             .register-btn {
@@ -1323,14 +1329,18 @@
             }
 
             /* Footer */
+            .footer {
+                padding: 30px 0 20px; /* Reduced from 50px 0 30px */
+            }
+
             .footer-content {
                 grid-template-columns: 1fr; /* Single column layout for footer */
-                gap: 25px;
+                gap: 20px; /* Reduced from 25px */
                 text-align: center; /* Center footer columns content */
             }
 
             .footer-col {
-                padding-bottom: 20px; /* Add spacing between cols */
+                padding-bottom: 15px; /* Reduced from 20px */
                 border-bottom: 1px solid var(--footer-border); /* Add subtle separator */
             }
 
@@ -1365,6 +1375,9 @@
             }
 
             /* Header - Fine-tuning for smallest phones */
+            .header-content {
+                padding: 8px 10px; /* Reduced further from 10px 15px */
+            }
             .logo-text {
                 font-size: 1.2em; /* Slightly smaller logo text for very small screens */
             }
@@ -1380,9 +1393,15 @@
                 font-size: 1.2em;
             }
 
+            /* Main content area */
+            .main-content {
+                padding: 15px 0; /* Reduced from 20px */
+            }
+
             /* Hero Section / Custom Slider */
             .hero-section.custom-slider {
                 min-height: 300px; /* Adjusted, up from 250px */
+                padding: 8px 0; /* Reduced from 10px */
             }
             .custom-carousel-item {
                 width: 320px; /* Even larger base width, up from 150px */
@@ -1414,7 +1433,7 @@
             .product-image {
                 width: 60px;
                 height: 60px;
-                margin-bottom: 8px;
+                margin-bottom: 5px; /* Reduced from 8px */
             }
             .product-image[src="capcutlogo.png"],
             .product-image[src="slideshare.jpeg"] {
@@ -1425,15 +1444,15 @@
                 font-size: 2.2em;
                 width: 50px;
                 height: 50px;
-                margin-bottom: 8px;
+                margin-bottom: 5px; /* Reduced from 8px */
             }
             .product-name {
                 font-size: 0.9em;
-                margin-bottom: 5px;
+                margin-bottom: 3px; /* Reduced from 5px */
             }
             .product-price {
                 font-size: 0.85em;
-                margin-bottom: 10px;
+                margin-bottom: 8px; /* Reduced from 10px */
             }
             .add-to-cart-btn {
                 padding: 5px 8px;
@@ -1442,19 +1461,35 @@
 
             /* Register Banner */
             .register-banner {
-                padding: 20px 10px;
+                padding: 15px 10px; /* Reduced from 20px 10px */
             }
             .register-banner h3 {
-                font-size: 1.4em;
-                margin-bottom: 10px;
+                font-size: 1.3em; /* Reduced from 1.4em */
+                margin-bottom: 8px; /* Reduced from 10px */
             }
             .register-banner p {
-                font-size: 0.8em;
-                margin-bottom: 15px;
+                font-size: 0.75em; /* Reduced from 0.8em */
+                margin-bottom: 10px; /* Reduced from 15px */
             }
             .register-btn {
-                padding: 10px 20px;
-                font-size: 0.9em;
+                padding: 8px 15px; /* Reduced from 10px 20px */
+            }
+
+            /* Footer */
+            .footer {
+                padding: 20px 0 15px; /* Reduced from 30px 0 20px */
+            }
+
+            .footer-content {
+                gap: 15px; /* Reduced from 20px */
+            }
+
+            .footer-col {
+                padding-bottom: 10px; /* Reduced from 15px */
+            }
+
+            .footer-bottom {
+                padding-top: 10px; /* Reduced from 15px */
             }
         }
         /* END NEW MEDIA QUERIES FOR MOBILE OPTIMIZATION */
@@ -1860,7 +1895,7 @@
             let slideInterval = setInterval(nextCarouselSlide, 2000);
 
             // Optional: Pause carousel on hover
-            const customSliderSection = document.querySelector('.custom-slider');
+            const customSliderSection = document.querySelector('.custom-carousel-track'); // Changed to track for more accurate hover
             if (customSliderSection) {
                 customSliderSection.addEventListener('mouseenter', () => clearInterval(slideInterval));
                 customSliderSection.addEventListener('mouseleave', () => slideInterval = setInterval(nextCarouselSlide, 2000));
